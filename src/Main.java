@@ -54,9 +54,9 @@ public class Main {
             if (i % 20 == 0) {
                 System.out.println();
             }
-            System.out.printf("%04X ", classData[i], 16);
+            System.out.printf("%02X ", classData[i]); // 此打印如《深入理解Java虚拟机》显示
         }
-        System.out.println();
+//        System.out.println();
     }
 }
 
