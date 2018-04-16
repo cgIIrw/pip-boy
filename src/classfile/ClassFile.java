@@ -26,6 +26,7 @@ public class ClassFile {
     }
 
     public void read(ClassReader reader) {
+        MemberInfo mb = new MemberInfo();
         readAndCheckMagic(reader);
         readAndCheckVersion(reader);
         constantPool = readConstantPool(reader);
@@ -33,8 +34,8 @@ public class ClassFile {
         thisClass = reader.readUint16();
         superClass = reader.readUint16();
         interfaces = reader.readUint16s();
-        fields = readMembers(reader, constantPool);
-        methods = readMembers(reader, constantPool);
+        fields = mb.readMembers(reader, constantPool);
+        methods = mb.readMembers(reader, constantPool);
         attributes = readAttributes(reader, constantPool);
     }
 
