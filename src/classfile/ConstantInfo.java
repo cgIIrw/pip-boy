@@ -45,15 +45,15 @@ class CreateConstantInfo {
             case CONSTANT_Double:
                 return new ConstantDoubleInfo();
             case CONSTANT_String:
-                return new ConstantStringInfo(constantPool);
+                return new ConstantStringInfo(cp);
             case CONSTANT_Class:
-                return new ConstantClassInfo(constantPool);
+                return new ConstantClassInfo(cp);
             case CONSTANT_Fieldref:
-                return new ConstantFieldRefInfo(constantPool);
+                return new ConstantFieldrefInfo(cp);
             case CONSTANT_Methodref:
-                return new ConstantMethodRefInfo(constantPool);
+                return new ConstantMethodrefInfo(cp);
             case CONSTANT_InterfaceMethodref:
-                return new ConstantInterfaceMethodRefInfo(constantPool);
+                return new ConstantInterfaceMethodrefInfo(cp);
             case CONSTANT_NameAndType:
                 return new ConstantNameAndTypeInfo();
             case CONSTANT_MethodType:

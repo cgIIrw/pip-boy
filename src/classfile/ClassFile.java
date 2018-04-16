@@ -29,7 +29,8 @@ public class ClassFile {
         MemberInfo mb = new MemberInfo();
         readAndCheckMagic(reader);
         readAndCheckVersion(reader);
-        constantPool = readConstantPool(reader);
+        constantPool = new ConstantPool();
+        constantPool.readConstantPool(reader);
         accessFlags = reader.readUint16();
         thisClass = reader.readUint16();
         superClass = reader.readUint16();

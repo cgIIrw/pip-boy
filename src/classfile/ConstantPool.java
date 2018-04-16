@@ -31,6 +31,26 @@ public class ConstantPool {
         return cpInfo;
     }
 
+    public String[] getNameAndType(int index) {
+        String[] str = new String[2];
+        ConstantNameAndTypeInfo ntInfo = (ConstantNameAndTypeInfo) getConstantInfo(index);
+        str[0] = getUtf8(ntInfo.getNameIndex());
+        str[1] = getUtf8(ntInfo.getDescriptorIndex());
+        return str;
+    }
+
+    public String getClassName(int index) {
+        ConstantClassInfo classInfo = (ConstantClassInfo)getConstantInfo(index);
+        return getUtf8(classInfo.getNameIndex());
+    }
+
+
+    public String getUtf8(int index) {
+        ConstantUtf8Info utf8Info = (ConstantUtf8Info)getConstantInfo(index);
+        // 在getConstantInfo()已经readInfo()过
+        return utf8Info.getStr();
+    }
+
 
 
 

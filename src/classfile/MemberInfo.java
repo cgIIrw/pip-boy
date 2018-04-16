@@ -35,7 +35,7 @@ public class MemberInfo {
 
     // 通过nameIndex来取出常量池中的相关数据,后面再实现
     public String getName() {
-        return this.cp.geUtf8(this.nameIndex);
+        return this.cp.getUtf8(this.nameIndex);
     }
 
     public String getDescriptor() {
