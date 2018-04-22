@@ -25,7 +25,7 @@ public class MemberInfo {
         mb.accessFlags = reader.readUint16();
         mb.nameIndex = reader.readUint16();
         mb.descriptorIndex = reader.readUint16();
-        mb.attributes = readAttributes(reader, cp);
+        mb.attributes = GreateAttributeInfo.readAttributes(reader, cp);
         return mb;
     }
 

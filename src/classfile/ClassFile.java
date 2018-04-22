@@ -37,7 +37,7 @@ public class ClassFile {
         interfaces = reader.readUint16s();
         fields = mb.readMembers(reader, constantPool);
         methods = mb.readMembers(reader, constantPool);
-        attributes = readAttributes(reader, constantPool);
+        attributes = GreateAttributeInfo.readAttributes(reader, constantPool);
     }
 
     public void readAndCheckMagic(ClassReader reader) {
@@ -50,6 +50,7 @@ public class ClassFile {
     public void readAndCheckVersion(ClassReader reader) {
         this.minorVersion = reader.readUint16();
         this.majorVersion = reader.readUint16();
+//        System.out.println(majorVersion); // 测试
         switch (majorVersion) {
             case 45:
                 return;

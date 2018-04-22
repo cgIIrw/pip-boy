@@ -8,7 +8,7 @@ import java.math.BigInteger;
  */
 public class ClassReader {
     private byte[] data = new byte[0];
-    private int cursor = 0;
+    public int cursor = 0;
 
     public ClassReader(byte[] data) {
         this.data = data;
@@ -24,7 +24,7 @@ public class ClassReader {
     public int readUint16() {
         int val = 0;
         for (int i = 1 + cursor; i >= cursor; i--) {
-            val |= (data[i] & 0xff) << ((1 - i) * 8);
+            val |= (data[i] & 0xff) << ((1 + cursor - i) * 8);
         }
         cursor = cursor + 2;
         return val;
@@ -34,7 +34,7 @@ public class ClassReader {
     public long readUint32() {
         long val = 0;
         for (int i = 3 + cursor; i >= cursor; i--) {
-            val |= (data[i] & 0xff) << ((3 - i) * 8);
+            val |= (data[i] & 0xff) << ((3 + cursor - i) * 8);
         }
         cursor = cursor + 4;
         return val;
@@ -75,6 +75,7 @@ public class ClassReader {
         for (int i = 0; i < n; i++) {
             bytes[i] = data[cursor + i];
         }
+        cursor = cursor + n;
         return bytes;
     }
 }
