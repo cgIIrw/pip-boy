@@ -12,11 +12,13 @@ public class ConstantUtf8Info implements ConstantInfo {
     public void readInfo(ClassReader reader) {
         int length = reader.readUint16();
         byte[] bytes = reader.readBytes(length);
-        try {
-            str = decodeMutf8(bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // 如果不用decodeMutf8()也能运行!!!!!!!!!!!!!!!!
+//        try {
+            // str = decodeMutf8(bytes);
+            str = new String(bytes, 0 ,bytes.length);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 

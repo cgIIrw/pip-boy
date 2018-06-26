@@ -19,7 +19,8 @@ public class MemberInfo {
         return members;
     }
 
-    public MemberInfo readMember(ClassReader reader, ConstantPool cp) {
+
+    public static MemberInfo readMember(ClassReader reader, ConstantPool cp) {
         MemberInfo mb = new MemberInfo();
         mb.cp = cp;
         mb.accessFlags = reader.readUint16();

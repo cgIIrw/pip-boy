@@ -61,7 +61,7 @@ public class Main {
 //        System.out.println();
     }
 
-    // startJVM02是用来
+    // startJVM02用来测试ch03的代码
     static void startJVM02(CommandLine cmd, String[] args) {
         String jreOption = "";
         String cpOption = "";
@@ -87,6 +87,7 @@ public class Main {
         }
 
         ClassFile cf = ClassFile.Parse(classData);
+        System.out.println();
         System.out.println();
         System.out.println((cf.getFields()).length);
         System.out.println(cf.getMajorVersion());
