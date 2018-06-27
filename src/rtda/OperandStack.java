@@ -9,6 +9,9 @@ public class OperandStack {
         if (maxStack > 0) {
             slots = new Slot[maxStack];
         }
+        for (int i = 0; i < slots.length; i++) {
+            slots[i] = new Slot();
+        }
     }
 
     public void pushInt(int val) {
@@ -45,10 +48,10 @@ public class OperandStack {
         this.size -= 2;
         int low = (int)(this.slots[this.size].num);
         int high = (int)(this.slots[this.size + 1].num);
-        return (high << 32) | low;
+        return ((high & 0xffffffffL) << 32) | (low & 0xffffffffL);
     }
 
-    public void pushDouble(float val) {
+    public void pushDouble(double val) {
         long temp = Double.doubleToLongBits(val);
         pushLong(temp);
     }
