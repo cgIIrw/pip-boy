@@ -6,6 +6,9 @@ public class LocalVars {
     public LocalVars(int maxLocals) {
         if (maxLocals > 0) {
             localVars = new Slot[maxLocals];
+            for (int i = 0; i < localVars.length; i++) {
+                localVars[i] = new Slot();
+            }
         }
     }
 
@@ -17,7 +20,7 @@ public class LocalVars {
         return localVars[index].num;
     }
 
-    public void setFloat(int index, int val) {
+    public void setFloat(int index, float val) {
          int temp = Float.floatToIntBits(val);
         localVars[index].num = temp;
 
@@ -36,7 +39,8 @@ public class LocalVars {
     public long getLong(int index) {
         int low = localVars[index].num;
         int high = localVars[index + 1].num;
-        return (high << 32) | low;
+        return ((high & 0xffffffffL)<< 32) | (low & 0xffffffffL);
+//        return ((high << 32) | low) & 0xffffffffffffffffL;
     }
 
     // 现转化为long，然后再进行处理

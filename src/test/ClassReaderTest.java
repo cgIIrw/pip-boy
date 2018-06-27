@@ -15,7 +15,6 @@ public class ClassReaderTest {
     @Test
     public void readBytes() {
         byte[] test = "ab".getBytes();
-        System.out.println(test);
 //        Assert.assertEquals(classReader.readBytes(2)[1], test[1]);
         Assert.assertEquals(classReader.readBytes(2)[0], test[0]);
     }
