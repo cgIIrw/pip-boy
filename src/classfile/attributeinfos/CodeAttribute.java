@@ -9,10 +9,10 @@ import classfile.GreateAttributeInfo;
  * Created by yin on 18/4/17.
  */
 public class CodeAttribute implements AttributeInfo {
-    ConstantPool cp;
-    int maxStack;
-    int maxLocals;
-    byte[] code;
+    public ConstantPool cp;
+    public int maxStack;
+    public int maxLocals;
+    public byte[] code;
     ExceptionTableEntry[] exceptionTable;
     AttributeInfo[] attributes;
 
