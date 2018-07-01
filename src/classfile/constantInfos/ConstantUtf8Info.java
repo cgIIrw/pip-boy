@@ -9,6 +9,7 @@ import java.io.*;
  * Created by yin on 18/4/16.
  */
 public class ConstantUtf8Info implements ConstantInfo {
+    public static final int id = 1;
     private String str;
 
     @Override
@@ -23,6 +24,11 @@ public class ConstantUtf8Info implements ConstantInfo {
 //            e.printStackTrace();
 //        }
 
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     // 原书并没有这个函数,但是采用的直接调用字段str,所以还是采用这个函数

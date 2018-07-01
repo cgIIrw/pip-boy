@@ -8,6 +8,7 @@ import classfile.ConstantPool;
  * Created by yin on 18/4/16.
  */
 public class ConstantStringInfo implements ConstantInfo {
+    public static final int id = 8;
     private ConstantPool cp;
     private int stringIndex;
 
@@ -18,6 +19,11 @@ public class ConstantStringInfo implements ConstantInfo {
     @Override
     public void readInfo(ClassReader reader) {
         this.stringIndex = reader.readUint16();
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     public String string() {

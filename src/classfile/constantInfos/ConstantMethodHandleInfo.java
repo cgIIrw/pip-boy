@@ -7,6 +7,7 @@ import classfile.ConstantInfo;
  * Created by yin on 18/4/17.
  */
 public class ConstantMethodHandleInfo implements ConstantInfo {
+    public static final int id = 15;
     int referenceKind;
     int referenceIndex;
 
@@ -14,5 +15,10 @@ public class ConstantMethodHandleInfo implements ConstantInfo {
     public void readInfo(ClassReader reader) {
         this.referenceKind = reader.readUint8();
         this.referenceIndex = reader.readUint16();
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 }

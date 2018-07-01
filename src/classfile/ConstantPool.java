@@ -53,10 +53,7 @@ public class ConstantPool {
         return utf8Info.getStr();
     }
 
-
-
-
-
-
-
+    public ConstantInfo[] getCp() {
+        return cp;
+    }
 }
