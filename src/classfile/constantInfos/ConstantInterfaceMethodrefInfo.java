@@ -1,14 +1,18 @@
-package classfile;
+package classfile.constantInfos;
+
+import classfile.ClassReader;
+import classfile.ConstantInfo;
+import classfile.ConstantPool;
 
 /**
  * Created by yin on 18/4/17.
  */
-public class ConstantFieldrefInfo implements ConstantInfo {
+public class ConstantInterfaceMethodrefInfo implements ConstantInfo {
     private ConstantPool cp;
     private int classIndex;
     private int nameAndTypeIndex;
 
-    public ConstantFieldrefInfo(ConstantPool cp) {
+    public ConstantInterfaceMethodrefInfo(ConstantPool cp) {
         this.cp = cp;
     }
 
@@ -25,5 +29,4 @@ public class ConstantFieldrefInfo implements ConstantInfo {
     public String[] NameAndDescriptor() {
         return this.cp.getNameAndType(this.nameAndTypeIndex);
     }
-
 }

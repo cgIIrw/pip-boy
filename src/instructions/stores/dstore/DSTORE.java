@@ -2,7 +2,6 @@ package instructions.stores.dstore;
 
 import instructions.base.Index8Instruction;
 import rtda.Myframe;
-import rtda.Myobject;
 
 public class DSTORE extends Index8Instruction {
     @Override

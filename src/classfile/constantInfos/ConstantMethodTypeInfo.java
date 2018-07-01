@@ -1,4 +1,7 @@
-package classfile;
+package classfile.constantInfos;
+
+import classfile.ClassReader;
+import classfile.ConstantInfo;
 
 /**
  * Created by yin on 18/4/17.

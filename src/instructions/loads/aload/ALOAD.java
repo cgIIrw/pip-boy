@@ -2,7 +2,7 @@ package instructions.loads.aload;
 
 import instructions.base.Index8Instruction;
 import rtda.Myframe;
-import rtda.Myobject;
+import rtda.heap.Myobject;
 
 public class ALOAD extends Index8Instruction {
     @Override

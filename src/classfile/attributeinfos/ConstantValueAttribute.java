@@ -14,7 +14,7 @@ public class ConstantValueAttribute implements AttributeInfo {
         this.constantValueIndex = reader.readUint16();
     }
 
-    int getConstantValueIndex() {
+    public int getConstantValueIndex() {
         return this.constantValueIndex;
     }
 }

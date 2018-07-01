@@ -42,4 +42,8 @@ public class MemberInfo {
     public String getDescriptor() {
         return this.cp.getUtf8(this.descriptorIndex);
     }
+
+    public AttributeInfo[] getAttributes() {
+        return attributes;
+    }
 }

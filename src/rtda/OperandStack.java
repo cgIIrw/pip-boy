@@ -1,5 +1,7 @@
 package rtda;
 
+import rtda.heap.Myobject;
+
 // 实现操作数栈
 public class OperandStack {
     int size;
