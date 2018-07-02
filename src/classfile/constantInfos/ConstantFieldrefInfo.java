@@ -32,7 +32,7 @@ public class ConstantFieldrefInfo implements ConstantInfo {
         return this.cp.getClassName(this.classIndex);
     }
 
-    public String[] NameAndDescriptor() {
+    public String[] getNameAndDescriptor() {
         return this.cp.getNameAndType(this.nameAndTypeIndex);
     }
 
