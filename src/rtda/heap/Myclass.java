@@ -17,6 +17,12 @@ public class Myclass {
     public MyField[] fields;
     // 方法表
     public MyMethod[] methods;
+    // 当前的类加载器
+    MyclassLoader loader;
+    // 父类的Class
+    Myclass superClass;
+    // 被继承的接口的Class
+    Myclass[] interfaces;
 
     public Myclass(ClassFile cf) {
         this.accessFlags = cf.getAccessFlags();
@@ -60,5 +66,18 @@ public class Myclass {
 
     public boolean isEnum() {
         return 0 != (accessFlags & AccessFlags.ACC_ENUM);
+    }
+
+    public String getPackageName() {
+        int i = name.lastIndexOf("/");
+        if (i > 0) {
+            return name.substring(0, i);
+        }
+        return "";
+    }
+
+    public boolean isSubClassOf(Myclass myclass) {
+        // todo
+
     }
 }
