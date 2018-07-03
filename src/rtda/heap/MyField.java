@@ -5,8 +5,9 @@ import classfile.MemberInfo;
 import classfile.attributeinfos.ConstantValueAttribute;
 
 public class MyField extends ClassMember {
-     //  《深入》178页，
+     //  《深入》178页，凡是index首先考虑的就是常量池中的位置
     int constValue_index;
+    int slotId;
 
     public MyField(Myclass myclass, MemberInfo classFileMemberInfo) {
         super(myclass, classFileMemberInfo);
@@ -32,7 +33,7 @@ public class MyField extends ClassMember {
     }
 
 
-    // 添加一个可以得到ConstantValueAttribute的方法，这个属性指向final static的值
+    // 添加一个可以得到ConstantValueAttribute的方法，这个属性代表final static
     public ConstantValueAttribute getConstantValueAttribute(AttributeInfo[] attributeInfos) {
         for (AttributeInfo info : attributeInfos) {
             if (info instanceof ConstantValueAttribute) {

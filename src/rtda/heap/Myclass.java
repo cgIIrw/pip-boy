@@ -1,6 +1,8 @@
 package rtda.heap;
 
 import classfile.ClassFile;
+import rtda.LocalVars;
+import rtda.Slot;
 
 public class Myclass {
     //
@@ -23,6 +25,12 @@ public class Myclass {
     Myclass superClass;
     // 被继承的接口的Class
     Myclass[] interfaces;
+
+    int instanceSlotCount;
+
+    int staticSlotCount;
+
+    LocalVars staticVars;
 
     public Myclass(ClassFile cf) {
         this.accessFlags = cf.getAccessFlags();
@@ -79,5 +87,9 @@ public class Myclass {
     public boolean isSubClassOf(Myclass myclass) {
         // todo
 
+    }
+
+    public boolean isAccessibleTo(Myclass otherclass) {
+        return this.isPublic() || (this.getPackageName() == otherclass.getPackageName());
     }
 }
