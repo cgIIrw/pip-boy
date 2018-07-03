@@ -4,20 +4,15 @@ import instructions.base.Index16Instruction;
 import rtda.LocalVars;
 import rtda.Myframe;
 import rtda.OperandStack;
-import rtda.heap.*;
+import rtda.heap.FieldRef;
+import rtda.heap.MyField;
+import rtda.heap.Myclass;
+import rtda.heap.RuntimeConstantPool;
 
-
-/**
- * 需要两个操作数，第一个一个index，在运行时常量池找到符号引用，解析就知道要给哪个静态变量赋值
- * 第二个操作数就是要赋的值
- */
-public class PUT_STATIC extends Index16Instruction {
-
+public class GET_STATIC extends Index16Instruction {
     @Override
     public void execute(Myframe frame) {
-        MyMethod currentMethod = frame.getMyMethod();
-        Myclass currentClass = currentMethod.getMyclass();
-        RuntimeConstantPool cp = currentClass.runtimeConstantPool;
+        RuntimeConstantPool cp = frame.getMyMethod().getMyclass().runtimeConstantPool;
         FieldRef fieldRef = (FieldRef)(cp.getConstants(index));
         MyField field = fieldRef.resolvedField();
         Myclass class1 = field.getMyclass();
@@ -25,12 +20,6 @@ public class PUT_STATIC extends Index16Instruction {
 
         if (!field.isStatic()) {
             throw new IncompatibleClassChangeError("java.lang.IncompatibleClassChangeError");
-        }
-
-        if (field.isFinal()) {
-            if (currentClass != class1 || currentMethod.getName() != "<clinit?") {
-                throw new IllegalAccessError("java.lang.IllegalAccessError");
-            }
         }
 
         String descriptor = field.getDescriptor();
@@ -44,19 +33,20 @@ public class PUT_STATIC extends Index16Instruction {
             case 'C':
             case 'S':
             case 'I':
-                slots.setInt(slotId, stack.popInt());
+                stack.pushInt(slots.getInt(slotId));
                 break;
             case 'F':
-                slots.setFloat(slotId, stack.popFloat());
+                stack.pushFloat(slots.getFloat(slotId));
                 break;
             case 'J':
-                slots.setLong(slotId, stack.popLong());
+                stack.pushLong(slots.getLong(slotId));
                 break;
             case 'D':
-                slots.setDouble(slotId, stack.popDouble());
+                stack.pushDouble(slots.getDouble(slotId));
+                break;
             case 'L':
             case '[':
-                slots.setRef(slotId, stack.popRef());
+                stack.pushRef(slots.getRef(slotId));
                 break;
             default:
                 break;
