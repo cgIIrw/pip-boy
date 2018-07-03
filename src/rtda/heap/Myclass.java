@@ -86,7 +86,7 @@ public class Myclass {
 
     public boolean isSubClassOf(Myclass myclass) {
         // todo
-
+//      return true;
     }
 
     public boolean isAccessibleTo(Myclass otherclass) {

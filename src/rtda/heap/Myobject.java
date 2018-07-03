@@ -11,4 +11,8 @@ public class Myobject {
         this.myclass = myclass;
         fields = new LocalVars(myclass.instanceSlotCount);
     }
+
+    public LocalVars getFields() {
+        return fields;
+    }
 }
