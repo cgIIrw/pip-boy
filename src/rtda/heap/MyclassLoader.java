@@ -2,6 +2,8 @@ package rtda.heap;
 
 import classfile.ClassFile;
 import classpath.ClassPath;
+import rtda.LocalVars;
+import rtda.Slot;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -86,7 +88,7 @@ public class MyclassLoader {
     public void link(Myclass myclass) {
         // 验证
         vertify(myclass);
-        // 准备：在方法区中为变量分配内存，这里的变量指的是static的。
+        // 准备：在方法区中为变量分配内存，这里的变量指static修饰。
         prepare(myclass);
     }
 
@@ -96,5 +98,94 @@ public class MyclassLoader {
 
     public void prepare(Myclass myclass) {
         // todo
+        // 计算实例字段的个数
+        calcInstanceFieldSlotIds(myclass);
+        // 计算静态字段的个数
+        calcStaticFieldSlotIds(myclass);
+        // 给类变量分配空间，然后给他们赋予初始值
+        allocAndInitStaticVars(myclass);
+    }
+
+    public void calcInstanceFieldSlotIds(Myclass myclass) {
+        int slotId = 0;
+        if (myclass.superClass != null) {
+            // 从上往下，先把父类的个数加上
+            slotId = myclass.superClass.instanceSlotCount;
+        }
+
+        for (int i = 0; i < myclass.fields.length; i++) {
+            if (!myclass.fields[i].isStatic()) {
+                // id可以用来计数，也可以用来表示索引
+                myclass.fields[i].slotId = slotId;
+                slotId++;
+                if (myclass.fields[i].isLongOrDouble()) {
+                    slotId++;
+                }
+            }
+        }
+       myclass.instanceSlotCount = slotId;
+    }
+
+    public void calcStaticFieldSlotIds(Myclass myclass) {
+        int slotId = 0;
+        for (int i = 0; i < myclass.fields.length; i++) {
+            if (myclass.fields[i].isStatic()) {
+                myclass.fields[i].slotId = slotId;
+                slotId++;
+                if (myclass.fields[i].isLongOrDouble()) {
+                    slotId++;
+                }
+            }
+        }
+        myclass.staticSlotCount = slotId;
+    }
+
+    public void allocAndInitStaticVars(Myclass myclass) {
+        // LocalVars是一个Slot[]的包装类，这里用来定位和初始化
+        myclass.staticVars = new LocalVars(myclass.staticSlotCount);
+        for (MyField myField : myclass.fields) {
+            if (myField.isStatic() && myField.isFinal()) {
+                initStaticFinalVar(myclass, myField);
+            }
+        }
+    }
+
+    public void initStaticFinalVar(Myclass myclass, MyField myField) {
+        LocalVars vars = myclass.staticVars;
+        RuntimeConstantPool cp = myclass.runtimeConstantPool;
+        int cpIndex = myField.constValue_index;
+        int slotId = myField.slotId;
+
+        // 《深入》P177，这个final static根据不同类型，获取相应类型的值
+        if (cpIndex > 0) {
+            switch (myField.descriptor) {
+                // 非long double float类型统统转化为int存储
+                case "Z" :
+                case "B" :
+                case "C" :
+                case "S" :
+                case "I" :
+                    int val = (int)(cp.getConstants(cpIndex));
+                    vars.setInt(slotId, val);
+                    break;
+                case "J" :
+                    long lval = (long)(cp.getConstants(cpIndex));
+                    vars.setLong(slotId, lval);
+                    break;
+                case "F" :
+                    float fval = (float)(cp.getConstants(cpIndex));
+                    vars.setFloat(slotId, fval);
+                    break;
+                case "D" :
+                    double dval = (double)(cp.getConstants(cpIndex));
+                    vars.setDouble(slotId, dval);
+                    break;
+                case "Ljava/lang/String;" :
+                    // todo
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
