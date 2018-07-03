@@ -12,4 +12,20 @@ public class SymRef {
     }
 
     // todo
+
+    public Myclass resolvedClass() {
+        if (myclass == null) {
+            resolvedClassRef();
+        }
+        return myclass;
+    }
+
+    public void resolvedClassRef() {
+        Myclass d = this.runtimeConstantPool.myclass;
+        Myclass c = d.loader.loadClass(this.className);
+        if (!c.isAccessibleTo(d)) {
+            throw new IllegalAccessError("java.lang.IllegalAccessError");
+        }
+        this.myclass = c;
+    }
 }
