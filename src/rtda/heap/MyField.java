@@ -60,4 +60,8 @@ public class MyField extends ClassMember {
     public boolean isLongOrDouble() {
         return getDescriptor().equals("J") || getDescriptor().equals("D");
     }
+
+    public int getSlotId() {
+        return slotId;
+    }
 }

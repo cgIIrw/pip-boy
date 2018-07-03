@@ -115,7 +115,6 @@ public class MyclassLoader {
 
         for (int i = 0; i < myclass.fields.length; i++) {
             if (!myclass.fields[i].isStatic()) {
-                // id可以用来计数，也可以用来表示索引
                 myclass.fields[i].slotId = slotId;
                 slotId++;
                 if (myclass.fields[i].isLongOrDouble()) {

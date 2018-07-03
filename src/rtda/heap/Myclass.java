@@ -96,4 +96,8 @@ public class Myclass {
     public Myobject newObject() {
         return new Myobject(this);
     }
+
+    public LocalVars getStaticVars() {
+        return staticVars;
+    }
 }
