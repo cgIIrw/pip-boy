@@ -153,6 +153,7 @@ public class MyclassLoader {
     public void initStaticFinalVar(Myclass myclass, MyField myField) {
         LocalVars vars = myclass.staticVars;
         RuntimeConstantPool cp = myclass.runtimeConstantPool;
+        // 在此强调一下，这里constValue_index的是static final
         int cpIndex = myField.constValue_index;
         int slotId = myField.slotId;
 

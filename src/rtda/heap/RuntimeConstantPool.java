@@ -37,15 +37,22 @@ public class RuntimeConstantPool {
                     constants[i] = ((ConstantStringInfo)constantInfo).string();
                     break;
                 case CreateConstantInfo.CONSTANT_Class:
-
-
-
+                    constants[i] = new ClassRef(this, (ConstantClassInfo)constantInfo);
+                    break;
+                case CreateConstantInfo.CONSTANT_Fieldref:
+                    constants[i] = new FieldRef(this, (ConstantFieldrefInfo)constantInfo);
+                    break;
+                case CreateConstantInfo.CONSTANT_Methodref:
+                    constants[i] = new MethodRef(this,(ConstantMethodrefInfo)constantInfo);
+                    break;
+                case CreateConstantInfo.CONSTANT_InterfaceMethodref:
+                    constants[i] = new InterfaceMethodRef(this, (ConstantInterfaceMethodrefInfo)constantInfo);
+                    break;
+                default:
+                    break;
+                    // todo
             }
         }
-
-
-
-
     }
 
     public Object getConstants(int id) {
