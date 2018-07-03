@@ -92,4 +92,8 @@ public class Myclass {
     public boolean isAccessibleTo(Myclass otherclass) {
         return this.isPublic() || (this.getPackageName() == otherclass.getPackageName());
     }
+
+    public Myobject newObject() {
+        return new Myobject(this);
+    }
 }
