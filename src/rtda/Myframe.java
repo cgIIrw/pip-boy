@@ -1,15 +1,24 @@
 package rtda;
 
+import rtda.heap.MyMethod;
+
 public class Myframe {
 
     // 前一个栈帧
     Myframe lower;
     LocalVars localVars;
     OperandStack operandStack;
+    Mythread mythread; // 当前所在线程
+    MyMethod myMethod;
+    int nextPC; //
 
-    public Myframe(int maxStack, int maxLocals) {
-        this.localVars = new LocalVars(maxLocals);
-        this.operandStack = new OperandStack(maxStack);
+
+    public Myframe(Mythread mythread, MyMethod myMethod) {
+        this.mythread = mythread;
+        this.myMethod = myMethod;
+
+        this.localVars = new LocalVars(myMethod.getMaxLocals());
+        this.operandStack = new OperandStack(myMethod.getMaxStack());
     }
 
     public LocalVars getLocalVars() {
@@ -18,5 +27,21 @@ public class Myframe {
 
     public OperandStack getOperandStack() {
         return this.operandStack;
+    }
+
+    public Mythread getMythread() {
+        return mythread;
+    }
+
+    public MyMethod getMyMethod() {
+        return myMethod;
+    }
+
+    public int getNextPC() {
+        return nextPC;
+    }
+
+    public void setNextPC(int nextPC) {
+        this.nextPC = nextPC;
     }
 }

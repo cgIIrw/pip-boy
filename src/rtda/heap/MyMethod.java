@@ -5,6 +5,14 @@ import classfile.MemberInfo;
 import classfile.attributeinfos.CodeAttribute;
 
 public class MyMethod extends ClassMember {
+    public int getMaxStack() {
+        return maxStack;
+    }
+
+    public int getMaxLocals() {
+        return maxLocals;
+    }
+
     int maxStack;
     int maxLocals;
     byte[] code;

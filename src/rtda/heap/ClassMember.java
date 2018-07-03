@@ -73,6 +73,5 @@ public class ClassMember {
         }
 
         return myclass1 == myclass;
-        // 是否没考虑内部类？
     }
 }
