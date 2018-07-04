@@ -1,5 +1,7 @@
 package classfile;
 
+import rtda.heap.MemberRef;
+
 /**
  * @author cgIIrw
  * @date 2018/4/11
@@ -26,7 +28,7 @@ public class ClassFile {
     }
 
     public void read(ClassReader reader) {
-        MemberInfo mb = new MemberInfo();
+//        MemberInfo mb = new MemberInfo();
         readAndCheckMagic(reader);
         readAndCheckVersion(reader);
         constantPool = new ConstantPool();
@@ -35,8 +37,8 @@ public class ClassFile {
         thisClass = reader.readUint16();
         superClass = reader.readUint16();
         interfaces = reader.readUint16s();
-        fields = mb.readMembers(reader, constantPool);
-        methods = mb.readMembers(reader, constantPool);
+        fields = MemberInfo.readMembers(reader, constantPool);
+        methods = MemberInfo.readMembers(reader, constantPool);
         attributes = GreateAttributeInfo.readAttributes(reader, constantPool);
     }
 
