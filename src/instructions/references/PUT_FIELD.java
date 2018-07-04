@@ -15,7 +15,7 @@ public class PUT_FIELD extends Index16Instruction {
         MyMethod currentMethod = frame.getMyMethod();
         Myclass currentClass = currentMethod.getMyclass();
         RuntimeConstantPool cp = currentClass.runtimeConstantPool;
-        FieldRef fieldRef = (FieldRef) (cp.getConstants(index));
+        FieldRef fieldRef = (FieldRef)((cp.getConstants(index)).getVal());
         MyField field = fieldRef.resolvedField();
 
         if (field.isStatic()) {

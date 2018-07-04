@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 
 public class RuntimeConstantPool {
     Myclass myclass;
-    Object[] constants;
+    Constant[] constants;
 
 
     public RuntimeConstantPool(Myclass myclass, ConstantPool cfCp) {
@@ -20,33 +20,42 @@ public class RuntimeConstantPool {
             ConstantInfo constantInfo = constantInfos[i];
             switch (constantInfo.getId()) {
                 case CreateConstantInfo.CONSTANT_Integer:
-                    constants[i] = ((ConstantIntegerInfo)constantInfo).getValue();
+                    constants[i].setVal(((ConstantIntegerInfo)constantInfo).getValue());
+                    constants[i].setType(3);
                     break;
                 case CreateConstantInfo.CONSTANT_Float:
-                    constants[i] = ((ConstantFloatInfo)constantInfo).getValue();
+                    constants[i].setVal(((ConstantFloatInfo)constantInfo).getValue());
+                    constants[i].setType(4);
                     break;
                 case CreateConstantInfo.CONSTANT_Long:
-                    constants[i] = ((ConstantLongInfo)constantInfo).getValue();
+                    constants[i].setVal(((ConstantLongInfo)constantInfo).getValue());
+                    constants[i].setType(5);
                     i++;
                     break;
                 case CreateConstantInfo.CONSTANT_Double:
-                    constants[i] = ((ConstantDoubleInfo)constantInfo).getValue();
+                    constants[i].setVal(((ConstantDoubleInfo)constantInfo).getValue());
+                    constants[i].setType(6);
                     i++;
                     break;
                 case CreateConstantInfo.CONSTANT_String:
-                    constants[i] = ((ConstantStringInfo)constantInfo).string();
+                    constants[i].setVal(((ConstantStringInfo)constantInfo).string());
+                    constants[i].setType(8);
                     break;
                 case CreateConstantInfo.CONSTANT_Class:
-                    constants[i] = new ClassRef(this, (ConstantClassInfo)constantInfo);
+                    constants[i].setVal(new ClassRef(this, (ConstantClassInfo)constantInfo));
+                    constants[i].setType(7);
                     break;
                 case CreateConstantInfo.CONSTANT_Fieldref:
-                    constants[i] = new FieldRef(this, (ConstantFieldrefInfo)constantInfo);
+                    constants[i].setVal(new FieldRef(this, (ConstantFieldrefInfo)constantInfo));
+                    constants[i].setType(9);
                     break;
                 case CreateConstantInfo.CONSTANT_Methodref:
-                    constants[i] = new MethodRef(this,(ConstantMethodrefInfo)constantInfo);
+                    constants[i].setVal(new MethodRef(this,(ConstantMethodrefInfo)constantInfo));
+                    constants[i].setType(10);
                     break;
                 case CreateConstantInfo.CONSTANT_InterfaceMethodref:
-                    constants[i] = new InterfaceMethodRef(this, (ConstantInterfaceMethodrefInfo)constantInfo);
+                    constants[i].setVal(new InterfaceMethodRef(this, (ConstantInterfaceMethodrefInfo)constantInfo));
+                    constants[i].setType(11);
                     break;
                 default:
                     break;
@@ -55,8 +64,8 @@ public class RuntimeConstantPool {
         }
     }
 
-    public Object getConstants(int id) {
-        Object c = this.constants[id];
+    public Constant getConstants(int id) {
+        Constant c = this.constants[id];
         if (c != null) {
             return c;
         } else {

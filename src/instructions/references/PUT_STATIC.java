@@ -18,7 +18,7 @@ public class PUT_STATIC extends Index16Instruction {
         MyMethod currentMethod = frame.getMyMethod();
         Myclass currentClass = currentMethod.getMyclass();
         RuntimeConstantPool cp = currentClass.runtimeConstantPool;
-        FieldRef fieldRef = (FieldRef)(cp.getConstants(index));
+        FieldRef fieldRef = (FieldRef)((cp.getConstants(index)).getVal());
         MyField field = fieldRef.resolvedField();
         Myclass class1 = field.getMyclass();
         // todo

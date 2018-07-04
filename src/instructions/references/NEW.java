@@ -11,7 +11,7 @@ public class NEW extends Index16Instruction {
     @Override
     public void execute(Myframe frame) {
         RuntimeConstantPool cp = frame.getMyMethod().getMyclass().runtimeConstantPool;
-        ClassRef cf = (ClassRef)cp.getConstants(index);
+        ClassRef cf = (ClassRef)((cp.getConstants(index)).getVal());
         Myclass myclass = cf.resolvedClass();
 
         // todo 初始化的一个判断
