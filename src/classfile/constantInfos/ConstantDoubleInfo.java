@@ -7,7 +7,7 @@ import classfile.ConstantInfo;
  * Created by yin on 18/4/16.
  */
 public class ConstantDoubleInfo implements ConstantInfo {
-    public static final int id = 6;
+    private final int id = 6;
     double val;
 
     @Override

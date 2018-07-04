@@ -21,6 +21,11 @@ public class Myframe {
         this.operandStack = new OperandStack(myMethod.getMaxStack());
     }
 
+    public Myframe(Mythread mythread, int maxLocals, int maxStack) {
+        localVars = new LocalVars(maxLocals);
+        operandStack = new OperandStack(maxStack);
+    }
+
     public LocalVars getLocalVars() {
         return this.localVars;
     }

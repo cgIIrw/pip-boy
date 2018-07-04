@@ -7,7 +7,7 @@ import classfile.ConstantInfo;
  * Created by yin on 18/4/16.
  */
 public class ConstantNameAndTypeInfo implements ConstantInfo {
-    public static final int id = 12;
+    private final int id = 12;
     private int nameIndex;
     private int descriptorIndex;
 

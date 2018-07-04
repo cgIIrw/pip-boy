@@ -3,7 +3,6 @@ package rtda.heap;
 import classfile.ClassFile;
 import classpath.ClassPath;
 import rtda.LocalVars;
-import rtda.Slot;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -165,19 +164,19 @@ public class MyclassLoader {
                 case "C" :
                 case "S" :
                 case "I" :
-                    int val = (int)(cp.getConstants(cpIndex));
+                    int val = (int)(cp.getConstants(cpIndex).getVal());
                     vars.setInt(slotId, val);
                     break;
                 case "J" :
-                    long lval = (long)(cp.getConstants(cpIndex));
+                    long lval = (long)(cp.getConstants(cpIndex).getVal());
                     vars.setLong(slotId, lval);
                     break;
                 case "F" :
-                    float fval = (float)(cp.getConstants(cpIndex));
+                    float fval = (float)(cp.getConstants(cpIndex).getVal());
                     vars.setFloat(slotId, fval);
                     break;
                 case "D" :
-                    double dval = (double)(cp.getConstants(cpIndex));
+                    double dval = (double)(cp.getConstants(cpIndex).getVal());
                     vars.setDouble(slotId, dval);
                     break;
                 case "Ljava/lang/String;" :

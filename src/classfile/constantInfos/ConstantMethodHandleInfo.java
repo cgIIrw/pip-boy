@@ -7,7 +7,7 @@ import classfile.ConstantInfo;
  * Created by yin on 18/4/17.
  */
 public class ConstantMethodHandleInfo implements ConstantInfo {
-    public static final int id = 15;
+    private final int id = 15;
     int referenceKind;
     int referenceIndex;
 

@@ -8,7 +8,7 @@ import classfile.ConstantPool;
  * Created by yin on 18/4/17.
  */
 public class ConstantInterfaceMethodrefInfo implements ConstantInfo {
-    public static final int id = 11;
+    private final int id = 11;
     private ConstantPool cp;
     private int classIndex;
     private int nameAndTypeIndex;

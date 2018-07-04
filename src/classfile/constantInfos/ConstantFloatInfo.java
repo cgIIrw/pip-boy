@@ -7,7 +7,7 @@ import classfile.ConstantInfo;
  * Created by yin on 18/4/16.
  */
 public class ConstantFloatInfo implements ConstantInfo {
-    public static final int id = 4;
+    private final int id = 4;
     float val;
 
     @Override

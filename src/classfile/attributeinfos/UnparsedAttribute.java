@@ -7,9 +7,9 @@ import classfile.ClassReader;
  * Created by yin on 18/4/17.
  */
 public class UnparsedAttribute implements AttributeInfo {
-    String name;
-    long length;
-    byte[] info;
+    private String name;
+    private long length;
+    private byte[] info;
 
     public UnparsedAttribute(String name, long length) {
         this.name = name;

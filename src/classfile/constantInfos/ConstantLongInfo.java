@@ -9,7 +9,7 @@ import java.math.BigInteger;
  * Created by yin on 18/4/16.
  */
 public class ConstantLongInfo implements ConstantInfo {
-    public static final int id = 5;
+    private final int id = 5;
     BigInteger val;
     @Override
     public void readInfo(ClassReader reader) {

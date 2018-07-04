@@ -5,6 +5,10 @@ import classfile.MemberInfo;
 import classfile.attributeinfos.CodeAttribute;
 
 public class MyMethod extends ClassMember {
+    int maxStack;
+    int maxLocals;
+    byte[] code;
+
     public int getMaxStack() {
         return maxStack;
     }
@@ -12,10 +16,6 @@ public class MyMethod extends ClassMember {
     public int getMaxLocals() {
         return maxLocals;
     }
-
-    int maxStack;
-    int maxLocals;
-    byte[] code;
 
     public MyMethod(Myclass myclass, MemberInfo classFileMemberInfo) {
         super(myclass, classFileMemberInfo);
@@ -33,16 +33,16 @@ public class MyMethod extends ClassMember {
     public void copyAttributes(MemberInfo cfMethod) {
         CodeAttribute codeAttribute = getConstantValueAttribute(cfMethod.getAttributes());
         if (codeAttribute != null) {
-            this.maxStack = codeAttribute.maxStack;
-            this.maxLocals = codeAttribute.maxLocals;
-            this.code = codeAttribute.code;
+            this.maxStack = codeAttribute.getMaxStack();
+            this.maxLocals = codeAttribute.getMaxLocals();
+            this.code = codeAttribute.getCode();
         }
     }
 
     public CodeAttribute getConstantValueAttribute(AttributeInfo[] attributeInfos) {
         for (AttributeInfo info : attributeInfos) {
             if (info instanceof CodeAttribute) {
-                return (CodeAttribute) info;
+                return (CodeAttribute)info;
             }
         }
         return null;

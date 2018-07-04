@@ -7,7 +7,7 @@ import classfile.ConstantInfo;
  * Created by yin on 18/4/17.
  */
 public class ConstantInvokeDynamicInfo implements ConstantInfo {
-    public static final int id = 18;
+    private final int id = 18;
     int bootstrapMethodAttrIndex;
     int nameAndTypeIndex;
 

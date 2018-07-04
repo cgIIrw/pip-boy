@@ -7,7 +7,7 @@ import classfile.ConstantInfo;
  * Created by yin on 18/4/16.
  */
 public class ConstantIntegerInfo implements ConstantInfo {
-    public static final int id = 3;
+    private final int id = 3;
     long val;
 
     @Override

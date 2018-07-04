@@ -8,7 +8,7 @@ import classfile.ConstantPool;
  * Created by yin on 18/4/16.
  */
 public class ConstantStringInfo implements ConstantInfo {
-    public static final int id = 8;
+    private final int id = 8;
     private ConstantPool cp;
     private int stringIndex;
 

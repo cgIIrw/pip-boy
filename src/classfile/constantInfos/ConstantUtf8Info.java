@@ -9,7 +9,7 @@ import java.io.*;
  * Created by yin on 18/4/16.
  */
 public class ConstantUtf8Info implements ConstantInfo {
-    public static final int id = 1;
+    private final int id = 1;
     private String str;
 
     @Override

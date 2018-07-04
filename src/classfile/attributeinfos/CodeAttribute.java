@@ -9,10 +9,10 @@ import classfile.GreateAttributeInfo;
  * Created by yin on 18/4/17.
  */
 public class CodeAttribute implements AttributeInfo {
-    public ConstantPool cp;
-    public int maxStack;
-    public int maxLocals;
-    public byte[] code;
+    private ConstantPool cp;
+    private int maxStack;
+    private int maxLocals;
+    private byte[] code;
     ExceptionTableEntry[] exceptionTable;
     AttributeInfo[] attributes;
 
@@ -31,19 +31,19 @@ public class CodeAttribute implements AttributeInfo {
         this.attributes = GreateAttributeInfo.readAttributes(reader, this.cp);
     }
 
-    int getMaxStack() {
+    public int getMaxStack() {
         return this.maxStack;
     }
 
-    int getMaxLocals() {
+    public int getMaxLocals() {
         return this.maxLocals;
     }
 
-    byte[] getCode() {
+    public byte[] getCode() {
         return this.code;
     }
 
-    ExceptionTableEntry[] getExceptionTable() {
+    public ExceptionTableEntry[] getExceptionTable() {
         return this.exceptionTable;
     }
 
@@ -51,10 +51,10 @@ public class CodeAttribute implements AttributeInfo {
 }
 
 class ExceptionTableEntry {
-    int startPc;
-    int endPc;
-    int handlerPc;
-    int catchType;
+    private int startPc;
+    private int endPc;
+    private int handlerPc;
+    private int catchType;
 
     public ExceptionTableEntry(ClassReader reader) {
         startPc = reader.readUint16();

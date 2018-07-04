@@ -7,7 +7,7 @@ import classfile.ConstantInfo;
  * Created by yin on 18/4/17.
  */
 public class ConstantMethodTypeInfo implements ConstantInfo {
-    public static final int id = 16;
+    private final int id = 16;
     int descriptorIndex;
 
     @Override

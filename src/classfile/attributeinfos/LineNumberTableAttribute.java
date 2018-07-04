@@ -7,7 +7,7 @@ import classfile.ClassReader;
  * Created by yin on 18/4/22.
  */
 public class LineNumberTableAttribute implements AttributeInfo {
-    LineNumberTableEntry[] lineNumberTable;
+    private LineNumberTableEntry[] lineNumberTable;
     @Override
     public void readInfo(ClassReader reader) {
         int lineNumberTableLength = reader.readUint16();
@@ -19,8 +19,8 @@ public class LineNumberTableAttribute implements AttributeInfo {
 }
 
 class LineNumberTableEntry {
-    int startPc;
-    int lineNumber;
+    private int startPc;
+    private int lineNumber;
 
     public LineNumberTableEntry(ClassReader reader) {
         startPc = reader.readUint16();
