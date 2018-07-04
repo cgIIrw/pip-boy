@@ -8,7 +8,7 @@ import java.math.BigInteger;
  */
 public class ClassReader {
     private byte[] data = new byte[0];
-    public int cursor = 0;
+    private int cursor = 0;
 
     public ClassReader(byte[] data) {
         this.data = data;

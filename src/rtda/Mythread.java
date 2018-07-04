@@ -21,7 +21,7 @@ public class Mythread {
         this.mystack.push(frame);
     }
 
-    public Myframe popMyframe(Myframe frame) {
+    public Myframe popMyframe() {
         return this.mystack.pop();
 
     }
