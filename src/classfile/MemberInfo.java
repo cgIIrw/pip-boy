@@ -1,5 +1,7 @@
 package classfile;
 
+import classfile.attributeinfos.CodeAttribute;
+
 /**
  * Created by yin on 18/4/15.
  */
@@ -10,24 +12,22 @@ public class MemberInfo {
     int descriptorIndex;
     AttributeInfo[] attributes;
 
-    public MemberInfo[] readMembers(ClassReader reader, ConstantPool cp) {
+    public static MemberInfo[] readMembers(ClassReader reader, ConstantPool cp) {
         int memberCount = reader.readUint16();
         MemberInfo[] members = new MemberInfo[memberCount];
         for (int i = 0; i < memberCount; i++) {
-            members[i] = readMember(reader, cp);
+            members[i] = new MemberInfo(reader, cp);
         }
         return members;
     }
 
 
-    public static MemberInfo readMember(ClassReader reader, ConstantPool cp) {
-        MemberInfo mb = new MemberInfo();
-        mb.cp = cp;
-        mb.accessFlags = reader.readUint16();
-        mb.nameIndex = reader.readUint16();
-        mb.descriptorIndex = reader.readUint16();
-        mb.attributes = GreateAttributeInfo.readAttributes(reader, cp);
-        return mb;
+    public MemberInfo(ClassReader reader, ConstantPool cp) {
+        this.cp = cp;
+        this.accessFlags = reader.readUint16();
+        this.nameIndex = reader.readUint16();
+        this.descriptorIndex = reader.readUint16();
+        this.attributes = GreateAttributeInfo.readAttributes(reader, cp);
     }
 
     public int getAccessFlags() {
@@ -46,4 +46,16 @@ public class MemberInfo {
     public AttributeInfo[] getAttributes() {
         return attributes;
     }
+
+    public CodeAttribute getCodeAttribute() {
+        for (AttributeInfo info : getAttributes()) {
+            String attrName = getName();
+            switch (attrName) {
+                case "Code":
+                    return (CodeAttribute)info;
+            }
+        }
+        return null;
+    }
+
 }
