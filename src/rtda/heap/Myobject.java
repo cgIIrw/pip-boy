@@ -15,4 +15,8 @@ public class Myobject {
     public LocalVars getFields() {
         return fields;
     }
+
+    public boolean isInstanceOf(Myclass s) {
+        return s.isAssignableFrom(this.myclass);
+    }
 }

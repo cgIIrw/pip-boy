@@ -85,9 +85,52 @@ public class Myclass {
     }
 
     public boolean isSubClassOf(Myclass myclass) {
-        // todo
-//      return true;
+
+        for (Myclass c = this.superClass; c != null; c = c.superClass) {
+            if (c == myclass) {
+                return true;
+            }
+        }
+        return false;
     }
+
+    public boolean isSubInterfaceOf(Myclass iface) {
+        for (Myclass superInterface : this.interfaces) {
+            if (superInterface == iface || superInterface.isSubInterfaceOf(iface)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isImplements(Myclass iface) {
+        for (Myclass c = this; c != null; c = c.superClass) {
+            for (Myclass i : c.interfaces) {
+                if (i == iface || i.isSubInterfaceOf(iface)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isAssignableFrom(Myclass other) {
+        // 判断other是不是this的子类或者继承自this
+        Myclass s = other;
+        Myclass t = this;
+
+        if (s == t) {
+            return true;
+        }
+
+        if (!t.isInterface()) {
+            return s.isSubClassOf(t);
+        } else {
+            return s.isImplements(t);
+        }
+    }
+
+
 
     public boolean isAccessibleTo(Myclass otherclass) {
         return this.isPublic() || (this.getPackageName() == otherclass.getPackageName());
