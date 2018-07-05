@@ -14,7 +14,7 @@ public class FieldRef extends MemberRef{
 
     @Override
     void copyMemberRefInfo(ConstantInfo info) {
-        className = ((ConstantFieldrefInfo)info).getClassName();
+        setClassName(((ConstantFieldrefInfo)info).getClassName());
         name = ((ConstantFieldrefInfo)info).getNameAndDescriptor()[0];
         descriptor = ((ConstantFieldrefInfo)info).getNameAndDescriptor()[1];
     }
@@ -27,7 +27,7 @@ public class FieldRef extends MemberRef{
     }
 
     public void resolveFieldRef() {
-        Myclass d = this.runtimeConstantPool.myclass;
+        Myclass d = this.getRuntimeConstantPool().getMyclass();
         Myclass c = resolvedClass();
         MyField field = lookupField(c, name, descriptor);
 
@@ -44,21 +44,21 @@ public class FieldRef extends MemberRef{
 
 
     public MyField lookupField(Myclass myclass, String name, String descriptor) {
-        for (MyField field : myclass.fields) {
-            if (this.name == field.name && this.descriptor == field.descriptor) {
+        for (MyField field : myclass.getFields()) {
+            if (this.name.equals(field.name) && this.descriptor.equals(field.descriptor)) {
                 return field;
             }
         }
 
-        for (Myclass iface : myclass.interfaces) {
+        for (Myclass iface : myclass.getInterfaces()) {
             MyField field = lookupField(iface, name, descriptor);
             if (field != null) {
                 return field;
             }
         }
 
-        if (myclass.superClass != null) {
-            return lookupField(myclass.superClass, name, descriptor);
+        if (myclass.getSuperClass() != null) {
+            return lookupField(myclass.getSuperClass(), name, descriptor);
         }
         return null;
     }

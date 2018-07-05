@@ -19,8 +19,8 @@ public class CHECK_CAST extends Index16Instruction {
             return;
         }
 
-        RuntimeConstantPool cp = frame.getMyMethod().getMyclass().runtimeConstantPool;
-        ClassRef classRef = (ClassRef)((cp.getConstants(index)).getVal());
+        RuntimeConstantPool cp = frame.getMyMethod().getMyclass().getRuntimeConstantPool();
+        ClassRef classRef = (ClassRef)((cp.getConstant(index)).getVal());
         Myclass myclass = classRef.resolvedClass();
         if (!ref.isInstanceOf(myclass)) {
             throw new ClassCastException("java.lang.ClassCastException");

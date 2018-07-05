@@ -54,11 +54,11 @@ public class MyclassLoader {
         // 里面填东西，并没有什么黑科技
         Myclass myclass = parseClass(bytes);
         // 相当于标记一下是谁加载的这个类(当前的类加载器加载的类)
-        myclass.loader = this;
+        myclass.setLoader(this);
         // 和对象不一样，子类的Class是需要加载父类的Class的
         resolveSuperClass(myclass);
         resolveInterfaces(myclass);
-        this.classMap.put(myclass.name, myclass);
+        this.classMap.put(myclass.getName(), myclass);
         return myclass;
     }
 
@@ -68,18 +68,18 @@ public class MyclassLoader {
     }
 
     public void resolveSuperClass(Myclass myclass) {
-        if (!myclass.name.equals("java/lang/Object")) {
-            myclass.superClass = myclass.loader.loadClass(myclass.superClassName);
+        if (!myclass.getName().equals("java/lang/Object")) {
+            myclass.setSuperClass(myclass.getLoader().loadClass(myclass.getSuperClassName()));
         }
     }
 
     public void resolveInterfaces(Myclass myclass) {
-        int interCount = myclass.interfaceNames.length;
+        int interCount = myclass.getInterfaceNames().length;
         if (interCount > 0) {
-            myclass.interfaces = new Myclass[interCount];
+            myclass.setInterfaces(new Myclass[interCount]);
             for (int i = 0; i < interCount; i++) {
-                myclass.interfaces[i] = myclass.loader
-                        .loadClass(myclass.interfaceNames[i]);
+                myclass.getInterfaces()[i] = myclass.getLoader()
+                        .loadClass(myclass.getInterfaceNames()[i]);
             }
         }
     }
@@ -107,41 +107,41 @@ public class MyclassLoader {
 
     public void calcInstanceFieldSlotIds(Myclass myclass) {
         int slotId = 0;
-        if (myclass.superClass != null) {
+        if (myclass.getSuperClass() != null) {
             // 从上往下，先把父类的个数加上
-            slotId = myclass.superClass.instanceSlotCount;
+            slotId = myclass.getSuperClass().getInstanceSlotCount();
         }
 
-        for (int i = 0; i < myclass.fields.length; i++) {
-            if (!myclass.fields[i].isStatic()) {
-                myclass.fields[i].slotId = slotId;
+        for (int i = 0; i < myclass.getFields().length; i++) {
+            if (!myclass.getFields()[i].isStatic()) {
+                myclass.getFields()[i].slotId = slotId;
                 slotId++;
-                if (myclass.fields[i].isLongOrDouble()) {
+                if (myclass.getFields()[i].isLongOrDouble()) {
                     slotId++;
                 }
             }
         }
-       myclass.instanceSlotCount = slotId;
+       myclass.setInstanceSlotCount(slotId);
     }
 
     public void calcStaticFieldSlotIds(Myclass myclass) {
         int slotId = 0;
-        for (int i = 0; i < myclass.fields.length; i++) {
-            if (myclass.fields[i].isStatic()) {
-                myclass.fields[i].slotId = slotId;
+        for (int i = 0; i < myclass.getFields().length; i++) {
+            if (myclass.getFields()[i].isStatic()) {
+                myclass.getFields()[i].slotId = slotId;
                 slotId++;
-                if (myclass.fields[i].isLongOrDouble()) {
+                if (myclass.getFields()[i].isLongOrDouble()) {
                     slotId++;
                 }
             }
         }
-        myclass.staticSlotCount = slotId;
+        myclass.setStaticSlotCount(slotId);
     }
 
     public void allocAndInitStaticVars(Myclass myclass) {
         // LocalVars是一个Slot[]的包装类，这里用来定位和初始化
-        myclass.staticVars = new LocalVars(myclass.staticSlotCount);
-        for (MyField myField : myclass.fields) {
+        myclass.staticVars = new LocalVars(myclass.getStaticSlotCount());
+        for (MyField myField : myclass.getFields()) {
             if (myField.isStatic() && myField.isFinal()) {
                 initStaticFinalVar(myclass, myField);
             }
@@ -150,7 +150,7 @@ public class MyclassLoader {
 
     public void initStaticFinalVar(Myclass myclass, MyField myField) {
         LocalVars vars = myclass.staticVars;
-        RuntimeConstantPool cp = myclass.runtimeConstantPool;
+        RuntimeConstantPool cp = myclass.getRuntimeConstantPool();
         // 在此强调一下，这里constValue_index的是static final
         int cpIndex = myField.constValue_index;
         int slotId = myField.slotId;
@@ -164,19 +164,19 @@ public class MyclassLoader {
                 case "C" :
                 case "S" :
                 case "I" :
-                    int val = (int)(cp.getConstants(cpIndex).getVal());
+                    int val = (int)(cp.getConstant(cpIndex).getVal());
                     vars.setInt(slotId, val);
                     break;
                 case "J" :
-                    long lval = (long)(cp.getConstants(cpIndex).getVal());
+                    long lval = (long)(cp.getConstant(cpIndex).getVal());
                     vars.setLong(slotId, lval);
                     break;
                 case "F" :
-                    float fval = (float)(cp.getConstants(cpIndex).getVal());
+                    float fval = (float)(cp.getConstant(cpIndex).getVal());
                     vars.setFloat(slotId, fval);
                     break;
                 case "D" :
-                    double dval = (double)(cp.getConstants(cpIndex).getVal());
+                    double dval = (double)(cp.getConstant(cpIndex).getVal());
                     vars.setDouble(slotId, dval);
                     break;
                 case "Ljava/lang/String;" :

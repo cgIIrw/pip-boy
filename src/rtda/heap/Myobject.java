@@ -9,7 +9,7 @@ public class Myobject {
 
     public Myobject(Myclass myclass) {
         this.myclass = myclass;
-        fields = new LocalVars(myclass.instanceSlotCount);
+        fields = new LocalVars(myclass.getInstanceSlotCount());
     }
 
     public LocalVars getFields() {

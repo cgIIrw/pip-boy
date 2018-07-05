@@ -8,8 +8,8 @@ import classfile.constantInfos.*;
 import java.util.NoSuchElementException;
 
 public class RuntimeConstantPool {
-    Myclass myclass;
-    Constant[] constants;
+    private Myclass myclass;
+    private Constant[] constants;
 
 
     public RuntimeConstantPool(Myclass myclass, ConstantPool cfCp) {
@@ -64,12 +64,20 @@ public class RuntimeConstantPool {
         }
     }
 
-    public Constant getConstants(int id) {
+    public Constant getConstant(int id) {
         Constant c = this.constants[id];
         if (c != null) {
             return c;
         } else {
             throw new NoSuchElementException("No constants at index" + id);
         }
+    }
+
+    public Myclass getMyclass() {
+        return myclass;
+    }
+
+    public Constant[] getConstants() {
+        return constants;
     }
 }

@@ -9,8 +9,8 @@ import rtda.heap.*;
 public class GET_FIELD extends Index16Instruction {
     @Override
     public void execute(Myframe frame) {
-        RuntimeConstantPool cp = frame.getMyMethod().getMyclass().runtimeConstantPool;
-        FieldRef fieldRef = (FieldRef)((cp.getConstants(index)).getVal());
+        RuntimeConstantPool cp = frame.getMyMethod().getMyclass().getRuntimeConstantPool();
+        FieldRef fieldRef = (FieldRef)((cp.getConstant(index)).getVal());
         MyField field = fieldRef.resolvedField();
 
         if (field.isStatic()) {

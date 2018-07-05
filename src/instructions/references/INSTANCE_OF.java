@@ -17,8 +17,8 @@ public class INSTANCE_OF extends Index16Instruction {
             stack.pushInt(0);
         }
 
-        RuntimeConstantPool cp = frame.getMyMethod().getMyclass().runtimeConstantPool;
-        ClassRef classRef = (ClassRef)((cp.getConstants(index)).getVal());
+        RuntimeConstantPool cp = frame.getMyMethod().getMyclass().getRuntimeConstantPool();
+        ClassRef classRef = (ClassRef)((cp.getConstant(index)).getVal());
         Myclass myclass = classRef.resolvedClass();
         // ref虽然是引用但是isInstanceOf调用的是内部的class进行判断
         if (ref.isInstanceOf(myclass)) {

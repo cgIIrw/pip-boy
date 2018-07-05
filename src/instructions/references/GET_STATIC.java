@@ -12,8 +12,8 @@ import rtda.heap.RuntimeConstantPool;
 public class GET_STATIC extends Index16Instruction {
     @Override
     public void execute(Myframe frame) {
-        RuntimeConstantPool cp = frame.getMyMethod().getMyclass().runtimeConstantPool;
-        FieldRef fieldRef = (FieldRef)(((cp.getConstants(index))).getVal());
+        RuntimeConstantPool cp = frame.getMyMethod().getMyclass().getRuntimeConstantPool();
+        FieldRef fieldRef = (FieldRef)(((cp.getConstant(index))).getVal());
         MyField field = fieldRef.resolvedField();
         Myclass class1 = field.getMyclass();
         // todo

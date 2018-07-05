@@ -6,29 +6,29 @@ import rtda.Slot;
 
 public class Myclass {
     //
-    int accessFlags;
+    private int accessFlags;
     //当前类名(完全限定名)
-    public String name;
+    private String name;
     //父类名(完全限定名)
-    public String superClassName;
+    private String superClassName;
     //接口名(完全限定名)
-    public String[] interfaceNames;
+    private String[] interfaceNames;
     //运行时常量池
-    public RuntimeConstantPool runtimeConstantPool;
+    private RuntimeConstantPool runtimeConstantPool;
     // 字段表
-    public MyField[] fields;
+    private MyField[] fields;
     // 方法表
-    public MyMethod[] methods;
+    private MyMethod[] methods;
     // 当前的类加载器
-    MyclassLoader loader;
+    private MyclassLoader loader;
     // 父类的Class
-    Myclass superClass;
+    private Myclass superClass;
     // 被继承的接口的Class
-    Myclass[] interfaces;
+    private Myclass[] interfaces;
 
-    int instanceSlotCount;
+    private int instanceSlotCount;
 
-    int staticSlotCount;
+    private int staticSlotCount;
 
     LocalVars staticVars;
 
@@ -142,5 +142,105 @@ public class Myclass {
 
     public LocalVars getStaticVars() {
         return staticVars;
+    }
+
+    public RuntimeConstantPool getRuntimeConstantPool() {
+        return runtimeConstantPool;
+    }
+
+    public int getAccessFlags() {
+        return accessFlags;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSuperClassName() {
+        return superClassName;
+    }
+
+    public String[] getInterfaceNames() {
+        return interfaceNames;
+    }
+
+    public MyField[] getFields() {
+        return fields;
+    }
+
+    public MyMethod[] getMethods() {
+        return methods;
+    }
+
+    public MyclassLoader getLoader() {
+        return loader;
+    }
+
+    public Myclass getSuperClass() {
+        return superClass;
+    }
+
+    public Myclass[] getInterfaces() {
+        return interfaces;
+    }
+
+    public int getInstanceSlotCount() {
+        return instanceSlotCount;
+    }
+
+    public int getStaticSlotCount() {
+        return staticSlotCount;
+    }
+
+    public void setAccessFlags(int accessFlags) {
+        this.accessFlags = accessFlags;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSuperClassName(String superClassName) {
+        this.superClassName = superClassName;
+    }
+
+    public void setInterfaceNames(String[] interfaceNames) {
+        this.interfaceNames = interfaceNames;
+    }
+
+    public void setRuntimeConstantPool(RuntimeConstantPool runtimeConstantPool) {
+        this.runtimeConstantPool = runtimeConstantPool;
+    }
+
+    public void setFields(MyField[] fields) {
+        this.fields = fields;
+    }
+
+    public void setMethods(MyMethod[] methods) {
+        this.methods = methods;
+    }
+
+    public void setLoader(MyclassLoader loader) {
+        this.loader = loader;
+    }
+
+    public void setSuperClass(Myclass superClass) {
+        this.superClass = superClass;
+    }
+
+    public void setInterfaces(Myclass[] interfaces) {
+        this.interfaces = interfaces;
+    }
+
+    public void setInstanceSlotCount(int instanceSlotCount) {
+        this.instanceSlotCount = instanceSlotCount;
+    }
+
+    public void setStaticSlotCount(int staticSlotCount) {
+        this.staticSlotCount = staticSlotCount;
+    }
+
+    public void setStaticVars(LocalVars staticVars) {
+        this.staticVars = staticVars;
     }
 }

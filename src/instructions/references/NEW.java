@@ -10,8 +10,8 @@ import rtda.heap.RuntimeConstantPool;
 public class NEW extends Index16Instruction {
     @Override
     public void execute(Myframe frame) {
-        RuntimeConstantPool cp = frame.getMyMethod().getMyclass().runtimeConstantPool;
-        ClassRef cf = (ClassRef)((cp.getConstants(index)).getVal());
+        RuntimeConstantPool cp = frame.getMyMethod().getMyclass().getRuntimeConstantPool();
+        ClassRef cf = (ClassRef)((cp.getConstant(index)).getVal());
         Myclass myclass = cf.resolvedClass();
 
         // todo 初始化的一个判断

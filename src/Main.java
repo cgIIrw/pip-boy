@@ -104,6 +104,8 @@ public class Main {
         for (MemberInfo m: cf.getFields()) {
             System.out.println(m.getName());
         }
+
+
     }
 }
 

@@ -12,8 +12,8 @@ public class LDC extends Index8Instruction {
     @Override
     public void execute(Myframe frame) {
         OperandStack stack = frame.getOperandStack();
-        RuntimeConstantPool cp = frame.getMyMethod().getMyclass().runtimeConstantPool;
-        Constant c = cp.getConstants(index);
+        RuntimeConstantPool cp = frame.getMyMethod().getMyclass().getRuntimeConstantPool();
+        Constant c = cp.getConstant(index);
 
         switch (c.getType()) {
             case CreateConstantInfo.CONSTANT_Integer:
