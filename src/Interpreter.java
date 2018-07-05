@@ -1,3 +1,4 @@
+import classfile.ClassFile;
 import classfile.MemberInfo;
 import classfile.attributeinfos.CodeAttribute;
 import instructions.Factory;
@@ -30,7 +31,6 @@ public class Interpreter {
             int pc = myframe.getNextPC();
             mythread.setPc(pc);
 
-            // decode
             reader.reset(bytecode, pc);
             int opcode = reader.readUint8();
 
@@ -40,12 +40,23 @@ public class Interpreter {
                 myframe.setNextPC(reader.getPc());
                 inst.execute(myframe);
             } catch (Exception e) {
-                System.out.println("LocalVars: " + myframe.getLocalVars());
+                System.out.println();
+                System.out.println("LocalVars: " + myframe.getLocalVars().getInt(1));
                 System.out.println("LocalVars: " + myframe.getOperandStack());
+                break;
             }
-
         }
-
     }
+
+    public static MemberInfo getMainMethod(ClassFile cf) {
+        for (MemberInfo m : cf.getMethods()) {
+            if (m.getName().equals("main")) {
+                return m;
+            }
+        }
+        return null;
+    }
+
+
 
 }

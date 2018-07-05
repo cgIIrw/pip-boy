@@ -68,7 +68,7 @@ public class MyclassLoader {
     }
 
     public void resolveSuperClass(Myclass myclass) {
-        if (myclass.name != "java/lang/Object") {
+        if (!myclass.name.equals("java/lang/Object")) {
             myclass.superClass = myclass.loader.loadClass(myclass.superClassName);
         }
     }

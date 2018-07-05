@@ -49,13 +49,10 @@ public class MemberInfo {
 
     public CodeAttribute getCodeAttribute() {
         for (AttributeInfo info : getAttributes()) {
-            String attrName = getName();
-            switch (attrName) {
-                case "Code":
-                    return (CodeAttribute)info;
+            if (info instanceof CodeAttribute) {
+                return (CodeAttribute) info;
             }
         }
         return null;
     }
-
 }
