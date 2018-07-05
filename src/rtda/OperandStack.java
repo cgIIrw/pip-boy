@@ -4,8 +4,8 @@ import rtda.heap.Myobject;
 
 // 实现操作数栈
 public class OperandStack {
-    int size;
-    Slot[] slots;
+    private int size;
+    private Slot[] slots;
 
     public OperandStack(int maxStack) {
         if (maxStack > 0) {
@@ -17,39 +17,39 @@ public class OperandStack {
     }
 
     public void pushInt(int val) {
-        this.slots[size].num = val;
+        this.slots[size].setNum(val);
         this.size++;
     }
 
     public int popInt() {
         size--;
-        return this.slots[this.size].num;
+        return this.slots[this.size].getNum();
     }
 
     // 处理float
     public void pushFloat(float val) {
         int temp = Float.floatToIntBits(val);
-        this.slots[size].num = temp;
+        this.slots[size].setNum(temp);
         this.size++;
     }
 
     public float popFloat() {
         this.size--;
-        int temp = this.slots[this.size].num;
+        int temp = this.slots[this.size].getNum();
         return Float.intBitsToFloat(temp);
     }
 
     //
     public void pushLong(long val) {
-        this.slots[this.size].num = (int)val;
-        this.slots[this.size + 1].num = (int)(val >> 32);
+        this.slots[this.size].setNum((int)val);
+        this.slots[this.size + 1].setNum((int)(val >> 32));
         this.size += 2;
     }
 
     public long popLong() {
         this.size -= 2;
-        int low = (int)(this.slots[this.size].num);
-        int high = (int)(this.slots[this.size + 1].num);
+        int low = (int)(this.slots[this.size].getNum());
+        int high = (int)(this.slots[this.size + 1].getNum());
         return ((high & 0xffffffffL) << 32) | (low & 0xffffffffL);
     }
 
@@ -64,14 +64,14 @@ public class OperandStack {
     }
 
     public void pushRef(Myobject ref) {
-        this.slots[this.size].ref = ref;
+        this.slots[this.size].setRef(ref);
         this.size++;
     }
 
     public Myobject popRef() {
         this.size--;
-        Myobject ref = this.slots[this.size].ref;
-        this.slots[this.size].ref = null;
+        Myobject ref = this.slots[this.size].getRef();
+        this.slots[this.size].setRef(null);
         return ref;
     }
 

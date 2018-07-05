@@ -4,7 +4,7 @@ import classfile.ConstantInfo;
 import classfile.constantInfos.ConstantFieldrefInfo;
 
 public class FieldRef extends MemberRef{
-    MyField myField;
+    private MyField myField;
 
 
     public FieldRef(RuntimeConstantPool runtimeConstantPool, ConstantFieldrefInfo fieldRefInfo) {
@@ -15,8 +15,8 @@ public class FieldRef extends MemberRef{
     @Override
     void copyMemberRefInfo(ConstantInfo info) {
         setClassName(((ConstantFieldrefInfo)info).getClassName());
-        name = ((ConstantFieldrefInfo)info).getNameAndDescriptor()[0];
-        descriptor = ((ConstantFieldrefInfo)info).getNameAndDescriptor()[1];
+        setName(((ConstantFieldrefInfo)info).getNameAndDescriptor()[0]);
+        setDescriptor(((ConstantFieldrefInfo)info).getNameAndDescriptor()[1]);
     }
 
     public MyField resolvedField() {
@@ -29,7 +29,7 @@ public class FieldRef extends MemberRef{
     public void resolveFieldRef() {
         Myclass d = this.getRuntimeConstantPool().getMyclass();
         Myclass c = resolvedClass();
-        MyField field = lookupField(c, name, descriptor);
+        MyField field = lookupField(c, getName(), getDescriptor());
 
         if (field == null) {
             throw new NoSuchFieldError("java.lang.NoSuchFieldError");
@@ -45,7 +45,7 @@ public class FieldRef extends MemberRef{
 
     public MyField lookupField(Myclass myclass, String name, String descriptor) {
         for (MyField field : myclass.getFields()) {
-            if (this.name.equals(field.name) && this.descriptor.equals(field.descriptor)) {
+            if (this.getName().equals(field.getName()) && this.getDescriptor().equals(field.getDescriptor())) {
                 return field;
             }
         }

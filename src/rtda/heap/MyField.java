@@ -45,15 +45,15 @@ public class MyField extends ClassMember {
 
 
     public boolean isVolatile() {
-        return 0 != (accessFlags & AccessFlags.ACC_VOLATILE);
+        return 0 != (getAccessFlags() & AccessFlags.ACC_VOLATILE);
     }
 
     public boolean isTransient() {
-        return 0 != (accessFlags & AccessFlags.ACC_TRANSIENT);
+        return 0 != (getAccessFlags() & AccessFlags.ACC_TRANSIENT);
     }
 
     public boolean isEnum() {
-        return 0 != (accessFlags & AccessFlags.ACC_ENUM);
+        return 0 != (getAccessFlags() & AccessFlags.ACC_ENUM);
     }
 
     // 描述符建《深入》long是J

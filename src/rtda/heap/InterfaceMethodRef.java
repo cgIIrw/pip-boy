@@ -14,7 +14,7 @@ public class InterfaceMethodRef extends MemberRef {
     @Override
     void copyMemberRefInfo(ConstantInfo info) {
         setClassName(((ConstantInterfaceMethodrefInfo)info).getClassName());
-        name = ((ConstantInterfaceMethodrefInfo)info).getNameAndDescriptor()[0];
-        descriptor = ((ConstantInterfaceMethodrefInfo)info).getNameAndDescriptor()[1];
+        setName(((ConstantInterfaceMethodrefInfo)info).getNameAndDescriptor()[0]);
+        setDescriptor(((ConstantInterfaceMethodrefInfo)info).getNameAndDescriptor()[1]);
     }
 }

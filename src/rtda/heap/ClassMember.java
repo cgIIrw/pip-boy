@@ -3,11 +3,11 @@ package rtda.heap;
 import classfile.MemberInfo;
 
 public class ClassMember {
-    int accessFlags;
-    String name;
-    String descriptor;
+    private int accessFlags;
+    private String name;
+    private String descriptor;
     // 可以通过方法或字段访问到它所属的类
-    Myclass myclass;
+    private Myclass myclass;
 
     public ClassMember(Myclass myclass, MemberInfo classFileMemberInfo) {
         copyMemberInfo(classFileMemberInfo);
@@ -73,5 +73,25 @@ public class ClassMember {
         }
 
         return myclass1 == myclass;
+    }
+
+    public int getAccessFlags() {
+        return accessFlags;
+    }
+
+    public void setAccessFlags(int accessFlags) {
+        this.accessFlags = accessFlags;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescriptor(String descriptor) {
+        this.descriptor = descriptor;
+    }
+
+    public void setMyclass(Myclass myclass) {
+        this.myclass = myclass;
     }
 }

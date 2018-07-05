@@ -157,7 +157,7 @@ public class MyclassLoader {
 
         // 《深入》P177，这个final static根据不同类型，获取相应类型的值
         if (cpIndex > 0) {
-            switch (myField.descriptor) {
+            switch (myField.getDescriptor()) {
                 // 非long double float类型统统转化为int存储
                 case "Z" :
                 case "B" :

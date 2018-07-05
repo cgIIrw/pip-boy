@@ -12,7 +12,7 @@ public class MethodRef extends MemberRef {
     @Override
     void copyMemberRefInfo(ConstantInfo info) {
         setClassName(((ConstantMethodrefInfo)info).getClassName());
-        name = ((ConstantMethodrefInfo)info).getNameAndDescriptor()[0];
-        descriptor = ((ConstantMethodrefInfo)info).getNameAndDescriptor()[1];
+        setName(((ConstantMethodrefInfo)info).getNameAndDescriptor()[0]);
+        setDescriptor(((ConstantMethodrefInfo)info).getNameAndDescriptor()[1]);
     }
 }

@@ -50,27 +50,27 @@ public class MyMethod extends ClassMember {
 
 
     public boolean isSynchronized() {
-        return 0 != (accessFlags & AccessFlags.ACC_SYNCHRONIZED);
+        return 0 != (getAccessFlags() & AccessFlags.ACC_SYNCHRONIZED);
     }
 
     public boolean isBridge() {
-        return 0 != (accessFlags & AccessFlags.ACC_BRIDGE);
+        return 0 != (getAccessFlags() & AccessFlags.ACC_BRIDGE);
     }
 
     public boolean isVarargs() {
-        return 0 != (accessFlags & AccessFlags.ACC_VARARGS);
+        return 0 != (getAccessFlags() & AccessFlags.ACC_VARARGS);
     }
 
     public boolean isNative() {
-        return 0 != (accessFlags & AccessFlags.ACC_NATIVE);
+        return 0 != (getAccessFlags() & AccessFlags.ACC_NATIVE);
     }
 
     public boolean isAbstract() {
-        return 0 != (accessFlags & AccessFlags.ACC_ABSTRACT);
+        return 0 != (getAccessFlags() & AccessFlags.ACC_ABSTRACT);
     }
 
     public boolean isStrict() {
-        return 0 != (accessFlags & AccessFlags.ACC_STRICT);
+        return 0 != (getAccessFlags() & AccessFlags.ACC_STRICT);
     }
 
 }

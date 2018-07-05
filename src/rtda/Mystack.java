@@ -16,7 +16,7 @@ public class Mystack {
         }
 
         if (this.top != null) {
-            myframe.lower = this.top;
+            myframe.setLower(this.top);
         }
 
         this.top = myframe;
@@ -29,8 +29,8 @@ public class Mystack {
         }
 
         Myframe temptop = this.top;
-        this.top = temptop.lower;
-        temptop.lower = null;
+        this.top = temptop.getLower();
+        temptop.setLower(null);
         size--;
 
         return temptop;

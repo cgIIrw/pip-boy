@@ -3,7 +3,7 @@ package rtda;
 import rtda.heap.Myobject;
 
 public class LocalVars {
-    Slot[] localVars;
+    private Slot[] localVars;
 
     public LocalVars(int maxLocals) {
         if (maxLocals > 0) {
@@ -15,32 +15,32 @@ public class LocalVars {
     }
 
     public void setInt(int index, int val) {
-        localVars[index].num = val;
+        localVars[index].setNum(val);
     }
 
     public int getInt(int index) {
-        return localVars[index].num;
+        return localVars[index].getNum();
     }
 
     public void setFloat(int index, float val) {
          int temp = Float.floatToIntBits(val);
-        localVars[index].num = temp;
+        localVars[index].setNum(temp);
 
     }
 
     public float getFloat(int index) {
-        float temp = Float.intBitsToFloat(localVars[index].num);
+        float temp = Float.intBitsToFloat(localVars[index].getNum());
         return temp;
     }
 
     public void setLong(int index, long val) {
-        localVars[index].num = (int) (val);
-        localVars[index + 1].num = (int) (val >> 32);
+        localVars[index].setNum((int) (val));
+        localVars[index + 1].setNum((int) (val >> 32));
     }
 
     public long getLong(int index) {
-        int low = localVars[index].num;
-        int high = localVars[index + 1].num;
+        int low = localVars[index].getNum();
+        int high = localVars[index + 1].getNum();
         return ((high & 0xffffffffL)<< 32) | (low & 0xffffffffL);
 //        return ((high << 32) | low) & 0xffffffffffffffffL;
     }
@@ -57,10 +57,10 @@ public class LocalVars {
     }
 
     public void setRef(int index, Myobject ref) {
-        localVars[index].ref = ref;
+        localVars[index].setRef(ref);
     }
 
     public Myobject getRef(int index) {
-        return localVars[index].ref;
+        return localVars[index].getRef();
     }
 }

@@ -5,12 +5,12 @@ import rtda.heap.MyMethod;
 public class Myframe {
 
     // 前一个栈帧
-    Myframe lower;
-    LocalVars localVars;
-    OperandStack operandStack;
-    Mythread mythread; // 当前所在线程
-    MyMethod myMethod;
-    int nextPC; //
+    private Myframe lower;
+    private LocalVars localVars;
+    private OperandStack operandStack;
+    private Mythread mythread; // 当前所在线程
+    private MyMethod myMethod;
+    private int nextPC; //
 
 
     public Myframe(Mythread mythread, MyMethod myMethod) {
@@ -48,5 +48,13 @@ public class Myframe {
 
     public void setNextPC(int nextPC) {
         this.nextPC = nextPC;
+    }
+
+    public Myframe getLower() {
+        return lower;
+    }
+
+    public void setLower(Myframe lower) {
+        this.lower = lower;
     }
 }

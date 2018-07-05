@@ -4,8 +4,8 @@ import classfile.ConstantInfo;
 
 public abstract class MemberRef extends SymRef{
 
-    String name;
-    String descriptor;
+    private String name;
+    private String descriptor;
 
     public MemberRef(RuntimeConstantPool runtimeConstantPool) {
         super(runtimeConstantPool);
@@ -19,5 +19,13 @@ public abstract class MemberRef extends SymRef{
 
     public String getDescriptor() {
         return descriptor;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescriptor(String descriptor) {
+        this.descriptor = descriptor;
     }
 }

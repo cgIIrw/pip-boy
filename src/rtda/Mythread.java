@@ -1,8 +1,8 @@
 package rtda;
 
 public class Mythread {
-    int pc;
-    Mystack mystack;
+    private int pc;
+    private Mystack mystack;
 
     public Mythread() {
         mystack = new Mystack(1024);
