@@ -8,6 +8,7 @@ public class MyMethod extends ClassMember {
     int maxStack;
     int maxLocals;
     byte[] code;
+    int argSlotCount;
 
     public int getMaxStack() {
         return maxStack;
@@ -26,6 +27,7 @@ public class MyMethod extends ClassMember {
         MyMethod[] methods = new MyMethod[cfMethods.length];
         for (int i = 0; i < methods.length; i++) {
             methods[i] = new MyMethod(myclass, cfMethods[i]);
+            methods[i].calcArgSlotCount();
         }
         return methods;
     }
@@ -73,4 +75,23 @@ public class MyMethod extends ClassMember {
         return 0 != (getAccessFlags() & AccessFlags.ACC_STRICT);
     }
 
+    public int getArgSlotCount() {
+        return argSlotCount;
+    }
+
+    public void calcArgSlotCount() {
+        MethodDescriptorParser p = new MethodDescriptorParser();
+        MethodDescriptor parsedDescriptor = p.parseMethodDescriptor(this.getDescriptor());
+
+        for (String paramType : parsedDescriptor.getParameterTypes()) {
+            this.argSlotCount++;
+            if (paramType.equals("J") || paramType.equals("D")) {
+                this.argSlotCount++;
+            }
+        }
+
+        if (!this.isStatic()) {
+            this.argSlotCount++;
+        }
+    }
 }
