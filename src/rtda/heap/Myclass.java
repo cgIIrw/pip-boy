@@ -84,6 +84,10 @@ public class Myclass {
         return "";
     }
 
+    public boolean isSuperClassOf(Myclass other) {
+        return other.isSubClassOf(this);
+    }
+
     public boolean isSubClassOf(Myclass myclass) {
 
         for (Myclass c = this.superClass; c != null; c = c.superClass) {

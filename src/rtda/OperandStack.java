@@ -84,4 +84,8 @@ public class OperandStack {
         this.size--;
         return this.slots[this.size];
     }
+
+    public Myobject getRefFromTop(int index) {
+        return this.slots[this.size - 1 - index].getRef();
+    }
 }

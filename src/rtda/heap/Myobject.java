@@ -18,4 +18,8 @@ public class Myobject {
     public boolean isInstanceOf(Myclass s) {
         return s.isAssignableFrom(this.myclass);
     }
+
+    public Myclass getMyclass() {
+        return myclass;
+    }
 }

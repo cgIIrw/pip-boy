@@ -6,7 +6,7 @@ import rtda.Slot;
 import rtda.heap.MyMethod;
 
 public class MethodInvokeLogic {
-    public void invokeMethod(Myframe invokerFrame, MyMethod method) {
+    public static void invokeMethod(Myframe invokerFrame, MyMethod method) {
         // 创建新的frame，推入栈顶;
         Mythread mythread = invokerFrame.getMythread();
         Myframe newFrame = new Myframe(mythread, method);
