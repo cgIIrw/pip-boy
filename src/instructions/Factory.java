@@ -1,6 +1,7 @@
 package instructions;
 
 import instructions.base.Instruction;
+import instructions.comparisons.*;
 import instructions.constants.ACONST_NULL;
 import instructions.constants.Ldc.LDC;
 import instructions.constants.Ldc.LDC2_W;
@@ -8,6 +9,7 @@ import instructions.constants.Ldc.LDC_W;
 import instructions.constants.NOP;
 import instructions.constants.*;
 import instructions.control.return_ins.*;
+import instructions.extended.*;
 import instructions.loads.aload.*;
 import instructions.loads.dload.*;
 import instructions.loads.fload.*;
@@ -142,6 +144,12 @@ public class Factory {
     static DRETURN dreturn = new DRETURN();
     static ARETURN areturn = new ARETURN();
     static RETURN _return = new RETURN();
+    static LCMP lcmp = new LCMP();
+    static FCMPL fcmpl = new FCMPL();
+    static FCMPG fcmpg = new FCMPG();
+    static DCMPL dcmpl = new DCMPL();
+    static DCMPG dcmpg = new DCMPG();
+
 
     public static Instruction newInstruction(int opCode) {
         switch (opCode) {
@@ -411,6 +419,38 @@ public class Factory {
                 return areturn;
             case 0xb1:
                 return _return;
+            case 0xa5:
+                return new IF_ACMPEQ();
+            case 0xa6:
+                return new IF_ACMPNE();
+            case 0x9f:
+                return new IF_ICMPEQ();
+            case 0xa0:
+                return new IF_ICMPNE();
+            case 0xa1:
+                return new IF_ICMPLT();
+            case 0xa2:
+                return new IF_ICMPGE();
+            case 0xa3:
+                return new IF_ICMPGT();
+            case 0xa4:
+                return new IF_ICMPLE();
+            case 0x99:
+                return new IFEQ();
+            case 0x9a:
+                return new IFNE();
+            case 0x9b:
+                return new IFLT();
+            case 0x9c:
+                return new IFGE();
+            case 0x9d:
+                return new IFGT();
+            case 0x9e:
+                return new IFLE();
+            case 0xc6:
+                return new IFNULL();
+            case 0xc7:
+                return new IFNONNULL();
             default:
                 throw new RuntimeException("Unsupported opcode: " + opCode);
         }
