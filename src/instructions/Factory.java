@@ -7,6 +7,7 @@ import instructions.constants.Ldc.LDC2_W;
 import instructions.constants.Ldc.LDC_W;
 import instructions.constants.NOP;
 import instructions.constants.*;
+import instructions.control.return_ins.*;
 import instructions.loads.aload.*;
 import instructions.loads.dload.*;
 import instructions.loads.fload.*;
@@ -135,6 +136,12 @@ public class Factory {
     static LOR lor = new LOR();
     static IXOR ixor = new IXOR();
     static LXOR lxor = new LXOR();
+    static IRETURN ireturn = new IRETURN();
+    static LRETURN lreturn = new LRETURN();
+    static FRETURN freturn = new FRETURN();
+    static DRETURN dreturn = new DRETURN();
+    static ARETURN areturn = new ARETURN();
+    static RETURN _return = new RETURN();
 
     public static Instruction newInstruction(int opCode) {
         switch (opCode) {
@@ -386,6 +393,24 @@ public class Factory {
                 return new CHECK_CAST();
             case 0xc1:
                 return new INSTANCE_OF();
+            case 0xb6:
+                return new INVOKE_VIRTUAL();
+            case 0xb7:
+                return new INVOKE_SPECIAL();
+            case 0xb8:
+                return new INVOKE_STATIC();
+            case 0xac:
+                return ireturn;
+            case 0xad:
+                return lreturn;
+            case 0xae:
+                return freturn;
+            case 0xaf:
+                return dreturn;
+            case 0xb0:
+                return areturn;
+            case 0xb1:
+                return _return;
             default:
                 throw new RuntimeException("Unsupported opcode: " + opCode);
         }
