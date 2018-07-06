@@ -29,4 +29,7 @@ public class Mythread {
     public Myframe currentMyframe() {
         return this.mystack.top();
     }
+    public Myframe getTopFrame() {
+        return this.mystack.top();
+    }
 }
