@@ -8,6 +8,7 @@ import instructions.constants.Ldc.LDC2_W;
 import instructions.constants.Ldc.LDC_W;
 import instructions.constants.NOP;
 import instructions.constants.*;
+import instructions.control.goto_ins.GOTO;
 import instructions.control.return_ins.*;
 import instructions.extended.*;
 import instructions.loads.aload.*;
@@ -435,6 +436,8 @@ public class Factory {
                 return new IF_ICMPGT();
             case 0xa4:
                 return new IF_ICMPLE();
+            case 0xa7:
+                return new GOTO();
             case 0x99:
                 return new IFEQ();
             case 0x9a:
