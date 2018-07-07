@@ -3,6 +3,7 @@ package instructions.references;
 import instructions.base.Index16Instruction;
 import instructions.base.MethodInvokeLogic;
 import rtda.Myframe;
+import rtda.OperandStack;
 import rtda.heap.*;
 
 public class INVOKE_VIRTUAL extends Index16Instruction {
@@ -10,7 +11,7 @@ public class INVOKE_VIRTUAL extends Index16Instruction {
     public void execute(Myframe frame) {
         Myclass currentClass = frame.getMyMethod().getMyclass();
         RuntimeConstantPool cp = currentClass.getRuntimeConstantPool();
-        MethodRef methodRef = (MethodRef)cp.getConstant(index).getVal();
+        MethodRef methodRef = (MethodRef) cp.getConstant(index).getVal();
         MyMethod resolvedMethod = methodRef.resolvedMethod();
 
         if (resolvedMethod.isStatic()) {
@@ -20,6 +21,10 @@ public class INVOKE_VIRTUAL extends Index16Instruction {
 
         if (ref == null) {
             // hack
+            if (methodRef.getName().equals("println")) {
+                _println(frame.getOperandStack(), methodRef.getDescriptor());
+                return;
+            }
             throw new NullPointerException();
         }
 
@@ -39,5 +44,33 @@ public class INVOKE_VIRTUAL extends Index16Instruction {
         }
 
         MethodInvokeLogic.invokeMethod(frame, methodToBeInvoked);
+    }
+
+    public void _println(OperandStack stack, String descriptor) {
+        switch (descriptor) {
+            case "(Z)V":
+                System.out.println(stack.popInt() != 0);
+                break;
+            case "(C)V":
+                System.out.println(stack.popInt());
+                break;
+            case "(I)V":
+            case "(B)V":
+            case "(S)V":
+                System.out.println(stack.popInt());
+                break;
+            case "(F)V":
+                System.out.println(stack.popFloat());
+                break;
+            case "(J)V":
+                System.out.println(stack.popLong());
+                break;
+            case "(D)V":
+                System.out.println(stack.popDouble());
+                break;
+            default:
+                throw new RuntimeException("println: " + descriptor);
+        }
+        stack.popRef();
     }
 }

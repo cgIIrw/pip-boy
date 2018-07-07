@@ -8,11 +8,12 @@ import classfile.ConstantInfo;
  */
 public class ConstantIntegerInfo implements ConstantInfo {
     private final int id = 3;
-    long val;
+    int val;
 
     @Override
     public void readInfo(ClassReader reader) {
-        this.val = reader.readUint32();
+         long temp = reader.readUint32();
+        this.val = ((int) temp);
     }
 
     @Override
@@ -20,7 +21,7 @@ public class ConstantIntegerInfo implements ConstantInfo {
         return id;
     }
 
-    public long getValue() {
+    public int getValue() {
         return val;
     }
 }

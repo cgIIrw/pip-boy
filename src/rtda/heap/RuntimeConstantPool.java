@@ -16,6 +16,11 @@ public class RuntimeConstantPool {
         this.myclass = myclass;
         ConstantInfo[] constantInfos = cfCp.getCp();
         constants = new Constant[constantInfos.length];
+        //
+        for (int i = 0; i < constants.length; i++) {
+            constants[i] = new Constant();
+        }
+
         for (int i = 1; i < constantInfos.length; i++) {
             ConstantInfo constantInfo = constantInfos[i];
             switch (constantInfo.getId()) {

@@ -27,7 +27,7 @@ public class MyMethod extends ClassMember {
         MyMethod[] methods = new MyMethod[cfMethods.length];
         for (int i = 0; i < methods.length; i++) {
             methods[i] = new MyMethod(myclass, cfMethods[i]);
-            methods[i].calcArgSlotCount();
+//            methods[i].calcArgSlotCount();
         }
         return methods;
     }
@@ -77,6 +77,10 @@ public class MyMethod extends ClassMember {
 
     public int getArgSlotCount() {
         return argSlotCount;
+    }
+
+    public byte[] getCode() {
+        return code;
     }
 
     public void calcArgSlotCount() {

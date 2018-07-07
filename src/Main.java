@@ -88,10 +88,17 @@ public class Main {
 
         ClassFile cf = ClassFile.Parse(classData);
 
-        MemberInfo mainMethod = Interpreter.getMainMethod(cf);
-        if (mainMethod != null) {
-            new Interpreter().interpret(mainMethod);
-        }
+//        MemberInfo mainMethod = Interpreter.getMainMethod(cf);
+//        if (mainMethod != null) {
+//            new Interpreter().interpret(mainMethod);
+//        }
+
+        System.out.println("\n****************************");
+
+        Interpreter02 inter02 = new Interpreter02();
+        inter02.work(cp, className);
+
+
 
         System.out.println();
         System.out.println();

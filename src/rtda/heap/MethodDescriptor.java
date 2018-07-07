@@ -3,7 +3,7 @@ package rtda.heap;
 import java.util.ArrayList;
 
 public class MethodDescriptor {
-    private ArrayList<String> parameterTypes;
+    private ArrayList<String> parameterTypes = new ArrayList<>();
     private String returnType;
 
 

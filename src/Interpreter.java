@@ -34,17 +34,17 @@ public class Interpreter {
             reader.reset(bytecode, pc);
             int opcode = reader.readUint8();
 
-            try {
+//            try {
                 Instruction inst = Factory.newInstruction(opcode);
                 inst.fetchOperands(reader);
                 myframe.setNextPC(reader.getPc());
                 inst.execute(myframe);
-            } catch (Exception e) {
-                System.out.println();
-                System.out.println("LocalVars: " + myframe.getLocalVars().getInt(1));
-                System.out.println("LocalVars: " + myframe.getOperandStack());
-                break;
-            }
+//            } catch (Exception e) {
+//                System.out.println();
+//                System.out.println("LocalVars: " + myframe.getLocalVars().getInt(1));
+//                System.out.println("LocalVars: " + myframe.getOperandStack());
+//                break;
+//            }
         }
     }
 

@@ -135,7 +135,6 @@ public class Myclass {
     }
 
 
-
     public boolean isAccessibleTo(Myclass otherclass) {
         return this.isPublic() || (this.getPackageName() == otherclass.getPackageName());
     }
@@ -246,5 +245,15 @@ public class Myclass {
 
     public void setStaticVars(LocalVars staticVars) {
         this.staticVars = staticVars;
+    }
+
+
+    public MyMethod getStaticMethod(String name, String descriptor) {
+        for (MyMethod myMethod : this.methods) {
+            if (myMethod.isStatic() && myMethod.getName().equals(name) && myMethod.getDescriptor().equals(descriptor)) {
+                return myMethod;
+            }
+        }
+        return null;
     }
 }
