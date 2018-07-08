@@ -17,7 +17,7 @@ public class LDC extends Index8Instruction {
 
         switch (c.getType()) {
             case CreateConstantInfo.CONSTANT_Integer:
-                stack.pushInt((int)(c.getVal()));
+                stack.pushInt((int)((long)(c.getVal()) & 0xffffffff));
                 break;
             case CreateConstantInfo.CONSTANT_Float:
                 stack.pushFloat((float)(c.getVal()));

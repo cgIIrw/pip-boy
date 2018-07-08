@@ -37,8 +37,8 @@ public class Interpreter02 {
     }
 
 
-    public void loop(Mythread mythread, byte[] bytecode) {
-        Myframe myframe = mythread.popMyframe();
+    public void loop(Mythread mythread, int[] bytecode) {
+        Myframe myframe = mythread.getTopFrame();
         BytecodeReader reader = new BytecodeReader();
 
         while (true) {
@@ -48,17 +48,20 @@ public class Interpreter02 {
             reader.reset(bytecode, pc);
             int opcode = reader.readUint8();
 
-//            try {
+            try {
             Instruction inst = Factory.newInstruction(opcode);
             inst.fetchOperands(reader);
             myframe.setNextPC(reader.getPc());
+
+
+            System.out.println(pc + inst.toString());
             inst.execute(myframe);
-//            } catch (Exception e) {
+            } catch (Exception e) {
 //                System.out.println();
 //                System.out.println("LocalVars: " + myframe.getLocalVars().getInt(1));
 //                System.out.println("LocalVars: " + myframe.getOperandStack());
 //                break;
-//            }
+           }
         }
     }
 

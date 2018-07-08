@@ -5,7 +5,7 @@ import instructions.base.Instruction;
 import rtda.Myframe;
 
 public class BIPUSH implements Instruction {
-    byte val;
+    int val;
 
     @Override
     public void fetchOperands(BytecodeReader reader) {

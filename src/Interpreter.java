@@ -13,7 +13,7 @@ public class Interpreter {
         CodeAttribute codeAttr = memberInfo.getCodeAttribute();
         int maxLocals = codeAttr.getMaxLocals();
         int maxStack = codeAttr.getMaxStack();
-        byte[] bytecode = codeAttr.getCode();
+        int[] bytecode = codeAttr.getCode();
 
         Mythread mythread = new Mythread();
         Myframe myframe = new Myframe(mythread, maxLocals, maxStack);
@@ -23,7 +23,7 @@ public class Interpreter {
 
     }
 
-    public void loop(Mythread mythread, byte[] bytecode) {
+    public void loop(Mythread mythread, int[] bytecode) {
         Myframe myframe = mythread.popMyframe();
         BytecodeReader reader = new BytecodeReader();
 

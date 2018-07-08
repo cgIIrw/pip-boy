@@ -7,7 +7,7 @@ import classfile.attributeinfos.CodeAttribute;
 public class MyMethod extends ClassMember {
     int maxStack;
     int maxLocals;
-    byte[] code;
+    int[] code;
     int argSlotCount;
 
     public int getMaxStack() {
@@ -38,6 +38,12 @@ public class MyMethod extends ClassMember {
             this.maxStack = codeAttribute.getMaxStack();
             this.maxLocals = codeAttribute.getMaxLocals();
             this.code = codeAttribute.getCode();
+//            int[] tempi = new int[temp.length];
+//
+//            for (int i = 0; i < temp.length; i++) {
+//               tempi[i] = temp[i] & 0xff;
+//            }
+//            this.code = tempi;
         }
     }
 
@@ -79,7 +85,7 @@ public class MyMethod extends ClassMember {
         return argSlotCount;
     }
 
-    public byte[] getCode() {
+    public int[] getCode() {
         return code;
     }
 

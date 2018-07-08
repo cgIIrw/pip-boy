@@ -12,7 +12,7 @@ public class CodeAttribute implements AttributeInfo {
     private ConstantPool cp;
     private int maxStack;
     private int maxLocals;
-    private byte[] code;
+    private int[] code;
     ExceptionTableEntry[] exceptionTable;
     AttributeInfo[] attributes;
 
@@ -26,7 +26,12 @@ public class CodeAttribute implements AttributeInfo {
         this.maxStack = reader.readUint16();
         this.maxLocals = reader.readUint16();
         int codeLength = (int)(reader.readUint32());
-        this.code = reader.readBytes(codeLength);
+        byte[] temp = reader.readBytes(codeLength);
+        int[] temp2 = new int[temp.length];
+        for (int i = 0; i < temp.length; i++) {
+            temp2[i] = temp[i] & 0xff;
+        }
+        this.code = temp2;
         this.exceptionTable = ExceptionTableEntry.readExceptionTable(reader);
         this.attributes = GreateAttributeInfo.readAttributes(reader, this.cp);
     }
@@ -39,7 +44,7 @@ public class CodeAttribute implements AttributeInfo {
         return this.maxLocals;
     }
 
-    public byte[] getCode() {
+    public int[] getCode() {
         return this.code;
     }
 

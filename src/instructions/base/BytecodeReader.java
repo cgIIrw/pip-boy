@@ -2,10 +2,10 @@ package instructions.base;
 
 public class BytecodeReader {
 
-    byte[] code;
+    int[] code;
     int pc;
 
-    public void reset(byte[] code, int pc) {
+    public void reset(int[] code, int pc) {
         this.code = code;
         this.pc = pc;
     }
@@ -15,8 +15,8 @@ public class BytecodeReader {
     }
 
     // 读取有符号数，可以直接返回byte，在最高位它自动进行应该的处理
-    public byte readInt8() {
-        byte i = this.code[this.pc];
+    public int readInt8() {
+        int i = this.code[this.pc];
         this.pc++;
         return i;
     }
