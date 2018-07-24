@@ -28,20 +28,4 @@ public abstract class MemberRef extends SymRef{
     public void setDescriptor(String descriptor) {
         this.descriptor = descriptor;
     }
-
-    public MyMethod lookupMethodInInterfaces(Myclass[] ifaces, String name, String descriptor) {
-        for (Myclass iface : ifaces) {
-            for (MyMethod method : iface.getMethods()) {
-                if (method.getName().equals(name) && method.getDescriptor().equals(descriptor)) {
-                    return method;
-                }
-            }
-
-            MyMethod method = lookupMethodInInterfaces(iface.getInterfaces(), name, descriptor);
-            if (method != null) {
-                return method;
-            }
-        }
-        return null;
-    }
 }

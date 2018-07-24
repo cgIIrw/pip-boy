@@ -47,21 +47,10 @@ public class MethodRef extends MemberRef {
     }
 
     public MyMethod lookupMethod(Myclass myclass, String name, String descriptor) {
-        MyMethod method = lookupMethodInClass(myclass, name, descriptor);
+        MyMethod method = MethodLookup.lookupMethodInClass(myclass, name, descriptor);
         if (method == null) {
-            method = lookupMethodInInterfaces(myclass.getInterfaces(), name, descriptor);
+            method = MethodLookup.lookupMethodInInterfaces(myclass.getInterfaces(), name, descriptor);
         }
         return method;
-    }
-
-    public static MyMethod lookupMethodInClass(Myclass myclass, String name, String descriptor) {
-        for (Myclass c = myclass; c != null; c = c.getSuperClass()) {
-            for (MyMethod method : c.getMethods()) {
-                if (method.getName().equals(name) && method.getDescriptor().equals(descriptor)) {
-                    return method;
-                }
-            }
-        }
-        return null;
     }
 }
