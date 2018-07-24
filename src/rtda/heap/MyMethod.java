@@ -21,13 +21,13 @@ public class MyMethod extends ClassMember {
     public MyMethod(Myclass myclass, MemberInfo classFileMemberInfo) {
         super(myclass, classFileMemberInfo);
         copyAttributes(classFileMemberInfo);
+        calcArgSlotCount();
     }
 
     public static MyMethod[] newMethods(Myclass myclass, MemberInfo[] cfMethods) {
         MyMethod[] methods = new MyMethod[cfMethods.length];
         for (int i = 0; i < methods.length; i++) {
             methods[i] = new MyMethod(myclass, cfMethods[i]);
-//            methods[i].calcArgSlotCount();
         }
         return methods;
     }
