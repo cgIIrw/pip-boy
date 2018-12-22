@@ -8,22 +8,17 @@ import java.io.*;
 class Dir_Entry implements Entry {
     private String absDir;
 
-    public Dir_Entry(String path) {
+    Dir_Entry(String path) {
         File file = new File(path);
-        try {
-            if (file.exists()) {
-                absDir = file.getCanonicalPath();
-            } else {
-                absDir = null;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(1);
+        if (file.exists()) {
+            absDir = file.getAbsolutePath();
+        } else {
+            absDir = null;
         }
     }
 
     @Override
-    public String string() {
+    public String getString() {
         return absDir;
     }
 
