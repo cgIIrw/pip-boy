@@ -11,10 +11,13 @@ class Zip_Entry implements Entry {
     private String absPath;
 
     public Zip_Entry(String path) {
+        // 创建file对象，如果文件系统也存在相应的文件，
+        // 那么在后续中它实际代表一个路径为path的压缩文件(jar等)
         File file = new File(path);
         try {
             if (file.exists()) {
-                absPath = file.getCanonicalPath(); // 带.jar等后缀的绝对路径
+                // 文件存在的时候返回绝对路径(包含压缩后缀)
+                absPath = file.getCanonicalPath();
             } else {
                 absPath = null;
             }
@@ -25,9 +28,12 @@ class Zip_Entry implements Entry {
     }
 
     @Override
+    // className带文件类型后缀
     public byte[] readClass(String className) throws IOException {
         File file = new File(absPath);
-        ZipFile zipFile = new ZipFile(file); // 这一步要抛出异常
+
+        // 需要抛出一个IO异常
+        ZipFile zipFile = new ZipFile(file);
         ZipEntry entry = zipFile.getEntry(className);
         if (entry == null) {
             return null;
@@ -48,7 +54,7 @@ class Zip_Entry implements Entry {
     }
 
     @Override
-    public String string() {
+    public String getString() {
         return absPath;
     }
 }

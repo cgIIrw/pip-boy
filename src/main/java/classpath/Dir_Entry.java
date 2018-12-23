@@ -11,7 +11,12 @@ class Dir_Entry implements Entry {
     Dir_Entry(String path) {
         File file = new File(path);
         if (file.exists()) {
-            absDir = file.getAbsolutePath();
+            try {
+                absDir = file.getCanonicalPath();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
         } else {
             absDir = null;
         }
@@ -26,14 +31,11 @@ class Dir_Entry implements Entry {
     public byte[] readClass(String className) {
         byte[] buf = new byte[1024];
         byte[] b = null;
-        File f;
-        if (absDir != null) {
-            f = new File(absDir, className);
-            if (!f.exists()) {
-                return null;
-            }
-        } else {
-            f = new File(className);
+        File f = new File(absDir, className);
+
+        // 如果文件不存在，直接返回null
+        if (!f.exists()) {
+            return null;
         }
 
         try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(f));
