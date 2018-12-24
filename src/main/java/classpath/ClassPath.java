@@ -84,7 +84,7 @@ public class ClassPath {
         if (userClasspath.readClass(className) != null) {
             return userClasspath.readClass(className);
         } else {
-            throw new RuntimeException("不能读.class文件！");
+            throw new RuntimeException("不能读取到.class文件！");
         }
     }
 }
