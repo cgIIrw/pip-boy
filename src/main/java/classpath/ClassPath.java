@@ -6,56 +6,75 @@ import java.io.*;
  * Created by yin on 18/4/2.
  */
 public class ClassPath {
-    Entry bootClasspath;
-    Entry exClasspath;
-    Entry userClasspath;
+    private Entry bootClasspath;
+    private Entry exClasspath;
+    private Entry userClasspath;
 
     public static ClassPath parse(String jreOption, String cpOption) {
         ClassPath cp = new ClassPath();
+
+        // 解析启动路径和扩展路径
         cp.parseBootAndExtClasspath(jreOption);
+
+        // 解析用户路径
         cp.parseUserClasspath(cpOption);
         return cp;
     }
 
-    public void parseBootAndExtClasspath(String jreOption) {
+    private void parseBootAndExtClasspath(String jreOption) {
         String jreDir = getJreDir(jreOption);
+
         // jre/lib/*
         String jreLibPath = jreDir + File.separator + "lib" + File.separator + "*";
-        // 获得了Composite_Entry实例后,就可以点用相关方法,读取class
+
+        // 获得实例，可以通过相关方法，读取class
         bootClasspath = new Wildcard_Entry(jreLibPath);
+
         // jre/lib/ext/*
         String jreExtPath = jreDir + File.separator + "lib" + File.separator + "ext" +
                 File.separator + "*";
         exClasspath = new Wildcard_Entry(jreExtPath);
     }
 
-    public String getJreDir(String jreOption) {
+    private String getJreDir(String jreOption) {
+
+        // Java环境变量的地址
         String jh = System.getenv("JAVA_HOME");
-        if (!jreOption.equals("") && jreOption != null) {
+//        String jh = "/Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home";
+        if (jreOption != null && !jreOption.equals("")) {
             return jreOption;
         }
+
+        // 如果没有输入，那么就在当前目录下查找jre
         File file = new File("jre");
+
+        // 如果此时jre确实存在，则将其绝对路径返回
         if (file.exists()) {
             return file.getAbsolutePath();
         }
-        if (jh != "") {
+
+        // 如果jre不存在，那么在环境变量去寻找
+        if (jh != null && !jh.equals("")) {
             return jh + File.separator + "jre";
         } else {
-            throw new RuntimeException("找不到jre文件!");
+            // 还找不到只能抛运行时异常
+            throw new RuntimeException("找不到jre文件！");
         }
     }
 
-    public void parseUserClasspath(String cpOption) {
-        if (cpOption.equals("") || cpOption != null) {
+    private void parseUserClasspath(String cpOption) {
+
+        // 如果传入的字符串为null或者空字符串，则默认为当前目录下
+        if (cpOption == null || cpOption.equals("")) {
             cpOption = ".";
         }
         userClasspath = NewEntry.newEntry(cpOption);
     }
 
-
     public byte[] readClass(String className) throws IOException {
         className = className + ".class";
 
+        // 读取的顺序是系统路径，扩展路径以及用户路径
         if (bootClasspath.readClass(className) != null) {
             return bootClasspath.readClass(className);
         }
@@ -65,12 +84,7 @@ public class ClassPath {
         if (userClasspath.readClass(className) != null) {
             return userClasspath.readClass(className);
         } else {
-            throw new RuntimeException("Can not read class!");
+            throw new RuntimeException("不能读.class文件！");
         }
-    }
-
-
-    public String string() {
-        return userClasspath.string();
     }
 }
