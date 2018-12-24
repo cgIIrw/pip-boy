@@ -1,11 +1,13 @@
 package classfile.utils;
 
 import java.math.BigInteger;
+import java.util.stream.IntStream;
 
 /**
  * @author cgIIrw
  * @date 2018/4/11
  */
+// 字节码读取工具
 public class ClassReader {
     private byte[] data = new byte[0];
     private int cursor = 0;
@@ -16,8 +18,7 @@ public class ClassReader {
 
     // byte to u1
     public int readUint8() {
-        int val = data[cursor++] & 0xff;
-        return val;
+        return data[cursor++] & 0xff;
     }
 
     // byte to u2
@@ -51,9 +52,7 @@ public class ClassReader {
 //    }
     public BigInteger readUint64() {
         byte[] bytes = new byte[8];
-        for (int i = 0; i < 8; i++) {
-            bytes[i] = data[cursor + i];
-        }
+        IntStream.range(0, 8).forEach(i -> bytes[i] = data[cursor + i]);
         cursor = cursor + 8;
         return new BigInteger(bytes);
     }
@@ -72,9 +71,7 @@ public class ClassReader {
     public byte[] readBytes(int n) {
         byte[] bytes = new byte[n];
 
-        for (int i = 0; i < n; i++) {
-            bytes[i] = data[cursor + i];
-        }
+        IntStream.range(0, n).forEach(i -> bytes[i] = data[cursor + i]);
         cursor = cursor + n;
         return bytes;
     }
