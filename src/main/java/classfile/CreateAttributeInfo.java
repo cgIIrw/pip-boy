@@ -1,11 +1,12 @@
 package classfile;
 
 import classfile.attributeinfos.*;
+import classfile.utils.ClassReader;
 
 /**
  * Created by yin on 18/4/17.
  */
-public class GreateAttributeInfo {
+public class CreateAttributeInfo {
 
 
     public static AttributeInfo[] readAttributes(ClassReader reader, ConstantPool cp) {
