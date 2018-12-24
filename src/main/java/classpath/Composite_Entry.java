@@ -11,7 +11,7 @@ import java.util.List;
 public class Composite_Entry implements Entry {
     private List<Entry> compositeEntry;
 
-    public Composite_Entry(String path) {
+    Composite_Entry(String path) {
         compositeEntry = new ArrayList<>();
         for (String p : path.split(Entry.pathListSeparator)) {
             compositeEntry.add(NewEntry.newEntry(p));
