@@ -10,7 +10,7 @@ import java.util.zip.ZipFile;
 class Zip_Entry implements Entry {
     private String absPath;
 
-    public Zip_Entry(String path) {
+    Zip_Entry(String path) {
         // 创建file对象，如果文件系统也存在相应的文件，
         // 那么在后续中它实际代表一个路径为path的压缩文件(jar等)
         File file = new File(path);
