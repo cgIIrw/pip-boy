@@ -1,32 +1,36 @@
 package classfile;
 
+import classfile.attributeinfos.CodeAttribute;
+import classfile.utils.ClassReader;
+
 /**
  * Created by yin on 18/4/15.
  */
+// 字段和方法由于结构相同用同一个结构体MemberInfo表示
+// 这里的字段和方法可能是static的，也可以不是，所以并非
+// 一定指类字段和类方法
 public class MemberInfo {
-    ConstantPool cp;
-    int accessFlags;
-    int nameIndex;
-    int descriptorIndex;
-    AttributeInfo[] attributes;
+    private ConstantPool cp;
+    private int accessFlags;
+    private int nameIndex;
+    private int descriptorIndex;
+    private AttributeInfo[] attributes;
 
-    public MemberInfo[] readMembers(ClassReader reader, ConstantPool cp) {
+    static MemberInfo[] readMembers(ClassReader reader, ConstantPool cp) {
         int memberCount = reader.readUint16();
         MemberInfo[] members = new MemberInfo[memberCount];
         for (int i = 0; i < memberCount; i++) {
-            members[i] = readMember(reader, cp);
+            members[i] = new MemberInfo(reader, cp);
         }
         return members;
     }
 
-    public MemberInfo readMember(ClassReader reader, ConstantPool cp) {
-        MemberInfo mb = new MemberInfo();
-        mb.cp = cp;
-        mb.accessFlags = reader.readUint16();
-        mb.nameIndex = reader.readUint16();
-        mb.descriptorIndex = reader.readUint16();
-        mb.attributes = GreateAttributeInfo.readAttributes(reader, cp);
-        return mb;
+    private MemberInfo(ClassReader reader, ConstantPool cp) {
+        this.cp = cp;
+        this.accessFlags = reader.readUint16();
+        this.nameIndex = reader.readUint16();
+        this.descriptorIndex = reader.readUint16();
+        this.attributes = CreateAttributeInfo.readAttributes(reader, cp);
     }
 
     public int getAccessFlags() {
@@ -40,5 +44,18 @@ public class MemberInfo {
 
     public String getDescriptor() {
         return this.cp.getUtf8(this.descriptorIndex);
+    }
+
+    public AttributeInfo[] getAttributes() {
+        return attributes;
+    }
+
+    public CodeAttribute getCodeAttribute() {
+        for (AttributeInfo info : getAttributes()) {
+            if (info instanceof CodeAttribute) {
+                return (CodeAttribute) info;
+            }
+        }
+        return null;
     }
 }
