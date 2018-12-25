@@ -1,6 +1,9 @@
-package classfile;
+package classfile.memberinfo;
 
-import classfile.attributeinfos.CodeAttribute;
+import classfile.attributeinfo.AttributeInfo;
+import classfile.attributeinfo.CreateAttributeInfo;
+import classfile.attributeinfo.attributeinfos.CodeAttribute;
+import classfile.constantpool.ConstantPool;
 import classfile.utils.ClassReader;
 
 /**
@@ -16,7 +19,7 @@ public class MemberInfo {
     private int descriptorIndex;
     private AttributeInfo[] attributes;
 
-    static MemberInfo[] readMembers(ClassReader reader, ConstantPool cp) {
+    public static MemberInfo[] readMembers(ClassReader reader, ConstantPool cp) {
         int memberCount = reader.readUint16();
         MemberInfo[] members = new MemberInfo[memberCount];
         for (int i = 0; i < memberCount; i++) {
