@@ -1,6 +1,6 @@
-package classfile.attributeinfos;
+package classfile.attributeinfo.attributeinfos;
 
-import classfile.AttributeInfo;
+import classfile.attributeinfo.AttributeInfo;
 import classfile.utils.ClassReader;
 
 /**

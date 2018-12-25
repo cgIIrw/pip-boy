@@ -1,9 +1,9 @@
-package classfile.attributeinfos;
+package classfile.attributeinfo.attributeinfos;
 
-import classfile.AttributeInfo;
+import classfile.attributeinfo.AttributeInfo;
 import classfile.utils.ClassReader;
-import classfile.ConstantPool;
-import classfile.CreateAttributeInfo;
+import classfile.constantpool.ConstantPool;
+import classfile.attributeinfo.AttributeInfoFactory;
 
 /**
  * Created by yin on 18/4/17.
@@ -33,7 +33,7 @@ public class CodeAttribute implements AttributeInfo {
         }
         this.code = temp2;
         this.exceptionTable = ExceptionTableEntry.readExceptionTable(reader);
-        this.attributes = CreateAttributeInfo.readAttributes(reader, this.cp);
+        this.attributes = AttributeInfoFactory.readAttributes(reader, this.cp);
     }
 
     public int getMaxStack() {
