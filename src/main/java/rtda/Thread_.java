@@ -1,12 +1,12 @@
 package rtda;
 
+// Java程序的线程抽象
 public class Thread_ {
     private int pc;
-    private Mystack mystack;
+    private VirtualMachineStack_ virtualMachineStack_;
 
     public Thread_() {
-        mystack = new Mystack(1024);
-
+        virtualMachineStack_ = new VirtualMachineStack_(1024);
     }
 
     public int getPc() {
@@ -17,19 +17,19 @@ public class Thread_ {
         this.pc = pc;
     }
 
-    public void pushMyframe(Myframe frame) {
-        this.mystack.push(frame);
+    public void pushStackFrame_(StackFrame_ frame) {
+        this.virtualMachineStack_.push(frame);
     }
 
-    public Myframe popMyframe() {
-        return this.mystack.pop();
-
+    public StackFrame_ popStackFrame_() {
+        return this.virtualMachineStack_.pop();
     }
 
-    public Myframe currentMyframe() {
-        return this.mystack.top();
+    public StackFrame_ currentStackFrame_() {
+        return this.virtualMachineStack_.getTop();
     }
-    public Myframe getTopFrame() {
-        return this.mystack.top();
+
+    public StackFrame_ getTopFrame() {
+        return this.virtualMachineStack_.getTop();
     }
 }
