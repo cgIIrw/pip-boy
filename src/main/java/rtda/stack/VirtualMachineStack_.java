@@ -1,5 +1,6 @@
-package rtda;
+package rtda.stack;
 
+// 虚拟机栈
 public class VirtualMachineStack_ {
 
     private int maxSize;
@@ -10,18 +11,18 @@ public class VirtualMachineStack_ {
         this.maxSize = maxSize;
     }
 
-    public void push(StackFrame_ stackFrame_) {
+    public void push(StackFrame_ stackFrame) {
         if (size >= maxSize) {
             throw new RuntimeException("当前栈大小已不小于最大容量");
         }
 
         // 如果push之前top不为null，那么把当前的top计为欲传入的下一层
         if (this.top != null) {
-            stackFrame_.setLower(this.top);
+            stackFrame.setNextFrame(this.top);
         }
 
         // 将top刷新
-        this.top = stackFrame_;
+        this.top = stackFrame;
         size++;
     }
 
@@ -31,8 +32,8 @@ public class VirtualMachineStack_ {
         }
 
         StackFrame_ temptop = this.top;
-        this.top = temptop.getLower();
-        temptop.setLower(null);
+        this.top = temptop.getNextFrame();
+        temptop.setNextFrame(null);
         size--;
 
         return temptop;

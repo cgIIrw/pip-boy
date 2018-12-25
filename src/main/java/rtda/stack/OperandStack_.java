@@ -1,18 +1,20 @@
-package rtda;
+package rtda.stack;
 
-import rtda.heap.Myobject;
+import rtda.heap.Instance_;
 
 // 实现操作数栈
-public class OperandStack {
+public class OperandStack_ {
     private int size;
-    private Slot[] slots;
+    // 操作数栈内部和局部变量表一样，也维护一个Slot数组
+    private Slot_[] slots;
 
-    public OperandStack(int maxStack) {
+    public OperandStack_(int maxStack) {
         if (maxStack > 0) {
-            slots = new Slot[maxStack];
+            slots = new Slot_[maxStack];
         }
+        assert slots != null;
         for (int i = 0; i < slots.length; i++) {
-            slots[i] = new Slot();
+            slots[i] = new Slot_();
         }
     }
 
@@ -41,15 +43,15 @@ public class OperandStack {
 
     //
     public void pushLong(long val) {
-        this.slots[this.size].setNum((int)val);
-        this.slots[this.size + 1].setNum((int)(val >> 32));
+        this.slots[this.size].setNum((int) val);
+        this.slots[this.size + 1].setNum((int) (val >> 32));
         this.size += 2;
     }
 
     public long popLong() {
         this.size -= 2;
-        int low = (int)(this.slots[this.size].getNum());
-        int high = (int)(this.slots[this.size + 1].getNum());
+        int low = (int) (this.slots[this.size].getNum());
+        int high = (int) (this.slots[this.size + 1].getNum());
         return ((high & 0xffffffffL) << 32) | (low & 0xffffffffL);
     }
 
@@ -63,30 +65,30 @@ public class OperandStack {
         return Double.longBitsToDouble(temp);
     }
 
-    public void pushRef(Myobject ref) {
+    public void pushRef(Instance_ ref) {
         this.slots[this.size].setRef(ref);
         this.size++;
     }
 
-    public Myobject popRef() {
+    public Instance_ popRef() {
         this.size--;
-        Myobject ref = this.slots[this.size].getRef();
+        Instance_ ref = this.slots[this.size].getRef();
         this.slots[this.size].setRef(null);
         return ref;
     }
 
-    public void pushSlot(Slot slot) {
+    public void pushSlot(Slot_ slot) {
         this.slots[this.size].setRef(slot.getRef());
         this.slots[this.size].setNum(slot.getNum());
         this.size++;
     }
 
-    public Slot popSlot() {
+    public Slot_ popSlot() {
         this.size--;
         return this.slots[this.size];
     }
 
-    public Myobject getRefFromTop(int index) {
+    public Instance_ getRefFromTop(int index) {
         return this.slots[this.size - 1 - index].getRef();
     }
 }
