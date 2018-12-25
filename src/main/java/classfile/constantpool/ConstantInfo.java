@@ -1,4 +1,4 @@
-package classfile;
+package classfile.constantpool;
 
 import classfile.utils.ClassReader;
 
@@ -9,7 +9,7 @@ import classfile.utils.ClassReader;
 
 public interface ConstantInfo {
     void readInfo(ClassReader reader);
-    int getId();
+    int getTag();
 }
 
 
