@@ -1,6 +1,6 @@
-package classfile;
+package classfile.constantpool;
 
-import classfile.constantInfos.*;
+import classfile.constantpool.constantInfos.*;
 import classfile.utils.ClassReader;
 
 /**
@@ -11,26 +11,27 @@ public class ConstantPool {
     private ConstantInfo[] cp;
 
     // 读取数据初始化常量池
-    void readConstantPool(ClassReader reader) {
+    public void readConstantPool(ClassReader reader) {
         int cpCount = reader.readUint16();
         cp = new ConstantInfo[cpCount];
 
         for (int i = 1; i < cpCount; i++) {
-            cp[i] = CreateConstantInfo.readConstantInfo(reader, this);
+            cp[i] = ConstantInfoFactory.readConstantInfo(reader, this);
             if (cp[i] instanceof ConstantLongInfo || cp[i] instanceof ConstantDoubleInfo) {
                 i++;
             }
         }
     }
+
     // 通过索引找到常量池中的表
     private ConstantInfo getConstantInfo(int index) {
         if (cp == null) {
             throw new RuntimeException("没有readConstantPool初始化常量池");
         }
-        // 为了简便这里就不作数组越界检查
+        // 这里没作数组越界检查
         ConstantInfo cpInfo = cp[index];
         if (cpInfo == null) {
-            throw new RuntimeException("Invalid constant pool index!");
+            throw new RuntimeException("不存在的常量池索引！");
         }
         return cpInfo;
     }
@@ -44,14 +45,13 @@ public class ConstantPool {
     }
 
     public String getClassName(int index) {
-        ConstantClassInfo classInfo = (ConstantClassInfo)getConstantInfo(index);
+        ConstantClassInfo classInfo = (ConstantClassInfo) getConstantInfo(index);
         return getUtf8(classInfo.getNameIndex());
     }
 
-
     public String getUtf8(int index) {
-        ConstantUtf8Info utf8Info = (ConstantUtf8Info)getConstantInfo(index);
-        // 在getConstantInfo()已经readInfo()过
+        ConstantUtf8Info utf8Info = (ConstantUtf8Info) getConstantInfo(index);
+        // 在ConstantInfoFactory.readConstantInfo()时已经readInfo()过并获得了str
         return utf8Info.getStr();
     }
 

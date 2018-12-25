@@ -1,6 +1,8 @@
-package classfile;
+package classfile.attributeinfo;
 
-import classfile.attributeinfos.*;
+import classfile.attributeinfo.AttributeInfo;
+import classfile.attributeinfo.attributeinfos.*;
+import classfile.constantpool.ConstantPool;
 import classfile.utils.ClassReader;
 
 /**
