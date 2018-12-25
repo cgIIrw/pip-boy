@@ -1,10 +1,10 @@
 package rtda;
 
-public class Mythread {
+public class Thread_ {
     private int pc;
     private Mystack mystack;
 
-    public Mythread() {
+    public Thread_() {
         mystack = new Mystack(1024);
 
     }

@@ -4,7 +4,7 @@ import classfile.ClassFile;
 import rtda.LocalVars;
 import rtda.Slot;
 
-public class Myclass {
+public class Class_ {
     //
     private int accessFlags;
     //当前类名(完全限定名)
@@ -22,9 +22,9 @@ public class Myclass {
     // 当前的类加载器
     private MyclassLoader loader;
     // 父类的Class
-    private Myclass superClass;
+    private Class_ superClass;
     // 被继承的接口的Class
-    private Myclass[] interfaces;
+    private Class_[] interfaces;
 
     private int instanceSlotCount;
 
@@ -32,7 +32,7 @@ public class Myclass {
 
     LocalVars staticVars;
 
-    public Myclass(ClassFile cf) {
+    public Class_(ClassFile cf) {
         this.accessFlags = cf.getAccessFlags();
         this.name = cf.getClassName();
         this.superClassName = cf.getSuperClassName();
@@ -84,13 +84,13 @@ public class Myclass {
         return "";
     }
 
-    public boolean isSuperClassOf(Myclass other) {
+    public boolean isSuperClassOf(Class_ other) {
         return other.isSubClassOf(this);
     }
 
-    public boolean isSubClassOf(Myclass myclass) {
+    public boolean isSubClassOf(Class_ myclass) {
 
-        for (Myclass c = this.superClass; c != null; c = c.superClass) {
+        for (Class_ c = this.superClass; c != null; c = c.superClass) {
             if (c == myclass) {
                 return true;
             }
@@ -98,8 +98,8 @@ public class Myclass {
         return false;
     }
 
-    public boolean isSubInterfaceOf(Myclass iface) {
-        for (Myclass superInterface : this.interfaces) {
+    public boolean isSubInterfaceOf(Class_ iface) {
+        for (Class_ superInterface : this.interfaces) {
             if (superInterface == iface || superInterface.isSubInterfaceOf(iface)) {
                 return true;
             }
@@ -107,9 +107,9 @@ public class Myclass {
         return false;
     }
 
-    public boolean isImplements(Myclass iface) {
-        for (Myclass c = this; c != null; c = c.superClass) {
-            for (Myclass i : c.interfaces) {
+    public boolean isImplements(Class_ iface) {
+        for (Class_ c = this; c != null; c = c.superClass) {
+            for (Class_ i : c.interfaces) {
                 if (i == iface || i.isSubInterfaceOf(iface)) {
                     return true;
                 }
@@ -118,10 +118,10 @@ public class Myclass {
         return false;
     }
 
-    public boolean isAssignableFrom(Myclass other) {
+    public boolean isAssignableFrom(Class_ other) {
         // 判断other是不是this的子类或者继承自this
-        Myclass s = other;
-        Myclass t = this;
+        Class_ s = other;
+        Class_ t = this;
 
         if (s == t) {
             return true;
@@ -135,12 +135,12 @@ public class Myclass {
     }
 
 
-    public boolean isAccessibleTo(Myclass otherclass) {
+    public boolean isAccessibleTo(Class_ otherclass) {
         return this.isPublic() || (this.getPackageName() == otherclass.getPackageName());
     }
 
-    public Myobject newObject() {
-        return new Myobject(this);
+    public Instance newObject() {
+        return new Instance(this);
     }
 
     public LocalVars getStaticVars() {
@@ -179,11 +179,11 @@ public class Myclass {
         return loader;
     }
 
-    public Myclass getSuperClass() {
+    public Class_ getSuperClass() {
         return superClass;
     }
 
-    public Myclass[] getInterfaces() {
+    public Class_[] getInterfaces() {
         return interfaces;
     }
 
@@ -227,11 +227,11 @@ public class Myclass {
         this.loader = loader;
     }
 
-    public void setSuperClass(Myclass superClass) {
+    public void setSuperClass(Class_ superClass) {
         this.superClass = superClass;
     }
 
-    public void setInterfaces(Myclass[] interfaces) {
+    public void setInterfaces(Class_[] interfaces) {
         this.interfaces = interfaces;
     }
 

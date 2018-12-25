@@ -2,27 +2,27 @@ package rtda;
 
 import rtda.heap.MyMethod;
 
-public class Myframe {
+public class StackFrame_ {
 
     // 前一个栈帧
-    private Myframe lower;
+    private StackFrame_ lower;
     private LocalVars localVars;
     private OperandStack operandStack;
-    private Mythread mythread; // 当前所在线程
+    private Thread_ thread_; // 当前所在线程
     private MyMethod myMethod;
     private int nextPC; //
 
 
-    public Myframe(Mythread mythread, MyMethod myMethod) {
-        this.mythread = mythread;
+    public StackFrame_(Thread_ thread_, MyMethod myMethod) {
+        this.thread_ = thread_;
         this.myMethod = myMethod;
 
         this.localVars = new LocalVars(myMethod.getMaxLocals());
         this.operandStack = new OperandStack(myMethod.getMaxStack());
     }
 
-    public Myframe(Mythread mythread, int maxLocals, int maxStack) {
-        this.mythread = mythread;
+    public StackFrame_(Thread_ thread_, int maxLocals, int maxStack) {
+        this.thread_ = thread_;
         localVars = new LocalVars(maxLocals);
         operandStack = new OperandStack(maxStack);
     }
@@ -35,8 +35,8 @@ public class Myframe {
         return this.operandStack;
     }
 
-    public Mythread getMythread() {
-        return mythread;
+    public Thread_ getThread_() {
+        return thread_;
     }
 
     public MyMethod getMyMethod() {
@@ -51,11 +51,11 @@ public class Myframe {
         this.nextPC = nextPC;
     }
 
-    public Myframe getLower() {
+    public StackFrame_ getLower() {
         return lower;
     }
 
-    public void setLower(Myframe lower) {
+    public void setLower(StackFrame_ lower) {
         this.lower = lower;
     }
 }
