@@ -1,13 +1,13 @@
 package classfile.attributeinfos;
 
 import classfile.AttributeInfo;
-import classfile.ClassReader;
+import classfile.utils.ClassReader;
 
 /**
  * Created by yin on 18/4/22.
  */
 public class ExceptionsAttribute implements AttributeInfo {
-    int[] exceptionIndexTable;
+    private int[] exceptionIndexTable;
 
     @Override
     public void readInfo(ClassReader reader) {

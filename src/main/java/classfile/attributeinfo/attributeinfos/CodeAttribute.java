@@ -1,18 +1,18 @@
 package classfile.attributeinfos;
 
 import classfile.AttributeInfo;
-import classfile.ClassReader;
+import classfile.utils.ClassReader;
 import classfile.ConstantPool;
-import classfile.GreateAttributeInfo;
+import classfile.CreateAttributeInfo;
 
 /**
  * Created by yin on 18/4/17.
  */
 public class CodeAttribute implements AttributeInfo {
-    ConstantPool cp;
-    int maxStack;
-    int maxLocals;
-    byte[] code;
+    private ConstantPool cp;
+    private int maxStack;
+    private int maxLocals;
+    private int[] code;
     ExceptionTableEntry[] exceptionTable;
     AttributeInfo[] attributes;
 
@@ -26,24 +26,29 @@ public class CodeAttribute implements AttributeInfo {
         this.maxStack = reader.readUint16();
         this.maxLocals = reader.readUint16();
         int codeLength = (int)(reader.readUint32());
-        this.code = reader.readBytes(codeLength);
+        byte[] temp = reader.readBytes(codeLength);
+        int[] temp2 = new int[temp.length];
+        for (int i = 0; i < temp.length; i++) {
+            temp2[i] = temp[i] & 0xff;
+        }
+        this.code = temp2;
         this.exceptionTable = ExceptionTableEntry.readExceptionTable(reader);
-        this.attributes = GreateAttributeInfo.readAttributes(reader, this.cp);
+        this.attributes = CreateAttributeInfo.readAttributes(reader, this.cp);
     }
 
-    int getMaxStack() {
+    public int getMaxStack() {
         return this.maxStack;
     }
 
-    int getMaxLocals() {
+    public int getMaxLocals() {
         return this.maxLocals;
     }
 
-    byte[] getCode() {
+    public int[] getCode() {
         return this.code;
     }
 
-    ExceptionTableEntry[] getExceptionTable() {
+    public ExceptionTableEntry[] getExceptionTable() {
         return this.exceptionTable;
     }
 
@@ -51,10 +56,10 @@ public class CodeAttribute implements AttributeInfo {
 }
 
 class ExceptionTableEntry {
-    int startPc;
-    int endPc;
-    int handlerPc;
-    int catchType;
+    private int startPc;
+    private int endPc;
+    private int handlerPc;
+    private int catchType;
 
     public ExceptionTableEntry(ClassReader reader) {
         startPc = reader.readUint16();

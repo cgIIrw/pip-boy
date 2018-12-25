@@ -1,13 +1,17 @@
 package classfile;
 
+import classfile.constantInfos.*;
+import classfile.utils.ClassReader;
+
 /**
  * Created by yin on 18/4/15.
  */
+// 常量池代码抽象，它是Class文件之中的资源仓库
 public class ConstantPool {
     private ConstantInfo[] cp;
 
     // 读取数据初始化常量池
-    public void readConstantPool(ClassReader reader) {
+    void readConstantPool(ClassReader reader) {
         int cpCount = reader.readUint16();
         cp = new ConstantInfo[cpCount];
 
@@ -19,7 +23,7 @@ public class ConstantPool {
         }
     }
     // 通过索引找到常量池中的表
-    public ConstantInfo getConstantInfo(int index) {
+    private ConstantInfo getConstantInfo(int index) {
         if (cp == null) {
             throw new RuntimeException("没有readConstantPool初始化常量池");
         }
@@ -51,10 +55,7 @@ public class ConstantPool {
         return utf8Info.getStr();
     }
 
-
-
-
-
-
-
+    public ConstantInfo[] getCp() {
+        return cp;
+    }
 }

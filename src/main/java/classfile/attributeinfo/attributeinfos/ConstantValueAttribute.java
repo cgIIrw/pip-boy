@@ -1,20 +1,20 @@
 package classfile.attributeinfos;
 
 import classfile.AttributeInfo;
-import classfile.ClassReader;
+import classfile.utils.ClassReader;
 
 /**
  * Created by yin on 18/4/22.
  */
 public class ConstantValueAttribute implements AttributeInfo {
-    int constantValueIndex;
+    private int constantValueIndex;
 
     @Override
     public void readInfo(ClassReader reader) {
         this.constantValueIndex = reader.readUint16();
     }
 
-    int getConstantValueIndex() {
+    public int getConstantValueIndex() {
         return this.constantValueIndex;
     }
 }

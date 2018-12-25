@@ -8,7 +8,6 @@ import classfile.utils.ClassReader;
  */
 public class CreateAttributeInfo {
 
-
     public static AttributeInfo[] readAttributes(ClassReader reader, ConstantPool cp) {
         int attributesCount = reader.readUint16();
         AttributeInfo[] attributes = new AttributeInfo[attributesCount];
@@ -18,7 +17,7 @@ public class CreateAttributeInfo {
         return attributes;
     }
 
-    public static AttributeInfo readAttribute(ClassReader reader, ConstantPool cp) {
+    private static AttributeInfo readAttribute(ClassReader reader, ConstantPool cp) {
         int attrNameIndex = reader.readUint16();
         String attrName = cp.getUtf8(attrNameIndex);
         long attrLen = reader.readUint32();
@@ -28,7 +27,7 @@ public class CreateAttributeInfo {
         return attrInfo;
     }
 
-    public static AttributeInfo newAttributeInfo(String attrName, long attrLen, ConstantPool cp) {
+    private static AttributeInfo newAttributeInfo(String attrName, long attrLen, ConstantPool cp) {
         switch (attrName) {
             case "Code":
                 return new CodeAttribute(cp);
