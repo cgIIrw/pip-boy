@@ -1,5 +1,5 @@
 //import classfile.ClassFile;
-//import classfile.MemberInfo;
+//import classfile.memberinfo.MemberInfo;
 //import classpath.*;
 //import org.apache.commons.cli.CommandLine;
 //import org.apache.commons.cli.ParseException;

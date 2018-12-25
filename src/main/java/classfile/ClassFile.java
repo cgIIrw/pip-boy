@@ -1,7 +1,7 @@
 package classfile;
 
 import classfile.attributeinfo.AttributeInfo;
-import classfile.attributeinfo.CreateAttributeInfo;
+import classfile.attributeinfo.AttributeInfoFactory;
 import classfile.constantpool.ConstantPool;
 import classfile.memberinfo.MemberInfo;
 import classfile.utils.ClassReader;
@@ -45,7 +45,7 @@ public class ClassFile {
         interfaces = reader.readUint16s();
         fields = MemberInfo.readMembers(reader, constantPool);
         methods = MemberInfo.readMembers(reader, constantPool);
-        attributes = CreateAttributeInfo.readAttributes(reader, constantPool);
+        attributes = AttributeInfoFactory.readAttributes(reader, constantPool);
     }
 
     // 验证魔数

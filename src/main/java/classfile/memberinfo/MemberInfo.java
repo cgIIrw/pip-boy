@@ -1,7 +1,7 @@
 package classfile.memberinfo;
 
 import classfile.attributeinfo.AttributeInfo;
-import classfile.attributeinfo.CreateAttributeInfo;
+import classfile.attributeinfo.AttributeInfoFactory;
 import classfile.attributeinfo.attributeinfos.CodeAttribute;
 import classfile.constantpool.ConstantPool;
 import classfile.utils.ClassReader;
@@ -33,7 +33,7 @@ public class MemberInfo {
         this.accessFlags = reader.readUint16();
         this.nameIndex = reader.readUint16();
         this.descriptorIndex = reader.readUint16();
-        this.attributes = CreateAttributeInfo.readAttributes(reader, cp);
+        this.attributes = AttributeInfoFactory.readAttributes(reader, cp);
     }
 
     public int getAccessFlags() {
