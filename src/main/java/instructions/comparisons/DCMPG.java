@@ -1,18 +1,17 @@
 package instructions.comparisons;
 
 import instructions.base.NoOperandsInstruction;
-import rtda.Myframe;
-import rtda.OperandStack;
+import rtda.stack.StackFrame_;
+import rtda.stack.OperandStack_;
 
 public class DCMPG extends NoOperandsInstruction {
     @Override
-    public void execute(Myframe frame) {
+    public void execute(StackFrame_ frame) {
         _dcmp(frame, true);
-
     }
 
-    public static void _dcmp(Myframe myframe, boolean gFlag) {
-        OperandStack stack = myframe.getOperandStack();
+    public static void _dcmp(StackFrame_ stackFrame, boolean gFlag) {
+        OperandStack_ stack = stackFrame.getOperandStack();
         double v2 = stack.popDouble();
         double v1 = stack.popDouble();
 
