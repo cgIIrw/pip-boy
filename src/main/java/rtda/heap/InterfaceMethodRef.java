@@ -34,10 +34,10 @@ public class InterfaceMethodRef extends MemberRef {
     public void resolvedInterfaceMethodRef() {
 
         // 当前代码所处的类d
-        Myclass d = this.getRuntimeConstantPool().getMyclass();
+        Class_ d = this.getRuntimeConstantPool().getClass_();
 
         // 要解析的非接口方法所属的类或接口c
-        Myclass c = this.resolvedClass();
+        Class_ c = this.resolvedClass();
 
         // 判断c是否是接口，如果不是则抛出IncompatibleClassChangeError异常
         if (!c.isInterface()) {
@@ -59,7 +59,7 @@ public class InterfaceMethodRef extends MemberRef {
         this.method = method;
     }
 
-    public MyMethod lookupInterfaceMethod(Myclass iface, String name, String descriptor) {
+    public MyMethod lookupInterfaceMethod(Class_ iface, String name, String descriptor) {
 
         // 在接口中查找是否有简单名和描述符都与目标相匹配的方法，如果有，返回这个方法的直接引用，查找结束
         for (MyMethod method : iface.getMethods()) {

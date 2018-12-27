@@ -1,12 +1,12 @@
 package instructions.base;
 
-import rtda.Myframe;
+import rtda.stack.StackFrame_;
 
 public class Branch {
 
-    public static void branch(Myframe myframe, int offset) {
-        int pc = myframe.getMythread().getPc();
+    public static void branch(StackFrame_ stackFrame, int offset) {
+        int pc = stackFrame.getThread_().getPc();
         int nextPc = pc + offset;
-        myframe.setNextPC(nextPc);
+        stackFrame.setNextPC(nextPc);
     }
 }

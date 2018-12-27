@@ -1,22 +1,20 @@
 package instructions.constants;
 
-import instructions.base.BytecodeReader;
+import instructions.utils.BytecodeReader;
 import instructions.base.Instruction;
-import rtda.Myframe;
+import rtda.stack.StackFrame_;
 
 public class BIPUSH implements Instruction {
-    int val;
+    private int val;
 
     @Override
     public void fetchOperands(BytecodeReader reader) {
-        // 这里是带符号数，比如最高位如果是非零，则为负数，但是可以暂且传值给val
-        this.val = reader.readInt8();
+        this.val = reader.readUint8();
     }
 
     @Override
-    public void execute(Myframe frame) {
+    public void execute(StackFrame_ frame) {
         // 将有符号转换为无符号
-        int i = (int)(val & 0xff);
-        frame.getOperandStack().pushInt(i);
+        frame.getOperandStack().pushInt(val);
     }
 }

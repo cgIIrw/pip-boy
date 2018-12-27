@@ -8,12 +8,12 @@ import classfile.constantpool.constantInfos.*;
 import java.util.NoSuchElementException;
 
 public class RuntimeConstantPool {
-    private Myclass myclass;
+    private Class_ class_;
     private Constant[] constants;
 
 
-    public RuntimeConstantPool(Myclass myclass, ConstantPool cfCp) {
-        this.myclass = myclass;
+    public RuntimeConstantPool(Class_ class_, ConstantPool cfCp) {
+        this.class_ = class_;
         ConstantInfo[] constantInfos = cfCp.getCp();
         constants = new Constant[constantInfos.length];
         //
@@ -78,8 +78,8 @@ public class RuntimeConstantPool {
         }
     }
 
-    public Myclass getMyclass() {
-        return myclass;
+    public Class_ getClass_() {
+        return class_;
     }
 
     public Constant[] getConstants() {

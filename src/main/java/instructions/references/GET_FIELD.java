@@ -1,15 +1,15 @@
 package instructions.references;
 
 import instructions.base.Index16Instruction;
-import rtda.LocalVars;
-import rtda.Myframe;
-import rtda.OperandStack;
+import rtda.stack.LocalVars_;
+import rtda.stack.OperandStack_;
+import rtda.stack.StackFrame_;
 import rtda.heap.*;
 
 public class GET_FIELD extends Index16Instruction {
     @Override
-    public void execute(Myframe frame) {
-        RuntimeConstantPool cp = frame.getMyMethod().getMyclass().getRuntimeConstantPool();
+    public void execute(StackFrame_ frame) {
+        RuntimeConstantPool cp = frame.getMyMethod().getClass_().getRuntimeConstantPool();
         FieldRef fieldRef = (FieldRef)((cp.getConstant(index)).getVal());
         MyField field = fieldRef.resolvedField();
 
@@ -17,15 +17,15 @@ public class GET_FIELD extends Index16Instruction {
             throw new IncompatibleClassChangeError("java.lang.IncompatibleClassChangeError");
         }
 
-        OperandStack stack = frame.getOperandStack();
-        Myobject ref = stack.popRef();
+        OperandStack_ stack = frame.getOperandStack();
+        Instance_ ref = stack.popRef();
         if (ref == null) {
             throw new NullPointerException("java.lang.NullPointerException");
         }
 
         String descriptor = field.getDescriptor();
         int slotId = field.getSlotId();
-        LocalVars slots = ref.getFields();
+        LocalVars_ slots = ref.getFields();
         switch (descriptor.charAt(0)) {
             case 'Z':
             case 'B':

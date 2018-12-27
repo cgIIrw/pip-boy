@@ -1,4 +1,4 @@
-package instructions.control.return_ins;
+package instructions.control.return_;
 
 import instructions.base.NoOperandsInstruction;
 import rtda.stack.StackFrame_;

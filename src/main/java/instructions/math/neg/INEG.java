@@ -1,13 +1,13 @@
 package instructions.math.neg;
 
 import instructions.base.NoOperandsInstruction;
-import rtda.Myframe;
-import rtda.OperandStack;
+import rtda.stack.OperandStack_;
+import rtda.stack.StackFrame_;
 
 public class INEG extends NoOperandsInstruction {
     @Override
-    public void execute(Myframe frame) {
-        OperandStack stack = frame.getOperandStack();
+    public void execute(StackFrame_ frame) {
+        OperandStack_ stack = frame.getOperandStack();
         int val = stack.popInt();
         stack.pushInt(-val);
     }

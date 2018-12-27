@@ -1,21 +1,21 @@
 package instructions.base;
 
-import rtda.Myframe;
-import rtda.Mythread;
-import rtda.Slot;
+import rtda.stack.StackFrame_;
+import rtda.stack.Thread_;
+import rtda.stack.Slot_;
 import rtda.heap.MyMethod;
 
 public class MethodInvokeLogic {
-    public static void invokeMethod(Myframe invokerFrame, MyMethod method) {
+    public static void invokeMethod(StackFrame_ invokerFrame, MyMethod method) {
 
         // 获取调用方法的栈帧所在的线程
-        Mythread mythread = invokerFrame.getMythread();
+        Thread_ thread = invokerFrame.getThread_();
 
         // 通过栈帧所在线程和所属方法，创建一个新的栈帧
-        Myframe newFrame = new Myframe(mythread, method);
+        StackFrame_ newFrame = new StackFrame_(thread, method);
 
         // 将创建的栈帧押入虚拟机栈顶
-        mythread.pushMyframe(newFrame);
+        thread.pushStackFrame_(newFrame);
 
         // 下面的代码主要作用是进行参数传递，首先确定方法参数所占位置数
         int argSlotSlot = method.getArgSlotCount();
@@ -24,7 +24,7 @@ public class MethodInvokeLogic {
             for (int i = argSlotSlot - 1; i >= 0; i--) {
 
                 // 方法参数首先是存储在调用方法的栈帧的操作数栈中
-                Slot slot = invokerFrame.getOperandStack().popSlot();
+                Slot_ slot = invokerFrame.getOperandStack().popSlot();
 
                 // 将弹出的参数存储在新创建的局部变量表中
                 newFrame.getLocalVars().setSlot(i, slot);

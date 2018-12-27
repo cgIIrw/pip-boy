@@ -5,15 +5,15 @@ package instructions.references;
  */
 
 import instructions.base.Index16Instruction;
-import rtda.Myframe;
-import rtda.OperandStack;
+import rtda.stack.OperandStack_;
+import rtda.stack.StackFrame_;
 import rtda.heap.*;
 
 public class PUT_FIELD extends Index16Instruction {
     @Override
-    public void execute(Myframe frame) {
+    public void execute(StackFrame_ frame) {
         MyMethod currentMethod = frame.getMyMethod();
-        Myclass currentClass = currentMethod.getMyclass();
+        Class_ currentClass = currentMethod.getClass_();
         RuntimeConstantPool cp = currentClass.getRuntimeConstantPool();
         FieldRef fieldRef = (FieldRef)((cp.getConstant(index)).getVal());
         MyField field = fieldRef.resolvedField();
@@ -23,14 +23,14 @@ public class PUT_FIELD extends Index16Instruction {
         }
 
         if (field.isFinal()) {
-            if ((currentClass != field.getMyclass()) || (currentMethod.getName() != "<init>")) {
+            if ((currentClass != field.getClass_()) || (currentMethod.getName() != "<init>")) {
                 throw new IllegalAccessError("java.lang.IllegalAccessError");
             }
         }
 
         String descriptor = field.getDescriptor();
         int slotId = field.getSlotId();
-        OperandStack stack = frame.getOperandStack();
+        OperandStack_ stack = frame.getOperandStack();
 
         switch (descriptor.charAt(0)) {
             case 'Z':
@@ -39,7 +39,7 @@ public class PUT_FIELD extends Index16Instruction {
             case 'S':
             case 'I': {
                 int val = stack.popInt();
-                Myobject ref = stack.popRef();
+                Instance_ ref = stack.popRef();
                 if (ref == null) {
                     throw new NullPointerException("call "+field.getName()+" on a null object");
                 }
@@ -48,7 +48,7 @@ public class PUT_FIELD extends Index16Instruction {
             }
             case 'F': {
                 float val = stack.popFloat();
-                Myobject ref = stack.popRef();
+                Instance_ ref = stack.popRef();
                 if (ref == null) {
                     throw new NullPointerException("call "+field.getName()+" on a null object");
                 }
@@ -57,7 +57,7 @@ public class PUT_FIELD extends Index16Instruction {
             }
             case 'J': {
                 long val = stack.popLong();
-                Myobject ref = stack.popRef();
+                Instance_ ref = stack.popRef();
                 if (ref == null) {
                     throw new NullPointerException("call "+field.getName()+" on a null object");
                 }
@@ -66,7 +66,7 @@ public class PUT_FIELD extends Index16Instruction {
             }
             case 'D': {
                 double val = stack.popDouble();
-                Myobject ref = stack.popRef();
+                Instance_ ref = stack.popRef();
                 if (ref == null) {
                     throw new NullPointerException("call "+field.getName()+" on a null object");
                 }
@@ -75,8 +75,8 @@ public class PUT_FIELD extends Index16Instruction {
             }
             case 'L':
             case '[': {
-                Myobject val = stack.popRef();
-                Myobject ref = stack.popRef();
+                Instance_ val = stack.popRef();
+                Instance_ ref = stack.popRef();
                 if (ref == null) {
                     throw new NullPointerException("call "+field.getName()+" on a null object");
                 }

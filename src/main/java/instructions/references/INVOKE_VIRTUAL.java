@@ -1,21 +1,20 @@
 package instructions.references;
 
 import instructions.base.Index16Instruction;
-import instructions.base.MethodInvokeLogic;
-import rtda.Myframe;
-import rtda.OperandStack;
+import rtda.stack.OperandStack_;
+import rtda.stack.StackFrame_;
 import rtda.heap.*;
 
 public class INVOKE_VIRTUAL extends Index16Instruction {
     @Override
-    public void execute(Myframe frame) {
-        Myclass currentClass = frame.getMyMethod().getMyclass();
+    public void execute(StackFrame_ frame) {
+        Class_ currentClass = frame.getMyMethod().getClass_();
         RuntimeConstantPool cp = currentClass.getRuntimeConstantPool();
         MethodRef methodRef = (MethodRef)(cp.getConstant(index).getVal());
 //        MyMethod resolvedMethod = methodRef.resolvedMethod();
 
         if (methodRef.getName().equals("println")) {
-            OperandStack stack = frame.getOperandStack();
+            OperandStack_ stack = frame.getOperandStack();
             switch (methodRef.getDescriptor()) {
                 case "(Z)V":
                     System.out.println(stack.popInt() != 0);
@@ -50,7 +49,7 @@ public class INVOKE_VIRTUAL extends Index16Instruction {
 //        if (resolvedMethod.isStatic()) {
 //            throw new IncompatibleClassChangeError();
 //        }
-//        Myobject ref = frame.getOperandStack().getRefFromTop(resolvedMethod.getArgSlotCount() - 1);
+//        Instance_ ref = frame.getOperandStack().getRefFromTop(resolvedMethod.getArgSlotCount() - 1);
 
 //        if (ref == null) {
 //            // hack
@@ -62,10 +61,10 @@ public class INVOKE_VIRTUAL extends Index16Instruction {
 //        }
 //
 //        if (resolvedMethod.isProtected()
-//                && resolvedMethod.getMyclass().isSuperClassOf(currentClass)
-//                && resolvedMethod.getMyclass().getPackageName().equals(currentClass.getPackageName())
-//                && ref.getMyclass() != currentClass
-//                && !ref.getMyclass().isSubClassOf(currentClass)) {
+//                && resolvedMethod.getClass_().isSuperClassOf(currentClass)
+//                && resolvedMethod.getClass_().getPackageName().equals(currentClass.getPackageName())
+//                && ref.getClass_() != currentClass
+//                && !ref.getClass_().isSubClassOf(currentClass)) {
 //            throw new IllegalAccessError();
 //        }
 //
@@ -79,7 +78,7 @@ public class INVOKE_VIRTUAL extends Index16Instruction {
 //        MethodInvokeLogic.invokeMethod(frame, methodToBeInvoked);
 //    }
 //
-//    public void _println(OperandStack stack, String descriptor) {
+//    public void _println(OperandStack_ stack, String descriptor) {
 
     }
 }

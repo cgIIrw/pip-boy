@@ -18,16 +18,16 @@ public class MyMethod extends ClassMember {
         return maxLocals;
     }
 
-    public MyMethod(Myclass myclass, MemberInfo classFileMemberInfo) {
-        super(myclass, classFileMemberInfo);
+    public MyMethod(Class_ class_, MemberInfo classFileMemberInfo) {
+        super(class_, classFileMemberInfo);
         copyAttributes(classFileMemberInfo);
         calcArgSlotCount();
     }
 
-    public static MyMethod[] newMethods(Myclass myclass, MemberInfo[] cfMethods) {
+    public static MyMethod[] newMethods(Class_ class_, MemberInfo[] cfMethods) {
         MyMethod[] methods = new MyMethod[cfMethods.length];
         for (int i = 0; i < methods.length; i++) {
-            methods[i] = new MyMethod(myclass, cfMethods[i]);
+            methods[i] = new MyMethod(class_, cfMethods[i]);
         }
         return methods;
     }

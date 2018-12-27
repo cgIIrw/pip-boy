@@ -1,18 +1,17 @@
 package instructions.stores.fstore;
 
 import instructions.base.Index8Instruction;
-import rtda.Myframe;
+import rtda.stack.StackFrame_;
 
 public class FSTORE extends Index8Instruction {
     @Override
-    public void execute(Myframe frame) {
+    public void execute(StackFrame_ frame) {
         fstore(frame, index);
-
     }
 
-    public static void fstore(Myframe myframe, int index) {
-//        Myobject ref = myframe.getLocalVars().getRef(index);
-        float ref = myframe.getOperandStack().popFloat();
-        myframe.getLocalVars().setFloat(index, ref);
+    static void fstore(StackFrame_ stackFrame, int index) {
+//        Instance_ ref = stackFrame.getLocalVars().getRef(index);
+        float ref = stackFrame.getOperandStack().popFloat();
+        stackFrame.getLocalVars().setFloat(index, ref);
     }
 }

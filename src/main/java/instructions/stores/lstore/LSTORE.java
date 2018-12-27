@@ -1,18 +1,17 @@
 package instructions.stores.lstore;
 
 import instructions.base.Index8Instruction;
-import rtda.Myframe;
+import rtda.stack.StackFrame_;
 
 public class LSTORE extends Index8Instruction {
     @Override
-    public void execute(Myframe frame) {
+    public void execute(StackFrame_ frame) {
         lstore(frame, index);
-
     }
 
-    public static void lstore(Myframe myframe, int index) {
-//        Myobject ref = myframe.getLocalVars().getRef(index);
-        long ref = myframe.getOperandStack().popLong();
-        myframe.getLocalVars().setLong(index, ref);
+    static void lstore(StackFrame_ stackFrame, int index) {
+//        Instance_ ref = stackFrame.getLocalVars().getRef(index);
+        long ref = stackFrame.getOperandStack().popLong();
+        stackFrame.getLocalVars().setLong(index, ref);
     }
 }

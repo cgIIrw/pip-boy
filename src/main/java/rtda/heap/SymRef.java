@@ -5,7 +5,7 @@ public class SymRef {
     private String className;
 
     // 符号引用的真正类，解析阶段将符号引用替换成直接引用
-    private Myclass myclass;
+    private Class_ class_;
 
     public SymRef(RuntimeConstantPool runtimeConstantPool) {
         this.runtimeConstantPool = runtimeConstantPool;
@@ -13,20 +13,20 @@ public class SymRef {
 
     // todo
 
-    public Myclass resolvedClass() {
-        if (myclass == null) {
+    public Class_ resolvedClass() {
+        if (class_ == null) {
             resolvedClassRef();
         }
-        return myclass;
+        return class_;
     }
 
     public void resolvedClassRef() {
-        Myclass d = this.runtimeConstantPool.getMyclass();
-        Myclass c = d.getLoader().loadClass(this.className);
+        Class_ d = this.runtimeConstantPool.getClass_();
+        Class_ c = d.getLoader().loadClass(this.className);
         if (!c.isAccessibleTo(d)) {
             throw new IllegalAccessError("java.lang.IllegalAccessError");
         }
-        this.myclass = c;
+        this.class_ = c;
     }
 
     public RuntimeConstantPool getRuntimeConstantPool() {
@@ -37,8 +37,8 @@ public class SymRef {
         return className;
     }
 
-    public Myclass getMyclass() {
-        return myclass;
+    public Class_ getClass_() {
+        return class_;
     }
 
     public void setClassName(String className) {

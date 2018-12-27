@@ -2,16 +2,16 @@ package instructions.constants.Ldc;
 
 import classfile.constantpool.ConstantInfoFactory;
 import instructions.base.Index8Instruction;
-import rtda.Myframe;
-import rtda.OperandStack;
+import rtda.stack.OperandStack_;
+import rtda.stack.StackFrame_;
 import rtda.heap.Constant;
 import rtda.heap.RuntimeConstantPool;
 
 public class LDC extends Index8Instruction {
     @Override
-    public void execute(Myframe frame) {
-        OperandStack stack = frame.getOperandStack();
-        RuntimeConstantPool cp = frame.getMyMethod().getMyclass().getRuntimeConstantPool();
+    public void execute(StackFrame_ frame) {
+        OperandStack_ stack = frame.getOperandStack();
+        RuntimeConstantPool cp = frame.getMyMethod().getClass_().getRuntimeConstantPool();
         Constant c = cp.getConstant(index);
 
         switch (c.getType()) {

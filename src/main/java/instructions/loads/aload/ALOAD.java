@@ -1,18 +1,18 @@
 package instructions.loads.aload;
 
 import instructions.base.Index8Instruction;
-import rtda.Myframe;
-import rtda.heap.Myobject;
+import rtda.stack.StackFrame_;
+import rtda.heap.Instance_;
 
 public class ALOAD extends Index8Instruction {
     @Override
-    public void execute(Myframe frame) {
+    public void execute(StackFrame_ frame) {
         aload(frame, index);
 
     }
 
-    public static void aload(Myframe myframe, int index) {
-        Myobject ref = myframe.getLocalVars().getRef(index);
-        myframe.getOperandStack().pushRef(ref);
+    public static void aload(StackFrame_ stackFrame, int index) {
+        Instance_ ref = stackFrame.getLocalVars().getRef(index);
+        stackFrame.getOperandStack().pushRef(ref);
     }
 }

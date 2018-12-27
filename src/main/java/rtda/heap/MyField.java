@@ -9,16 +9,16 @@ public class MyField extends ClassMember {
     int constValue_index;
     int slotId;
 
-    public MyField(Myclass myclass, MemberInfo classFileMemberInfo) {
-        super(myclass, classFileMemberInfo);
+    public MyField(Class_ class_, MemberInfo classFileMemberInfo) {
+        super(class_, classFileMemberInfo);
         copyAttributes(classFileMemberInfo);
     }
 
-    public static MyField[] newFields(Myclass myclass, MemberInfo[] cfFields) {
+    public static MyField[] newFields(Class_ class_, MemberInfo[] cfFields) {
         MyField[] fields = new MyField[cfFields.length];
         for (int i = 0; i < fields.length; i++) {
             // 参看构造函数
-            fields[i] = new MyField(myclass, cfFields[i]);
+            fields[i] = new MyField(class_, cfFields[i]);
         }
         return fields;
     }

@@ -1,8 +1,7 @@
 package rtda.heap;
 
 import classfile.ClassFile;
-import rtda.LocalVars;
-import rtda.Slot;
+import rtda.stack.LocalVars_;
 
 public class Class_ {
     //
@@ -30,7 +29,7 @@ public class Class_ {
 
     private int staticSlotCount;
 
-    LocalVars staticVars;
+    LocalVars_ staticVars;
 
     public Class_(ClassFile cf) {
         this.accessFlags = cf.getAccessFlags();
@@ -88,10 +87,10 @@ public class Class_ {
         return other.isSubClassOf(this);
     }
 
-    public boolean isSubClassOf(Class_ myclass) {
+    public boolean isSubClassOf(Class_ class_) {
 
         for (Class_ c = this.superClass; c != null; c = c.superClass) {
-            if (c == myclass) {
+            if (c == class_) {
                 return true;
             }
         }
@@ -139,11 +138,11 @@ public class Class_ {
         return this.isPublic() || (this.getPackageName() == otherclass.getPackageName());
     }
 
-    public Instance newObject() {
-        return new Instance(this);
+    public Instance_ newObject() {
+        return new Instance_(this);
     }
 
-    public LocalVars getStaticVars() {
+    public LocalVars_ getStaticVars() {
         return staticVars;
     }
 
@@ -243,7 +242,7 @@ public class Class_ {
         this.staticSlotCount = staticSlotCount;
     }
 
-    public void setStaticVars(LocalVars staticVars) {
+    public void setStaticVars(LocalVars_ staticVars) {
         this.staticVars = staticVars;
     }
 

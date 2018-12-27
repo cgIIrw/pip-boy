@@ -2,13 +2,13 @@ package instructions.extended;
 
 import instructions.base.Branch;
 import instructions.base.BranchInstruction;
-import rtda.Myframe;
-import rtda.heap.Myobject;
+import rtda.stack.StackFrame_;
+import rtda.heap.Instance_;
 
 public class IFNONNULL extends BranchInstruction {
     @Override
-    public void execute(Myframe frame) {
-        Myobject ref = frame.getOperandStack().popRef();
+    public void execute(StackFrame_ frame) {
+        Instance_ ref = frame.getOperandStack().popRef();
 
         if (ref != null) {
             Branch.branch(frame, this.getOffset());

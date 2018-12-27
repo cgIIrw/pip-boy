@@ -1,18 +1,18 @@
 package rtda.heap;
 
-import rtda.LocalVars;
+import rtda.stack.LocalVars_;
 
 // 实例对象的表示方法
 public class Instance_ {
     private Class_ class_;
-    private LocalVars fields;
+    private LocalVars_ fields;
 
     public Instance_(Class_ class_) {
         this.class_ = class_;
-        fields = new LocalVars(class_.getInstanceSlotCount());
+        fields = new LocalVars_(class_.getInstanceSlotCount());
     }
 
-    public LocalVars getFields() {
+    public LocalVars_ getFields() {
         return fields;
     }
 
@@ -20,7 +20,7 @@ public class Instance_ {
         return s.isAssignableFrom(this.class_);
     }
 
-    public Class_ getMyclass() {
+    public Class_ getClass_() {
         return class_;
     }
 }

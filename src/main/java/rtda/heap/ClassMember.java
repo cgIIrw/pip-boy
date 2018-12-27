@@ -7,11 +7,11 @@ public class ClassMember {
     private String name;
     private String descriptor;
     // 可以通过方法或字段访问到它所属的类
-    private Myclass myclass;
+    private Class_ class_;
 
-    public ClassMember(Myclass myclass, MemberInfo classFileMemberInfo) {
+    public ClassMember(Class_ class_, MemberInfo classFileMemberInfo) {
         copyMemberInfo(classFileMemberInfo);
-        this.myclass = myclass;
+        this.class_ = class_;
     }
 
     private void copyMemberInfo(MemberInfo memberInfo) {
@@ -52,27 +52,27 @@ public class ClassMember {
         return descriptor;
     }
 
-    public Myclass getMyclass() {
-        return myclass;
+    public Class_ getClass_() {
+        return class_;
     }
 
     // myclass1是否可以访问myclass
-    public boolean isAccessibleTo(Myclass myclass1) {
+    public boolean isAccessibleTo(Class_ myclass1) {
         if (this.isPublic()) {
             return true;
         }
         // 不同包下相同的类是否需要考虑？或者说自己是否为自己的子类？不吝啬打括号
         if (this.isProtected()) {
-            return (myclass1 == myclass) || myclass1.isSubClassOf(myclass)
-                    || (myclass1.getPackageName() == myclass.getPackageName());
+            return (myclass1 == class_) || myclass1.isSubClassOf(class_)
+                    || (myclass1.getPackageName() == class_.getPackageName());
         }
 
         // 这是默认包访问
         if (!this.isPrivate()) {
-            return myclass1.getPackageName() == myclass.getPackageName();
+            return myclass1.getPackageName() == class_.getPackageName();
         }
 
-        return myclass1 == myclass;
+        return myclass1 == class_;
     }
 
     public int getAccessFlags() {
@@ -91,7 +91,7 @@ public class ClassMember {
         this.descriptor = descriptor;
     }
 
-    public void setMyclass(Myclass myclass) {
-        this.myclass = myclass;
+    public void setMyclass(Class_ class_) {
+        this.class_ = class_;
     }
 }

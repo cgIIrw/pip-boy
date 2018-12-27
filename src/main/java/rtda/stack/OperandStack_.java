@@ -78,8 +78,7 @@ public class OperandStack_ {
     }
 
     public void pushSlot(Slot_ slot) {
-        this.slots[this.size].setRef(slot.getRef());
-        this.slots[this.size].setNum(slot.getNum());
+        this.slots[this.size] = slot;
         this.size++;
     }
 

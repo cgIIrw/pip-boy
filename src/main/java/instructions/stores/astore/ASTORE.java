@@ -1,19 +1,18 @@
 package instructions.stores.astore;
 
 import instructions.base.Index8Instruction;
-import rtda.Myframe;
-import rtda.heap.Myobject;
+import rtda.stack.StackFrame_;
+import rtda.heap.Instance_;
 
 public class ASTORE extends Index8Instruction {
     @Override
-    public void execute(Myframe frame) {
+    public void execute(StackFrame_ frame) {
         astore(frame, index);
-
     }
 
-    public static void astore(Myframe myframe, int index) {
-//        Myobject ref = myframe.getLocalVars().getRef(index);
-        Myobject ref = myframe.getOperandStack().popRef();
-        myframe.getLocalVars().setRef(index, ref);
+    static void astore(StackFrame_ stackFrame, int index) {
+//        Instance_ ref = stackFrame.getLocalVars().getRef(index);
+        Instance_ ref = stackFrame.getOperandStack().popRef();
+        stackFrame.getLocalVars().setRef(index, ref);
     }
 }

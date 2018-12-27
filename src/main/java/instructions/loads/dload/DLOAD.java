@@ -1,16 +1,16 @@
 package instructions.loads.dload;
 
 import instructions.base.Index8Instruction;
-import rtda.Myframe;
+import rtda.stack.StackFrame_;
 
 public class DLOAD extends Index8Instruction {
     @Override
-    public void execute(Myframe frame) {
+    public void execute(StackFrame_ frame) {
         dload(frame, index);
     }
 
-    public static void dload(Myframe myframe, int index) {
-        double val = myframe.getLocalVars().getDouble(index);
-        myframe.getOperandStack().pushDouble(val);
+    public static void dload(StackFrame_ stackFrame, int index) {
+        double val = stackFrame.getLocalVars().getDouble(index);
+        stackFrame.getOperandStack().pushDouble(val);
     }
 }

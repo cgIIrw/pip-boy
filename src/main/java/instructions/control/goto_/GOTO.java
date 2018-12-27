@@ -1,4 +1,4 @@
-package instructions.control.goto_ins;
+package instructions.control.goto_;
 
 import instructions.base.Branch;
 import instructions.base.BranchInstruction;

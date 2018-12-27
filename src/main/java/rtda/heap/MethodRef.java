@@ -33,10 +33,10 @@ public class MethodRef extends MemberRef {
     public void resolveMethodRef() {
 
         // 当前代码所处的类d
-        Myclass d = this.getRuntimeConstantPool().getMyclass();
+        Class_ d = this.getRuntimeConstantPool().getClass_();
 
         // 要解析的非接口方法所属的类或接口c
-        Myclass c = this.resolvedClass();
+        Class_ c = this.resolvedClass();
 
         // 判断c是否是接口，如果是则抛出IncompatibleClassChangeError异常
         if (c.isInterface()) {
@@ -60,18 +60,18 @@ public class MethodRef extends MemberRef {
         this.method = method;
     }
 
-    public MyMethod lookupMethod(Myclass myclass, String name, String descriptor) {
+    public MyMethod lookupMethod(Class_ class_, String name, String descriptor) {
         MyMethod method = null;
 
         // 在类myclass和它的父类中递归查找是否有简单名和描述符都与目标相匹配的方法，
         // 如果有，返回这个方法的直接引用，查找结束
-        method = MethodLookup.lookupMethodInClass(myclass, name, descriptor);
+        method = MethodLookup.lookupMethodInClass(class_, name, descriptor);
         if (method != null) {
             return method;
         }
 
         // 在类myclass实现的接口列表及它们的父接口中递归查找是否有简单名和描述符都与目标相匹配的方法
-        method = MethodLookup.lookupMethodInInterfaces(myclass.getInterfaces(), name, descriptor);
+        method = MethodLookup.lookupMethodInInterfaces(class_.getInterfaces(), name, descriptor);
 
         // 如果存在匹配的方法，说明类myclass是一个抽象类，查找结束，抛出AbstractMethodError异常
         if (method != null) {

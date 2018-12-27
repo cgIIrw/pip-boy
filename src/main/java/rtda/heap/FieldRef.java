@@ -27,8 +27,8 @@ public class FieldRef extends MemberRef{
     }
 
     public void resolveFieldRef() {
-        Myclass d = this.getRuntimeConstantPool().getMyclass();
-        Myclass c = resolvedClass();
+        Class_ d = this.getRuntimeConstantPool().getClass_();
+        Class_ c = resolvedClass();
         MyField field = lookupField(c, getName(), getDescriptor());
 
         if (field == null) {
@@ -43,22 +43,22 @@ public class FieldRef extends MemberRef{
 
 
 
-    public MyField lookupField(Myclass myclass, String name, String descriptor) {
-        for (MyField field : myclass.getFields()) {
+    public MyField lookupField(Class_ class_, String name, String descriptor) {
+        for (MyField field : class_.getFields()) {
             if (this.getName().equals(field.getName()) && this.getDescriptor().equals(field.getDescriptor())) {
                 return field;
             }
         }
 
-        for (Myclass iface : myclass.getInterfaces()) {
+        for (Class_ iface : class_.getInterfaces()) {
             MyField field = lookupField(iface, name, descriptor);
             if (field != null) {
                 return field;
             }
         }
 
-        if (myclass.getSuperClass() != null) {
-            return lookupField(myclass.getSuperClass(), name, descriptor);
+        if (class_.getSuperClass() != null) {
+            return lookupField(class_.getSuperClass(), name, descriptor);
         }
         return null;
     }
