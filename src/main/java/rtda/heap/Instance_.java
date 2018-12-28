@@ -1,5 +1,6 @@
 package rtda.heap;
 
+import rtda.methodarea.Class_;
 import rtda.stack.LocalVars_;
 
 // 实例对象的表示方法

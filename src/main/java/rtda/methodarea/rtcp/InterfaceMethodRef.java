@@ -1,16 +1,21 @@
-package rtda.heap;
+package rtda.methodarea.rtcp;
 
 import classfile.constantpool.ConstantInfo;
 import classfile.constantpool.constantInfos.ConstantInterfaceMethodrefInfo;
+import rtda.heap.MethodLookup;
+import rtda.methodarea.Class_;
+import rtda.methodarea.Method_;
+import rtda.methodarea.rtcp.MemberRef;
+import rtda.methodarea.rtcp.RuntimeConstantPool_;
 
 /**
  * 接口方法引用类，并提供解析方法
  */
 public class InterfaceMethodRef extends MemberRef {
-    private MyMethod method;
+    private Method_ method;
 
 
-    public InterfaceMethodRef(RuntimeConstantPool runtimeConstantPool, ConstantInterfaceMethodrefInfo refInfo) {
+    public InterfaceMethodRef(RuntimeConstantPool_ runtimeConstantPool, ConstantInterfaceMethodrefInfo refInfo) {
         super(runtimeConstantPool);
         copyMemberRefInfo(refInfo);
     }
@@ -22,7 +27,7 @@ public class InterfaceMethodRef extends MemberRef {
         setDescriptor(((ConstantInterfaceMethodrefInfo)info).getNameAndDescriptor()[1]);
     }
 
-    public MyMethod resolvedInterfaceMethod() {
+    public Method_ resolvedInterfaceMethod() {
 
         // 判断是否缓存有已经解析过的方法，没有则进行解析
         if (this.method == null) {
@@ -44,7 +49,7 @@ public class InterfaceMethodRef extends MemberRef {
             throw new IncompatibleClassChangeError();
         }
 
-        MyMethod method = lookupInterfaceMethod(c, this.getName(), this.getDescriptor());
+        Method_ method = lookupInterfaceMethod(c, this.getName(), this.getDescriptor());
 
         // 执行到这一步如果仍然没有查找到符合条件的方法，则抛出NoSuchMethodError异常
         if (method == null) {
@@ -59,10 +64,10 @@ public class InterfaceMethodRef extends MemberRef {
         this.method = method;
     }
 
-    public MyMethod lookupInterfaceMethod(Class_ iface, String name, String descriptor) {
+    public Method_ lookupInterfaceMethod(Class_ iface, String name, String descriptor) {
 
         // 在接口中查找是否有简单名和描述符都与目标相匹配的方法，如果有，返回这个方法的直接引用，查找结束
-        for (MyMethod method : iface.getMethods()) {
+        for (Method_ method : iface.getMethods()) {
             if (method.getName().equals(name) && method.getDescriptor().equals(descriptor)) {
                 return method;
             }

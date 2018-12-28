@@ -1,17 +1,19 @@
 package instructions.references;
 
 import instructions.base.Index16Instruction;
+import rtda.methodarea.Class_;
+import rtda.methodarea.rtcp.MethodRef;
+import rtda.methodarea.rtcp.RuntimeConstantPool_;
 import rtda.stack.OperandStack_;
 import rtda.stack.StackFrame_;
-import rtda.heap.*;
 
 public class INVOKE_VIRTUAL extends Index16Instruction {
     @Override
     public void execute(StackFrame_ frame) {
-        Class_ currentClass = frame.getMyMethod().getClass_();
-        RuntimeConstantPool cp = currentClass.getRuntimeConstantPool();
+        Class_ currentClass = frame.getMethod_().getClass_();
+        RuntimeConstantPool_ cp = currentClass.getRuntimeConstantPool();
         MethodRef methodRef = (MethodRef)(cp.getConstant(index).getVal());
-//        MyMethod resolvedMethod = methodRef.resolvedMethod();
+//        Method_ resolvedMethod = methodRef.resolvedMethod();
 
         if (methodRef.getName().equals("println")) {
             OperandStack_ stack = frame.getOperandStack();
@@ -68,7 +70,7 @@ public class INVOKE_VIRTUAL extends Index16Instruction {
 //            throw new IllegalAccessError();
 //        }
 //
-//        MyMethod methodToBeInvoked = MethodRef.lookupMethodInClass(currentClass.getSuperClass(),
+//        Method_ methodToBeInvoked = MethodRef.lookupMethodInClass(currentClass.getSuperClass(),
 //                methodRef.getName(), methodRef.getDescriptor());
 //
 //        if (methodToBeInvoked == null || methodToBeInvoked.isAbstract()) {

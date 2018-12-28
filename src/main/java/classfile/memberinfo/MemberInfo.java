@@ -21,11 +21,11 @@ public class MemberInfo {
 
     public static MemberInfo[] readMembers(ClassReader reader, ConstantPool cp) {
         int memberCount = reader.readUint16();
-        MemberInfo[] members = new MemberInfo[memberCount];
+        MemberInfo[] memberInfos = new MemberInfo[memberCount];
         for (int i = 0; i < memberCount; i++) {
-            members[i] = new MemberInfo(reader, cp);
+            memberInfos[i] = new MemberInfo(reader, cp);
         }
-        return members;
+        return memberInfos;
     }
 
     private MemberInfo(ClassReader reader, ConstantPool cp) {

@@ -1,23 +1,22 @@
-package rtda.heap;
+package rtda.methodarea;
 
 import classfile.memberinfo.MemberInfo;
+import rtda.methodarea.Class_;
+import rtda.utils.AccessFlags;
 
-public class ClassMember {
+// 字段和方法的公共类
+public class ClassMember_ {
     private int accessFlags;
     private String name;
     private String descriptor;
     // 可以通过方法或字段访问到它所属的类
     private Class_ class_;
 
-    public ClassMember(Class_ class_, MemberInfo classFileMemberInfo) {
-        copyMemberInfo(classFileMemberInfo);
+    public ClassMember_(Class_ class_, MemberInfo memberInfo) {
+        this.accessFlags = memberInfo.getAccessFlags();
+        this.name = memberInfo.getName();
+        this.descriptor = memberInfo.getDescriptor();
         this.class_ = class_;
-    }
-
-    private void copyMemberInfo(MemberInfo memberInfo) {
-        accessFlags = memberInfo.getAccessFlags();
-        name = memberInfo.getName();
-        descriptor = memberInfo.getDescriptor();
     }
 
     public boolean isPublic() {
@@ -57,22 +56,23 @@ public class ClassMember {
     }
 
     // myclass1是否可以访问myclass
-    public boolean isAccessibleTo(Class_ myclass1) {
+    public boolean isAccessibleTo(Class_ class_1) {
+        // 如果被访问的类是public当然可以被访问
         if (this.isPublic()) {
             return true;
         }
         // 不同包下相同的类是否需要考虑？或者说自己是否为自己的子类？不吝啬打括号
         if (this.isProtected()) {
-            return (myclass1 == class_) || myclass1.isSubClassOf(class_)
-                    || (myclass1.getPackageName() == class_.getPackageName());
+            return (class_1 == class_) || class_1.isSubClassOf(class_)
+                    || (class_1.getPackageName().equals(class_.getPackageName()));
         }
 
         // 这是默认包访问
         if (!this.isPrivate()) {
-            return myclass1.getPackageName() == class_.getPackageName();
+            return class_1.getPackageName().equals(class_.getPackageName());
         }
 
-        return myclass1 == class_;
+        return class_1 == class_;
     }
 
     public int getAccessFlags() {
@@ -91,7 +91,7 @@ public class ClassMember {
         this.descriptor = descriptor;
     }
 
-    public void setMyclass(Class_ class_) {
+    public void setThisClass(Class_ class_) {
         this.class_ = class_;
     }
 }

@@ -1,15 +1,20 @@
-package rtda.heap;
+package rtda.methodarea.rtcp;
 
 import classfile.constantpool.ConstantInfo;
 import classfile.constantpool.constantInfos.ConstantMethodrefInfo;
+import rtda.heap.MethodLookup;
+import rtda.methodarea.Class_;
+import rtda.methodarea.Method_;
+import rtda.methodarea.rtcp.MemberRef;
+import rtda.methodarea.rtcp.RuntimeConstantPool_;
 
 /**
  * 普通方法引用类，并提供解析方法
  */
 public class MethodRef extends MemberRef {
-    private MyMethod method;
+    private Method_ method;
 
-    public MethodRef(RuntimeConstantPool runtimeConstantPool, ConstantMethodrefInfo methodrefInfo) {
+    public MethodRef(RuntimeConstantPool_ runtimeConstantPool, ConstantMethodrefInfo methodrefInfo) {
         super(runtimeConstantPool);
         copyMemberRefInfo(methodrefInfo);
     }
@@ -21,7 +26,7 @@ public class MethodRef extends MemberRef {
         setDescriptor(((ConstantMethodrefInfo) info).getNameAndDescriptor()[1]);
     }
 
-    public MyMethod resolvedMethod() {
+    public Method_ resolvedMethod() {
 
         // 判断是否缓存有已经解析过的方法，没有则进行解析
         if (this.method == null) {
@@ -44,7 +49,7 @@ public class MethodRef extends MemberRef {
         }
 
         // 注释见lookupMethod实现
-        MyMethod method = lookupMethod(c, this.getName(), this.getDescriptor());
+        Method_ method = lookupMethod(c, this.getName(), this.getDescriptor());
 
         // 执行到这一步如果仍然没有查找到符合条件的方法，则抛出NoSuchMethodError异常
         if (method == null) {
@@ -60,8 +65,8 @@ public class MethodRef extends MemberRef {
         this.method = method;
     }
 
-    public MyMethod lookupMethod(Class_ class_, String name, String descriptor) {
-        MyMethod method = null;
+    public Method_ lookupMethod(Class_ class_, String name, String descriptor) {
+        Method_ method = null;
 
         // 在类myclass和它的父类中递归查找是否有简单名和描述符都与目标相匹配的方法，
         // 如果有，返回这个方法的直接引用，查找结束

@@ -3,10 +3,10 @@ package instructions.base;
 import rtda.stack.StackFrame_;
 import rtda.stack.Thread_;
 import rtda.stack.Slot_;
-import rtda.heap.MyMethod;
+import rtda.methodarea.Method_;
 
 public class MethodInvokeLogic {
-    public static void invokeMethod(StackFrame_ invokerFrame, MyMethod method) {
+    public static void invokeMethod(StackFrame_ invokerFrame, Method_ method) {
 
         // 获取调用方法的栈帧所在的线程
         Thread_ thread = invokerFrame.getThread_();

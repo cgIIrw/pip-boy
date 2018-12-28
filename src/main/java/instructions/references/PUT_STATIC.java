@@ -1,10 +1,14 @@
 package instructions.references;
 
 import instructions.base.Index16Instruction;
+import rtda.methodarea.Class_;
+import rtda.methodarea.Field_;
+import rtda.methodarea.Method_;
+import rtda.methodarea.rtcp.FieldRef;
+import rtda.methodarea.rtcp.RuntimeConstantPool_;
 import rtda.stack.LocalVars_;
 import rtda.stack.StackFrame_;
 import rtda.stack.OperandStack_;
-import rtda.heap.*;
 
 
 /**
@@ -15,11 +19,11 @@ public class PUT_STATIC extends Index16Instruction {
 
     @Override
     public void execute(StackFrame_ frame) {
-        MyMethod currentMethod = frame.getMyMethod();
+        Method_ currentMethod = frame.getMethod_();
         Class_ currentClass = currentMethod.getClass_();
-        RuntimeConstantPool cp = currentClass.getRuntimeConstantPool();
+        RuntimeConstantPool_ cp = currentClass.getRuntimeConstantPool();
         FieldRef fieldRef = (FieldRef)((cp.getConstant(index)).getVal());
-        MyField field = fieldRef.resolvedField();
+        Field_ field = fieldRef.resolvedField();
         Class_ class1 = field.getClass_();
         // todo
 

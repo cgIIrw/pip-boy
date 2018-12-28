@@ -6,11 +6,11 @@ import rtda.stack.StackFrame_;
 public class INVOKE_SPECIAL extends Index16Instruction {
     @Override
     public void execute(StackFrame_ frame) {
-//        Class_ currentClass = frame.getMyMethod().getClass_();
-//        RuntimeConstantPool cp = currentClass.getRuntimeConstantPool();
+//        Class_ currentClass = frame.getMethod_().getClass_();
+//        RuntimeConstantPool_ cp = currentClass.getRuntimeConstantPool();
 //        MethodRef methodRef = (MethodRef)(cp.getConstant(index).getVal());
 //        Class_ resolvedClass = methodRef.resolvedClass();
-//        MyMethod resolvedMethod = methodRef.resolvedMethod();
+//        Method_ resolvedMethod = methodRef.resolvedMethod();
 //
 //        if (resolvedMethod.getName().equals("<init>") && resolvedMethod.getClass_() != resolvedClass) {
 //            throw new NoSuchMethodError();
@@ -32,7 +32,7 @@ public class INVOKE_SPECIAL extends Index16Instruction {
 //                && ref.getClass_().isSubClassOf(currentClass)) {
 //            throw new IllegalAccessError();
 //        }
-//        MyMethod methodToBeInvoked = resolvedMethod;
+//        Method_ methodToBeInvoked = resolvedMethod;
 //        if (currentClass.isSuper()
 //                && resolvedClass.isSubClassOf(currentClass)
 //                && resolvedMethod.getName().equals("<init>")) {

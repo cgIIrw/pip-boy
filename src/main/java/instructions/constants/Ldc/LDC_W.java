@@ -7,14 +7,14 @@ import classfile.constantpool.ConstantInfoFactory;
 import instructions.base.Index16Instruction;
 import rtda.stack.OperandStack_;
 import rtda.stack.StackFrame_;
-import rtda.heap.Constant;
-import rtda.heap.RuntimeConstantPool;
+import rtda.methodarea.rtcp.Constant;
+import rtda.methodarea.rtcp.RuntimeConstantPool_;
 
 public class LDC_W extends Index16Instruction {
     @Override
     public void execute(StackFrame_ frame) {
         OperandStack_ stack = frame.getOperandStack();
-        RuntimeConstantPool cp = frame.getMyMethod().getClass_().getRuntimeConstantPool();
+        RuntimeConstantPool_ cp = frame.getMethod_().getClass_().getRuntimeConstantPool();
         Constant c = cp.getConstant(index);
 
         switch (c.getType()) {

@@ -1,13 +1,16 @@
-package rtda.heap;
+package rtda.methodarea.rtcp;
 
 import classfile.constantpool.ConstantInfo;
 import classfile.constantpool.constantInfos.ConstantFieldrefInfo;
+import rtda.methodarea.Class_;
+import rtda.methodarea.Field_;
+import rtda.methodarea.rtcp.MemberRef;
+import rtda.methodarea.rtcp.RuntimeConstantPool_;
 
-public class FieldRef extends MemberRef{
-    private MyField myField;
+public class FieldRef extends MemberRef {
+    private Field_ field;
 
-
-    public FieldRef(RuntimeConstantPool runtimeConstantPool, ConstantFieldrefInfo fieldRefInfo) {
+    public FieldRef(RuntimeConstantPool_ runtimeConstantPool, ConstantFieldrefInfo fieldRefInfo) {
         super(runtimeConstantPool);
         copyMemberRefInfo(fieldRefInfo);
     }
@@ -19,17 +22,17 @@ public class FieldRef extends MemberRef{
         setDescriptor(((ConstantFieldrefInfo)info).getNameAndDescriptor()[1]);
     }
 
-    public MyField resolvedField() {
-        if (myField == null) {
+    public Field_ resolvedField() {
+        if (field == null) {
             resolveFieldRef();
         }
-        return myField;
+        return field;
     }
 
     public void resolveFieldRef() {
         Class_ d = this.getRuntimeConstantPool().getClass_();
         Class_ c = resolvedClass();
-        MyField field = lookupField(c, getName(), getDescriptor());
+        Field_ field = lookupField(c, getName(), getDescriptor());
 
         if (field == null) {
             throw new NoSuchFieldError("java.lang.NoSuchFieldError");
@@ -38,20 +41,18 @@ public class FieldRef extends MemberRef{
         if (!field.isAccessibleTo(d)) {
             throw new IllegalAccessError("java.lang.IllegalAccessError");
         }
-        this.myField = field;
+        this.field = field;
     }
 
-
-
-    public MyField lookupField(Class_ class_, String name, String descriptor) {
-        for (MyField field : class_.getFields()) {
+    public Field_ lookupField(Class_ class_, String name, String descriptor) {
+        for (Field_ field : class_.getFields()) {
             if (this.getName().equals(field.getName()) && this.getDescriptor().equals(field.getDescriptor())) {
                 return field;
             }
         }
 
         for (Class_ iface : class_.getInterfaces()) {
-            MyField field = lookupField(iface, name, descriptor);
+            Field_ field = lookupField(iface, name, descriptor);
             if (field != null) {
                 return field;
             }

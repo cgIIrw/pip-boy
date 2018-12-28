@@ -1,14 +1,17 @@
-package rtda.heap;
+package rtda.methodarea;
 
 import classfile.attributeinfo.AttributeInfo;
 import classfile.memberinfo.MemberInfo;
 import classfile.attributeinfo.attributeinfos.CodeAttribute;
+import rtda.utils.AccessFlags;
+import rtda.heap.MethodDescriptor;
+import rtda.heap.MethodDescriptorParser;
 
-public class MyMethod extends ClassMember {
-    int maxStack;
-    int maxLocals;
-    int[] code;
-    int argSlotCount;
+public class Method_ extends ClassMember_ {
+    private int maxStack;
+    private int maxLocals;
+    private int[] code;
+    private int argSlotCount;
 
     public int getMaxStack() {
         return maxStack;
@@ -18,39 +21,30 @@ public class MyMethod extends ClassMember {
         return maxLocals;
     }
 
-    public MyMethod(Class_ class_, MemberInfo classFileMemberInfo) {
-        super(class_, classFileMemberInfo);
-        copyAttributes(classFileMemberInfo);
-        calcArgSlotCount();
-    }
-
-    public static MyMethod[] newMethods(Class_ class_, MemberInfo[] cfMethods) {
-        MyMethod[] methods = new MyMethod[cfMethods.length];
-        for (int i = 0; i < methods.length; i++) {
-            methods[i] = new MyMethod(class_, cfMethods[i]);
-        }
-        return methods;
-    }
-
-    public void copyAttributes(MemberInfo cfMethod) {
-        CodeAttribute codeAttribute = getConstantValueAttribute(cfMethod.getAttributes());
+    public Method_(Class_ class_, MemberInfo memberInfo) {
+        super(class_, memberInfo);
+        CodeAttribute codeAttribute = getCodeAttribute(memberInfo.getAttributes());
         if (codeAttribute != null) {
             this.maxStack = codeAttribute.getMaxStack();
             this.maxLocals = codeAttribute.getMaxLocals();
             this.code = codeAttribute.getCode();
-//            int[] tempi = new int[temp.length];
-//
-//            for (int i = 0; i < temp.length; i++) {
-//               tempi[i] = temp[i] & 0xff;
-//            }
-//            this.code = tempi;
         }
+        calcArgSlotCount();
     }
 
-    public CodeAttribute getConstantValueAttribute(AttributeInfo[] attributeInfos) {
+    // 创建多个method，最终会遍历的调用Method_的构造方法
+    public static Method_[] newMethods(Class_ class_, MemberInfo[] memberInfos) {
+        Method_[] methods = new Method_[memberInfos.length];
+        for (int i = 0; i < methods.length; i++) {
+            methods[i] = new Method_(class_, memberInfos[i]);
+        }
+        return methods;
+    }
+
+    private CodeAttribute getCodeAttribute(AttributeInfo[] attributeInfos) {
         for (AttributeInfo info : attributeInfos) {
             if (info instanceof CodeAttribute) {
-                return (CodeAttribute)info;
+                return (CodeAttribute) info;
             }
         }
         return null;

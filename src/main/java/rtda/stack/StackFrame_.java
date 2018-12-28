@@ -1,6 +1,6 @@
 package rtda.stack;
 
-import rtda.heap.MyMethod;
+import rtda.methodarea.Method_;
 
 // 虚拟机栈的栈帧
 public class StackFrame_ {
@@ -11,15 +11,15 @@ public class StackFrame_ {
     private OperandStack_ operandStack;
     // 当前所在线程
     private Thread_ thread;
-    private MyMethod myMethod;
+    private Method_ method;
     private int nextPC;
 
-    public StackFrame_(Thread_ thread, MyMethod myMethod) {
+    public StackFrame_(Thread_ thread, Method_ method) {
         this.thread = thread;
-        this.myMethod = myMethod;
+        this.method = method;
 
-        this.localVars = new LocalVars_(myMethod.getMaxLocals());
-        this.operandStack = new OperandStack_(myMethod.getMaxStack());
+        this.localVars = new LocalVars_(method.getMaxLocals());
+        this.operandStack = new OperandStack_(method.getMaxStack());
     }
 
     public StackFrame_(Thread_ thread, int maxLocals, int maxStack) {
@@ -40,8 +40,8 @@ public class StackFrame_ {
         return thread;
     }
 
-    public MyMethod getMyMethod() {
-        return myMethod;
+    public Method_ getMethod_() {
+        return method;
     }
 
     public int getNextPC() {

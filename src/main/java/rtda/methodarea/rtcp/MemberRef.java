@@ -1,13 +1,15 @@
-package rtda.heap;
+package rtda.methodarea.rtcp;
 
 import classfile.constantpool.ConstantInfo;
+import rtda.methodarea.rtcp.RuntimeConstantPool_;
+import rtda.methodarea.rtcp.SymRef;
 
-public abstract class MemberRef extends SymRef{
+public abstract class MemberRef extends SymRef {
 
     private String name;
     private String descriptor;
 
-    public MemberRef(RuntimeConstantPool runtimeConstantPool) {
+    public MemberRef(RuntimeConstantPool_ runtimeConstantPool) {
         super(runtimeConstantPool);
     }
 

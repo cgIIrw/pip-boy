@@ -1,4 +1,4 @@
-package rtda.heap;
+package rtda.utils;
 
 public class AccessFlags {
     public static final int ACC_PUBLIC = 0x0001;            // class field method

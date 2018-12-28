@@ -1,23 +1,26 @@
-package rtda.heap;
+package rtda.methodarea;
 
 import classfile.ClassFile;
+import rtda.heap.*;
+import rtda.methodarea.rtcp.RuntimeConstantPool_;
 import rtda.stack.LocalVars_;
+import rtda.utils.AccessFlags;
 
 public class Class_ {
     //
     private int accessFlags;
     //当前类名(完全限定名)
-    private String name;
+    private String thisClassName;
     //父类名(完全限定名)
     private String superClassName;
     //接口名(完全限定名)
     private String[] interfaceNames;
     //运行时常量池
-    private RuntimeConstantPool runtimeConstantPool;
-    // 字段表
-    private MyField[] fields;
-    // 方法表
-    private MyMethod[] methods;
+    private RuntimeConstantPool_ runtimeConstantPool;
+    // 字段集合
+    private Field_[] fields;
+    // 方法集合
+    private Method_[] methods;
     // 当前的类加载器
     private MyclassLoader loader;
     // 父类的Class
@@ -29,18 +32,18 @@ public class Class_ {
 
     private int staticSlotCount;
 
-    LocalVars_ staticVars;
+    private LocalVars_ staticVars;
 
     public Class_(ClassFile cf) {
         this.accessFlags = cf.getAccessFlags();
-        this.name = cf.getClassName();
+        this.thisClassName = cf.getClassName();
         this.superClassName = cf.getSuperClassName();
         this.interfaceNames = cf.getInterfaceNames();
-        this.runtimeConstantPool = new RuntimeConstantPool(this, cf.getConstantPool());
+        this.runtimeConstantPool = new RuntimeConstantPool_(this, cf.getConstantPool());
         // 由于返回数组，这里使用一个静态方法获取
-        this.fields = MyField.newFields(this, cf.getFields());
+        this.fields = Field_.newFields(this, cf.getFields());
         // 由于返回数组，这里使用一个静态方法获取
-        this.methods = MyMethod.newMethods(this, cf.getMethods());
+        this.methods = Method_.newMethods(this, cf.getMethods());
     }
 
     public boolean isPublic() {
@@ -76,9 +79,9 @@ public class Class_ {
     }
 
     public String getPackageName() {
-        int i = name.lastIndexOf("/");
+        int i = this.thisClassName.lastIndexOf("/");
         if (i > 0) {
-            return name.substring(0, i);
+            return this.thisClassName.substring(0, i);
         }
         return "";
     }
@@ -119,23 +122,22 @@ public class Class_ {
 
     public boolean isAssignableFrom(Class_ other) {
         // 判断other是不是this的子类或者继承自this
-        Class_ s = other;
         Class_ t = this;
 
-        if (s == t) {
+        if (t == other) {
             return true;
         }
 
         if (!t.isInterface()) {
-            return s.isSubClassOf(t);
+            return other.isSubClassOf(t);
         } else {
-            return s.isImplements(t);
+            return other.isImplements(t);
         }
     }
 
-
+    //
     public boolean isAccessibleTo(Class_ otherclass) {
-        return this.isPublic() || (this.getPackageName() == otherclass.getPackageName());
+        return this.isPublic() || (this.getPackageName().equals(otherclass.getPackageName()));
     }
 
     public Instance_ newObject() {
@@ -146,7 +148,7 @@ public class Class_ {
         return staticVars;
     }
 
-    public RuntimeConstantPool getRuntimeConstantPool() {
+    public RuntimeConstantPool_ getRuntimeConstantPool() {
         return runtimeConstantPool;
     }
 
@@ -154,8 +156,8 @@ public class Class_ {
         return accessFlags;
     }
 
-    public String getName() {
-        return name;
+    public String getThisClassName() {
+        return thisClassName;
     }
 
     public String getSuperClassName() {
@@ -166,11 +168,11 @@ public class Class_ {
         return interfaceNames;
     }
 
-    public MyField[] getFields() {
+    public Field_[] getFields() {
         return fields;
     }
 
-    public MyMethod[] getMethods() {
+    public Method_[] getMethods() {
         return methods;
     }
 
@@ -198,8 +200,8 @@ public class Class_ {
         this.accessFlags = accessFlags;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setThisClassName(String thisClassName) {
+        this.thisClassName = thisClassName;
     }
 
     public void setSuperClassName(String superClassName) {
@@ -210,15 +212,15 @@ public class Class_ {
         this.interfaceNames = interfaceNames;
     }
 
-    public void setRuntimeConstantPool(RuntimeConstantPool runtimeConstantPool) {
+    public void setRuntimeConstantPool(RuntimeConstantPool_ runtimeConstantPool) {
         this.runtimeConstantPool = runtimeConstantPool;
     }
 
-    public void setFields(MyField[] fields) {
+    public void setFields(Field_[] fields) {
         this.fields = fields;
     }
 
-    public void setMethods(MyMethod[] methods) {
+    public void setMethods(Method_[] methods) {
         this.methods = methods;
     }
 
@@ -247,10 +249,10 @@ public class Class_ {
     }
 
 
-    public MyMethod getStaticMethod(String name, String descriptor) {
-        for (MyMethod myMethod : this.methods) {
-            if (myMethod.isStatic() && myMethod.getName().equals(name) && myMethod.getDescriptor().equals(descriptor)) {
-                return myMethod;
+    public Method_ getStaticMethod(String name, String descriptor) {
+        for (Method_ method : this.methods) {
+            if (method.isStatic() && method.getName().equals(name) && method.getDescriptor().equals(descriptor)) {
+                return method;
             }
         }
         return null;
