@@ -7,7 +7,7 @@ public class MethodLookup {
 
     public static Method_ lookupMethodInClass(Class_ class_, String name, String descriptor) {
 
-        // 在myclass和它的父类中递归查找简单名和描述符都与目标相匹配的方法
+        // 在class_和它的父类中递归查找简单名和描述符都与目标相匹配的方法
         for (Class_ c = class_; c != null; c = c.getSuperClass()) {
             for (Method_ method : c.getMethods()) {
                 if (method.getName().equals(name) && method.getDescriptor().equals(descriptor)) {

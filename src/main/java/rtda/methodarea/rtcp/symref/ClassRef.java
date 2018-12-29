@@ -1,8 +1,8 @@
-package rtda.methodarea.rtcp;
+package rtda.methodarea.rtcp.symref;
 
 import classfile.constantpool.constantInfos.ConstantClassInfo;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
-import rtda.methodarea.rtcp.SymRef;
+import rtda.methodarea.rtcp.symref.SymRef;
 
 
 // 类或接口的符号引用

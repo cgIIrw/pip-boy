@@ -5,6 +5,10 @@ import classfile.constantpool.ConstantInfoFactory;
 import classfile.constantpool.ConstantPool;
 import classfile.constantpool.constantInfos.*;
 import rtda.methodarea.Class_;
+import rtda.methodarea.rtcp.symref.ClassRef;
+import rtda.methodarea.rtcp.symref.FieldRef;
+import rtda.methodarea.rtcp.symref.InterfaceMethodRef;
+import rtda.methodarea.rtcp.symref.MethodRef;
 
 import java.util.NoSuchElementException;
 

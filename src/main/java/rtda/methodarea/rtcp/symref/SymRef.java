@@ -1,4 +1,4 @@
-package rtda.methodarea.rtcp;
+package rtda.methodarea.rtcp.symref;
 
 import rtda.methodarea.Class_;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;

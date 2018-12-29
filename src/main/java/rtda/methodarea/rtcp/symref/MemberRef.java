@@ -1,8 +1,8 @@
-package rtda.methodarea.rtcp;
+package rtda.methodarea.rtcp.symref;
 
 import classfile.constantpool.ConstantInfo;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
-import rtda.methodarea.rtcp.SymRef;
+import rtda.methodarea.rtcp.symref.SymRef;
 
 public abstract class MemberRef extends SymRef {
 

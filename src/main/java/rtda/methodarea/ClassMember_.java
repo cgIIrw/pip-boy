@@ -55,7 +55,7 @@ public class ClassMember_ {
         return class_;
     }
 
-    // myclass1是否可以访问myclass
+    // class1_是否可以访问class_
     public boolean isAccessibleTo(Class_ class_1) {
         // 如果被访问的类是public当然可以被访问
         if (this.isPublic()) {

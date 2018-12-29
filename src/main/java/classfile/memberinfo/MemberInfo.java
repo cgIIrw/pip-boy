@@ -9,6 +9,7 @@ import classfile.utils.ClassReader;
 /**
  * Created by yin on 18/4/15.
  */
+// 相当于FieldInfo、MethodInfo
 // 字段和方法由于结构相同用同一个结构体MemberInfo表示
 // 这里的字段和方法可能是static的，也可以不是，所以并非
 // 一定指类字段和类方法

@@ -2,7 +2,7 @@ package instructions.references;
 
 import instructions.base.Index16Instruction;
 import rtda.methodarea.Field_;
-import rtda.methodarea.rtcp.FieldRef;
+import rtda.methodarea.rtcp.symref.FieldRef;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
 import rtda.stack.LocalVars_;
 import rtda.stack.OperandStack_;

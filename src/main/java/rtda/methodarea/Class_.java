@@ -22,7 +22,7 @@ public class Class_ {
     // 方法集合
     private Method_[] methods;
     // 当前的类加载器
-    private MyclassLoader loader;
+    private ClassLoader_ loader;
     // 父类的Class
     private Class_ superClass;
     // 被继承的接口的Class
@@ -176,7 +176,7 @@ public class Class_ {
         return methods;
     }
 
-    public MyclassLoader getLoader() {
+    public ClassLoader_ getLoader() {
         return loader;
     }
 
@@ -224,7 +224,7 @@ public class Class_ {
         this.methods = methods;
     }
 
-    public void setLoader(MyclassLoader loader) {
+    public void setLoader(ClassLoader_ loader) {
         this.loader = loader;
     }
 

@@ -4,7 +4,7 @@ import instructions.base.Index16Instruction;
 import rtda.stack.LocalVars_;
 import rtda.stack.StackFrame_;
 import rtda.stack.OperandStack_;
-import rtda.methodarea.rtcp.FieldRef;
+import rtda.methodarea.rtcp.symref.FieldRef;
 import rtda.methodarea.Field_;
 import rtda.methodarea.Class_;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;

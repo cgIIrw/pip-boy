@@ -1,11 +1,11 @@
-package rtda.methodarea.rtcp;
+package rtda.methodarea.rtcp.symref;
 
 import classfile.constantpool.ConstantInfo;
 import classfile.constantpool.constantInfos.ConstantFieldrefInfo;
 import rtda.methodarea.Class_;
 import rtda.methodarea.Field_;
-import rtda.methodarea.rtcp.MemberRef;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
+import rtda.methodarea.rtcp.symref.MemberRef;
 
 public class FieldRef extends MemberRef {
     private Field_ field;

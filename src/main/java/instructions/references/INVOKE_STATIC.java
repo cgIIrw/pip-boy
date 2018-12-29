@@ -3,7 +3,7 @@ package instructions.references;
 import instructions.base.Index16Instruction;
 import instructions.base.MethodInvokeLogic;
 import rtda.stack.StackFrame_;
-import rtda.methodarea.rtcp.MethodRef;
+import rtda.methodarea.rtcp.symref.MethodRef;
 import rtda.methodarea.Method_;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
 

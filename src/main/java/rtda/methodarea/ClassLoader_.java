@@ -1,4 +1,4 @@
-package rtda.heap;
+package rtda.methodarea;
 
 import classfile.ClassFile;
 import classpath.ClassPath;
@@ -10,23 +10,18 @@ import rtda.stack.LocalVars_;
 import java.io.IOException;
 import java.util.HashMap;
 
-/*
-class names:
-    - primitive types: boolean, byte, int ...
-    - primitive arrays: [Z, [B, [I ...
-    - non-array classes: java/lang/Object ...
-    - array classes: [Ljava/lang/Object; ...
-*/
-public class MyclassLoader {
-    ClassPath cp;
-    HashMap<String, Class_> classMap;
+// 类加载器
+public class ClassLoader_ {
+    private ClassPath cp;
+    private HashMap<String, Class_> classMap;
 
-    public MyclassLoader(ClassPath cp) {
+    public ClassLoader_(ClassPath cp) {
         this.cp = cp;
         classMap = new HashMap<>();
 
     }
 
+    // name是完全限定名
     public Class_ loadClass(String name) {
         if (classMap.containsKey(name)) {
             return classMap.get(name);
@@ -53,7 +48,7 @@ public class MyclassLoader {
     }
 
     public Class_ defineClass(byte[] bytes) {
-        // 这里就已经完成了字节码到Myclass对象的转换，基本思路就是一个"空"架子，往
+        // 这里就已经完成了字节码到Class_对象的转换，基本思路就是一个"空"架子，往
         // 里面填东西，并没有什么黑科技
         Class_ class_ = parseClass(bytes);
         // 相当于标记一下是谁加载的这个类(当前的类加载器加载的类)
