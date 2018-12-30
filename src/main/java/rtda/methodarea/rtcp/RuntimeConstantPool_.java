@@ -80,7 +80,7 @@ public class RuntimeConstantPool_ {
         if (c != null) {
             return c;
         } else {
-            throw new NoSuchElementException("No constants at index" + id);
+            throw new NoSuchElementException("不存在索引：" + id);
         }
     }
 

@@ -2,8 +2,8 @@ package rtda.methodarea;
 
 import classfile.ClassFile;
 import classpath.ClassPath;
-import rtda.methodarea.Class_;
-import rtda.methodarea.Field_;
+import rtda.heap.Instance_;
+import rtda.methodarea.coutfields_utils.StaticFieldsCounter;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
 import rtda.stack.LocalVars_;
 
@@ -40,7 +40,7 @@ public class ClassLoader_ {
     public byte[] readClass(String name) {
         byte[] data = new byte[0];
         try {
-           data = this.cp.readClass(name);
+            data = this.cp.readClass(name);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -98,7 +98,7 @@ public class ClassLoader_ {
         // 计算实例字段的个数
         calcInstanceFieldSlotIds(class_);
         // 计算静态字段的个数
-        calcStaticFieldSlotIds(class_);
+        StaticFieldsCounter.countsStaticFields(class_);
         // 给类变量分配空间，然后给他们赋予初始值
         allocAndInitStaticVars(class_);
     }
@@ -119,67 +119,103 @@ public class ClassLoader_ {
                 }
             }
         }
-       class_.setInstanceSlotCount(slotId);
+        class_.setInstanceSlotCount(slotId);
     }
 
-    public void calcStaticFieldSlotIds(Class_ class_) {
-        int slotId = 0;
-        for (int i = 0; i < class_.getFields().length; i++) {
-            if (class_.getFields()[i].isStatic()) {
-                class_.getFields()[i].setSlotId(slotId);
-                slotId++;
-                if (class_.getFields()[i].isLongOrDouble()) {
-                    slotId++;
-                }
-            }
-        }
-        class_.setStaticSlotCount(slotId);
-    }
+//    public void calcStaticFieldSlotIds(Class_ class_) {
+//        int slotId = 0;
+//        for (int i = 0; i < class_.getFields().length; i++) {
+//            if (class_.getFields()[i].isStatic()) {
+//                class_.getFields()[i].setSlotId(slotId);
+//                slotId++;
+//                if (class_.getFields()[i].isLongOrDouble()) {
+//                    slotId++;
+//                }
+//            }
+//        }
+//        class_.setStaticSlotCount(slotId);
+//    }
 
-    public void allocAndInitStaticVars(Class_ class_) {
+    private void allocAndInitStaticVars(Class_ class_) {
         // LocalVars是一个Slot[]的包装类，这里用来定位和初始化
         class_.setStaticVars(new LocalVars_(class_.getStaticSlotCount()));
         for (Field_ field : class_.getFields()) {
-            if (field.isStatic() && field.isFinal()) {
-                initStaticFinalVar(class_, field);
-            }
+//            if (field.isStatic() && field.isFinal()) {
+            initStaticFinalVar(class_, field);
+//            }
         }
     }
 
-    public void initStaticFinalVar(Class_ class_, Field_ field) {
+    private void initStaticFinalVar(Class_ class_, Field_ field) {
         LocalVars_ vars = class_.getStaticVars();
         RuntimeConstantPool_ cp = class_.getRuntimeConstantPool();
-        // 在此强调一下，这里constValue_index的是static final
-        int cpIndex = field.getConstValue_index();
+        // 再次强调一下，这里constValue_index的是static final
+//        int cpIndex = field.getConstValue_index();
         int slotId = field.getSlotId();
+        int cpIndex;
 
         // 《深入》P177，这个final static根据不同类型，获取相应类型的值
-        if (cpIndex > 0) {
+        // 如果是static且final的常量，则赋常量值
+        if (field.isStatic() && field.isFinal() &&
+                (cpIndex = field.getConstValue_index()) > 0) {
             switch (field.getDescriptor()) {
-                // 非long double float类型统统转化为int存储
-                case "Z" :
-                case "B" :
-                case "C" :
-                case "S" :
-                case "I" :
-                    int val = (int)(cp.getConstant(cpIndex).getVal());
+                // 非long double float类型转化为int存储
+                case "Z": // 基本类型boolean
+                case "B": // 基本类型byte
+                case "C": // 基本类型char
+                case "S": // 基本类型short
+                case "I": // 基本类型int
+                    int val = (int) (cp.getConstant(cpIndex).getVal());
                     vars.setInt(slotId, val);
                     break;
-                case "J" :
-                    long lval = (long)(cp.getConstant(cpIndex).getVal());
+                case "J":
+                    long lval = (long) (cp.getConstant(cpIndex).getVal());
                     vars.setLong(slotId, lval);
                     break;
-                case "F" :
-                    float fval = (float)(cp.getConstant(cpIndex).getVal());
+                case "F":
+                    float fval = (float) (cp.getConstant(cpIndex).getVal());
                     vars.setFloat(slotId, fval);
                     break;
-                case "D" :
-                    double dval = (double)(cp.getConstant(cpIndex).getVal());
+                case "D":
+                    double dval = (double) (cp.getConstant(cpIndex).getVal());
                     vars.setDouble(slotId, dval);
                     break;
-                case "Ljava/lang/String;" :
+                case "Ljava/lang/String;":
                     // todo
                     break;
+                default:
+                    break;
+            }
+        } else {
+            // static final只限余基本类型加String类型
+            switch (field.getDescriptor()) {
+                // 非long double float类型转化为int存储
+                case "Z": // 基本类型boolean
+                case "B": // 基本类型byte
+                case "C": // 基本类型char
+                case "S": // 基本类型short
+                case "I": // 基本类型int
+                    int val = (0);
+                    vars.setInt(slotId, val);
+                    break;
+                case "J":
+                    long lval = (0L);
+                    vars.setLong(slotId, lval);
+                    break;
+                case "F":
+                    float fval = (0.0f);
+                    vars.setFloat(slotId, fval);
+                    break;
+                case "D":
+                    double dval = (0.0);
+                    vars.setDouble(slotId, dval);
+                    break;
+                case "Ljava/lang/String;":
+                    // todo
+                    break;
+                case "L":
+                    Instance_ refval = null;
+                    vars.setRef(slotId, refval);
                 default:
                     break;
             }
