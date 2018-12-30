@@ -5,7 +5,7 @@ import classfile.constantpool.constantInfos.ConstantFieldrefInfo;
 import rtda.methodarea.Class_;
 import rtda.methodarea.Field_;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
-import rtda.methodarea.rtcp.symref.MemberRef;
+import rtda.methodarea.rtcp.resolvedref.ResolvedRef;
 
 public class FieldRef extends MemberRef {
     private Field_ field;
@@ -23,28 +23,13 @@ public class FieldRef extends MemberRef {
     }
 
     public Field_ resolvedField() {
-        if (field == null) {
-            resolveFieldRef();
+        if (this.field == null) {
+            this.field = ResolvedRef.resolveFieldRef(this);
         }
-        return field;
+        return this.field;
     }
 
-    public void resolveFieldRef() {
-        Class_ d = this.getRuntimeConstantPool().getClass_();
-        Class_ c = resolvedClass();
-        Field_ field = lookupField(c, getName(), getDescriptor());
-
-        if (field == null) {
-            throw new NoSuchFieldError("java.lang.NoSuchFieldError");
-        }
-
-        if (!field.isAccessibleTo(d)) {
-            throw new IllegalAccessError("java.lang.IllegalAccessError");
-        }
-        this.field = field;
-    }
-
-    public Field_ lookupField(Class_ class_, String name, String descriptor) {
+    public Field_ lookupField(Class_ class_) {
         for (Field_ field : class_.getFields()) {
             if (this.getName().equals(field.getName()) && this.getDescriptor().equals(field.getDescriptor())) {
                 return field;
@@ -52,14 +37,14 @@ public class FieldRef extends MemberRef {
         }
 
         for (Class_ iface : class_.getInterfaces()) {
-            Field_ field = lookupField(iface, name, descriptor);
+            Field_ field = lookupField(iface);
             if (field != null) {
                 return field;
             }
         }
 
         if (class_.getSuperClass() != null) {
-            return lookupField(class_.getSuperClass(), name, descriptor);
+            return lookupField(class_.getSuperClass());
         }
         return null;
     }

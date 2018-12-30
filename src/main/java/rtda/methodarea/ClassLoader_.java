@@ -96,31 +96,31 @@ public class ClassLoader_ {
     public void prepare(Class_ class_) {
         // todo
         // 计算实例字段的个数
-        calcInstanceFieldSlotIds(class_);
+//        calcInstanceFieldSlotIds(class_);
         // 计算静态字段的个数
         StaticFieldsCounter.countsStaticFields(class_);
         // 给类变量分配空间，然后给他们赋予初始值
         allocAndInitStaticVars(class_);
     }
 
-    public void calcInstanceFieldSlotIds(Class_ class_) {
-        int slotId = 0;
-        if (class_.getSuperClass() != null) {
-            // 从上往下，先把父类的个数加上
-            slotId = class_.getSuperClass().getInstanceSlotCount();
-        }
-
-        for (int i = 0; i < class_.getFields().length; i++) {
-            if (!class_.getFields()[i].isStatic()) {
-                class_.getFields()[i].setSlotId(slotId);
-                slotId++;
-                if (class_.getFields()[i].isLongOrDouble()) {
-                    slotId++;
-                }
-            }
-        }
-        class_.setInstanceSlotCount(slotId);
-    }
+//    public void calcInstanceFieldSlotIds(Class_ class_) {
+//        int slotId = 0;
+//        if (class_.getSuperClass() != null) {
+//            // 从上往下，先把父类的个数加上
+//            slotId = class_.getSuperClass().getInstanceSlotCount();
+//        }
+//
+//        for (int i = 0; i < class_.getFields().length; i++) {
+//            if (!class_.getFields()[i].isStatic()) {
+//                class_.getFields()[i].setSlotId(slotId);
+//                slotId++;
+//                if (class_.getFields()[i].isLongOrDouble()) {
+//                    slotId++;
+//                }
+//            }
+//        }
+//        class_.setInstanceSlotCount(slotId);
+//    }
 
 //    public void calcStaticFieldSlotIds(Class_ class_) {
 //        int slotId = 0;

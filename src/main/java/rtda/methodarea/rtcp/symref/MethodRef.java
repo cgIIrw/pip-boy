@@ -2,10 +2,11 @@ package rtda.methodarea.rtcp.symref;
 
 import classfile.constantpool.ConstantInfo;
 import classfile.constantpool.constantInfos.ConstantMethodrefInfo;
-import rtda.heap.MethodLookup;
+import rtda.utils.MethodLookup;
 import rtda.methodarea.Class_;
 import rtda.methodarea.Method_;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
+import rtda.methodarea.rtcp.resolvedref.ResolvedRef;
 
 /**
  * 普通方法引用类，并提供解析方法
@@ -29,43 +30,13 @@ public class MethodRef extends MemberRef {
 
         // 判断是否缓存有已经解析过的方法，没有则进行解析
         if (this.method == null) {
-            resolveMethodRef();
+            this.method = ResolvedRef.resolveMethodRef(this);
         }
         return this.method;
     }
 
-    public void resolveMethodRef() {
-
-        // 当前代码所处的类d
-        Class_ d = this.getRuntimeConstantPool().getClass_();
-
-        // 要解析的非接口方法所属的类或接口c
-        Class_ c = this.resolvedClass();
-
-        // 判断c是否是接口，如果是则抛出IncompatibleClassChangeError异常
-        if (c.isInterface()) {
-            throw new IncompatibleClassChangeError();
-        }
-
-        // 注释见lookupMethod实现
-        Method_ method = lookupMethod(c, this.getName(), this.getDescriptor());
-
-        // 执行到这一步如果仍然没有查找到符合条件的方法，则抛出NoSuchMethodError异常
-        if (method == null) {
-            throw new NoSuchMethodError();
-        }
-
-        // 查找到了方法，返回了直接引用，还要在这一步进行权限验证，当前类应该能访问查找到的方法，
-        // 否则抛出IllegalAccessError异常
-        if (!method.isAccessibleTo(d)) {
-            throw new IllegalAccessError();
-        }
-
-        this.method = method;
-    }
-
     public Method_ lookupMethod(Class_ class_, String name, String descriptor) {
-        Method_ method = null;
+        Method_ method;
 
         // 在类class_和它的父类中递归查找是否有简单名和描述符都与目标相匹配的方法，
         // 如果有，返回这个方法的直接引用，查找结束

@@ -2,10 +2,12 @@ package rtda.methodarea.rtcp.symref;
 
 import classfile.constantpool.ConstantInfo;
 import classfile.constantpool.constantInfos.ConstantInterfaceMethodrefInfo;
-import rtda.heap.MethodLookup;
+import rtda.utils.MethodLookup;
 import rtda.methodarea.Class_;
 import rtda.methodarea.Method_;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
+
+import static rtda.methodarea.rtcp.resolvedref.ResolvedRef.resolvedInterfaceMethodRef;
 
 /**
  * 接口方法引用类，并提供解析方法
@@ -21,46 +23,18 @@ public class InterfaceMethodRef extends MemberRef {
 
     @Override
     void copyMemberRefInfo(ConstantInfo info) {
-        setClassName(((ConstantInterfaceMethodrefInfo)info).getClassName());
-        setName(((ConstantInterfaceMethodrefInfo)info).getNameAndDescriptor()[0]);
-        setDescriptor(((ConstantInterfaceMethodrefInfo)info).getNameAndDescriptor()[1]);
+        setClassName(((ConstantInterfaceMethodrefInfo) info).getClassName());
+        setName(((ConstantInterfaceMethodrefInfo) info).getNameAndDescriptor()[0]);
+        setDescriptor(((ConstantInterfaceMethodrefInfo) info).getNameAndDescriptor()[1]);
     }
 
     public Method_ resolvedInterfaceMethod() {
 
         // 判断是否缓存有已经解析过的方法，没有则进行解析
         if (this.method == null) {
-            resolvedInterfaceMethodRef();
+            this.method = resolvedInterfaceMethodRef(this);
         }
         return this.method;
-    }
-
-    public void resolvedInterfaceMethodRef() {
-
-        // 当前代码所处的类d
-        Class_ d = this.getRuntimeConstantPool().getClass_();
-
-        // 要解析的非接口方法所属的类或接口c
-        Class_ c = this.resolvedClass();
-
-        // 判断c是否是接口，如果不是则抛出IncompatibleClassChangeError异常
-        if (!c.isInterface()) {
-            throw new IncompatibleClassChangeError();
-        }
-
-        Method_ method = lookupInterfaceMethod(c, this.getName(), this.getDescriptor());
-
-        // 执行到这一步如果仍然没有查找到符合条件的方法，则抛出NoSuchMethodError异常
-        if (method == null) {
-            throw new NoSuchMethodError();
-        }
-
-        // 接口中所有方法默认都是public，不存在访问权限问题
-//        if (!method.isAccessibleTo(d)) {
-//            throw new IllegalAccessError();
-//        }
-
-        this.method = method;
     }
 
     public Method_ lookupInterfaceMethod(Class_ iface, String name, String descriptor) {

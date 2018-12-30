@@ -2,6 +2,7 @@ package rtda.methodarea.rtcp.symref;
 
 import rtda.methodarea.Class_;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
+import rtda.methodarea.rtcp.resolvedref.ResolvedRef;
 
 public class SymRef {
     private RuntimeConstantPool_ runtimeConstantPool;
@@ -18,24 +19,7 @@ public class SymRef {
 
     // todo
 
-    // 解析并进行缓存
-    public Class_ resolvedClass() {
-        if (class_ == null) {
-            resolvedClassRef();
-        }
-        return class_;
-    }
 
-    // d是加载的当前.class文件的Class对象，c是通过类符号引用的
-    // 完全限定名产生的class对象，d应该拥有c的访问权限
-    public void resolvedClassRef() {
-        Class_ d = this.runtimeConstantPool.getClass_();
-        Class_ c = d.getLoader().loadClass(this.className);
-        if (!c.isAccessibleTo(d)) {
-            throw new IllegalAccessError("错误的访问权限！");
-        }
-        this.class_ = c;
-    }
 
     public RuntimeConstantPool_ getRuntimeConstantPool() {
         return runtimeConstantPool;
