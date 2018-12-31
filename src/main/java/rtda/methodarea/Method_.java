@@ -29,7 +29,7 @@ public class Method_ extends ClassMember_ {
             this.maxLocals = codeAttribute.getMaxLocals();
             this.code = codeAttribute.getCode();
         }
-        calcArgSlotCount();
+//        calcArgSlotCount();
     }
 
     // 创建多个method，最终会遍历的调用Method_的构造方法
@@ -49,7 +49,6 @@ public class Method_ extends ClassMember_ {
         }
         return null;
     }
-
 
     public boolean isSynchronized() {
         return 0 != (getAccessFlags() & AccessFlags.ACC_SYNCHRONIZED);

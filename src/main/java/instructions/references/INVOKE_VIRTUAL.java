@@ -12,7 +12,7 @@ public class INVOKE_VIRTUAL extends Index16Instruction {
     public void execute(StackFrame_ frame) {
         Class_ currentClass = frame.getMethod_().getClass_();
         RuntimeConstantPool_ cp = currentClass.getRuntimeConstantPool();
-        MethodRef methodRef = (MethodRef)(cp.getConstant(index).getVal());
+        MethodRef methodRef = (MethodRef) (cp.getConstant(index).getVal());
 //        Method_ resolvedMethod = methodRef.resolvedMethod();
 
         if (methodRef.getName().equals("println")) {
@@ -42,7 +42,6 @@ public class INVOKE_VIRTUAL extends Index16Instruction {
                     throw new RuntimeException("println: " + methodRef.getDescriptor());
             }
             stack.popRef();
-
 
 
         }

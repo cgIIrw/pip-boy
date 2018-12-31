@@ -187,7 +187,7 @@ public class ClassLoader_ {
                     break;
             }
         } else {
-            // static final只限余基本类型加String类型
+            // static final只限于基本类型加String类型
             switch (field.getDescriptor()) {
                 // 非long double float类型转化为int存储
                 case "Z": // 基本类型boolean
@@ -213,10 +213,9 @@ public class ClassLoader_ {
                 case "Ljava/lang/String;":
                     // todo
                     break;
-                case "L":
+                default:
                     Instance_ refval = null;
                     vars.setRef(slotId, refval);
-                default:
                     break;
             }
         }

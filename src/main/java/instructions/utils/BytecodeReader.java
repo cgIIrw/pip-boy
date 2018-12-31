@@ -3,10 +3,10 @@ package instructions.utils;
 // 字节码读取器
 public class BytecodeReader {
 
-    private byte[] code;
+    private int[] code;
     private int bpc;
 
-    public void reset(byte[] code, int bpc) {
+    public void reset(int[] code, int bpc) {
         this.code = code;
         this.bpc = bpc;
     }
@@ -15,7 +15,9 @@ public class BytecodeReader {
         return bpc;
     }
 
-    // 处理8位无符号的时候直接 & 0xff
+    // 编写的时候原本code是byte类型数组，处理8位无
+    // 符号的时候 & 0xff，但是在项目其它处已经进行
+    // 了byte转换int，所以直接将code设置为int数组
     public int readUint8() {
         int i = this.code[this.bpc] & 0xff;
         this.bpc++;

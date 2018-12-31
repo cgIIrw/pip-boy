@@ -11,16 +11,17 @@ public class NEW extends Index16Instruction {
     @Override
     public void execute(StackFrame_ frame) {
         RuntimeConstantPool_ cp = frame.getMethod_().getClass_().getRuntimeConstantPool();
-        ClassRef cf = (ClassRef)((cp.getConstant(index)).getVal());
+        ClassRef cf = (ClassRef) ((cp.getConstant(index)).getVal());
         Class_ class_ = cf.resolvedClass();
 
         // todo 初始化的一个判断
 
         if (class_.isAbstract() || class_.isInterface()) {
-            throw new InstantiationError("java.lang.InstantiationError");
+            throw new InstantiationError("抽象类或接口不能实例化！");
         }
 
         Instance_ ref = class_.newObject();
+
         frame.getOperandStack().pushRef(ref);
     }
 }

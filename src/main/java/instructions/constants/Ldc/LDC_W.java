@@ -1,8 +1,5 @@
 package instructions.constants.Ldc;
 
-/**
- * 和LDC不同之处在于操作数它取16位
- */
 import classfile.constantpool.ConstantInfoFactory;
 import instructions.base.Index16Instruction;
 import rtda.stack.OperandStack_;
@@ -10,6 +7,8 @@ import rtda.stack.StackFrame_;
 import rtda.methodarea.rtcp.Constant;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
 
+//  和LDC不同之处在于操作数它取16位
+// https://cs.au.dk/~mis/dOvs/jvmspec/ref-_ldc_w.html
 public class LDC_W extends Index16Instruction {
     @Override
     public void execute(StackFrame_ frame) {
@@ -19,10 +18,10 @@ public class LDC_W extends Index16Instruction {
 
         switch (c.getType()) {
             case ConstantInfoFactory.CONSTANT_Integer:
-                stack.pushInt((int)(c.getVal()));
+                stack.pushInt((int) (c.getVal()));
                 break;
             case ConstantInfoFactory.CONSTANT_Float:
-                stack.pushFloat((float)(c.getVal()));
+                stack.pushFloat((float) (c.getVal()));
                 break;
 //            case ConstantInfoFactory.CONSTANT_String:
 //                break;

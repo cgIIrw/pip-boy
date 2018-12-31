@@ -19,6 +19,7 @@ public class OperandStack_ {
     }
 
     public void pushInt(int val) {
+        this.slots[size] = new Slot_();
         this.slots[size].setNum(val);
         this.size++;
     }
@@ -31,6 +32,7 @@ public class OperandStack_ {
     // 处理float
     public void pushFloat(float val) {
         int temp = Float.floatToIntBits(val);
+        this.slots[size] = new Slot_();
         this.slots[size].setNum(temp);
         this.size++;
     }
@@ -43,6 +45,8 @@ public class OperandStack_ {
 
     //
     public void pushLong(long val) {
+        this.slots[this.size] = new Slot_();
+        this.slots[this.size] = new Slot_();
         this.slots[this.size].setNum((int) val);
         this.slots[this.size + 1].setNum((int) (val >> 32));
         this.size += 2;
@@ -66,6 +70,7 @@ public class OperandStack_ {
     }
 
     public void pushRef(Instance_ ref) {
+        this.slots[this.size] = new Slot_();
         this.slots[this.size].setRef(ref);
         this.size++;
     }
@@ -73,7 +78,7 @@ public class OperandStack_ {
     public Instance_ popRef() {
         this.size--;
         Instance_ ref = this.slots[this.size].getRef();
-        this.slots[this.size].setRef(null);
+        this.slots[this.size] = new Slot_();
         return ref;
     }
 

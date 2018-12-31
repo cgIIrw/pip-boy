@@ -7,6 +7,7 @@ import rtda.stack.OperandStack_;
 import rtda.stack.StackFrame_;
 import rtda.methodarea.rtcp.Constant;
 
+// 从运行时常量池加载int和float
 public class LDC extends Index8Instruction {
     @Override
     public void execute(StackFrame_ frame) {
@@ -16,10 +17,10 @@ public class LDC extends Index8Instruction {
 
         switch (c.getType()) {
             case ConstantInfoFactory.CONSTANT_Integer:
-                stack.pushInt((int)((long)(c.getVal()) & 0xffffffff));
+                stack.pushInt((int) (c.getVal()));
                 break;
             case ConstantInfoFactory.CONSTANT_Float:
-                stack.pushFloat((float)(c.getVal()));
+                stack.pushFloat((float) (c.getVal()));
                 break;
 //            case ConstantInfoFactory.CONSTANT_Long:
 //                break;
@@ -39,11 +40,6 @@ public class LDC extends Index8Instruction {
                 break;
             // todo
         }
-
-
-
-
-
 
 
     }
