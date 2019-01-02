@@ -13,7 +13,7 @@ public class VirtualMachineStack_ {
 
     public void push(StackFrame_ stackFrame) {
         if (size >= maxSize) {
-            throw new RuntimeException("当前栈大小已不小于最大容量");
+            throw new RuntimeException("当前栈大小已不小于最大容量！");
         }
 
         // 如果push之前top不为null，那么把当前的top计为欲传入的下一层

@@ -12,9 +12,6 @@ public class MethodDescriptorParser {
         return this.parse(descriptor);
     }
 
-
-
-
     public MethodDescriptor parse(String descriptor) {
         this.raw = descriptor;
         this.parsed = new MethodDescriptor();

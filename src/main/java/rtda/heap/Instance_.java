@@ -11,6 +11,7 @@ public class Instance_ {
 
     public Instance_(Class_ class_) {
         this.class_ = class_;
+        // 在给对象开辟内存空间的时候计算实例字段的个数
         class_.setInstanceSlotCount(InstanceFieldsCounter.countsInstanceField(class_));
         fields = new LocalVars_(class_.getInstanceSlotCount());
     }

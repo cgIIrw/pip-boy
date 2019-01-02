@@ -1,5 +1,7 @@
 import instructions.InstructionFactory;
 import instructions.base.Instruction;
+import instructions.control.return_.RETURN;
+import instructions.references.INVOKE_VIRTUAL;
 import instructions.utils.BytecodeReader;
 import rtda.methodarea.Method_;
 import rtda.stack.StackFrame_;
@@ -23,11 +25,12 @@ public class Interpret6 {
             reader.reset(code, pc);
             int opcode = reader.readUint8();
             Instruction instruction = InstructionFactory.getInstruction(opcode);
+            if (instruction instanceof RETURN)
+                break;
             instruction.fetchOperands(reader);
             frame.setNextPC(reader.getPc());
             System.out.println("pc: " + pc + " inst: " + instruction);
             instruction.execute(frame);
         }
-
     }
 }

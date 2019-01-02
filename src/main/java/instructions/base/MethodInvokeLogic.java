@@ -5,6 +5,8 @@ import rtda.stack.Thread_;
 import rtda.stack.Slot_;
 import rtda.methodarea.Method_;
 
+// 方法调用指令调用方法的逻辑：给方法创建一个栈帧并推入
+// Java虚拟机栈顶，然后传递参数
 public class MethodInvokeLogic {
     public static void invokeMethod(StackFrame_ invokerFrame, Method_ method) {
 

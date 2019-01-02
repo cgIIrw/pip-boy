@@ -3,6 +3,7 @@ package rtda.utils;
 import rtda.methodarea.Class_;
 import rtda.methodarea.Method_;
 
+//
 public class MethodLookup {
 
     public static Method_ lookupMethodInClass(Class_ class_, String name, String descriptor) {
@@ -28,6 +29,7 @@ public class MethodLookup {
                 }
             }
 
+            // 这是一个深度优先的搜索
             Method_ method = lookupMethodInInterfaces(iface.getInterfaces(), name, descriptor);
             if (method != null) {
                 return method;

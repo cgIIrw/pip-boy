@@ -21,6 +21,7 @@ public class ResolvedRef {
         return c;
     }
 
+    // 解析方法的符号引用
     public static Method_ resolveMethodRef(MethodRef methodRef) {
 
         // 当前代码所处的类d
@@ -41,7 +42,7 @@ public class ResolvedRef {
 
         // 执行到这一步如果仍然没有查找到符合条件的方法，则抛出NoSuchMethodError异常
         if (method == null) {
-            throw new NoSuchMethodError();
+            throw new NoSuchMethodError("出现错误，没有该方法！");
         }
 
         // 查找到了方法，返回了直接引用，还要在这一步进行权限验证，当前类应该能访问查找到的方法，
@@ -52,6 +53,7 @@ public class ResolvedRef {
         return method;
     }
 
+    // 解析字段的符号引用
     public static Field_ resolveFieldRef(FieldRef fieldRef) {
         Class_ d = fieldRef.getRuntimeConstantPool().getClass_();
         Class_ c = fieldRef.getClass_();
@@ -70,6 +72,7 @@ public class ResolvedRef {
         return field;
     }
 
+    // 解析接口方法的符号引用
     public static Method_ resolvedInterfaceMethodRef(InterfaceMethodRef interfaceMethodRef) {
 
         // 当前代码所处的类d
