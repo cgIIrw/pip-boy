@@ -1,50 +1,75 @@
 package instructions.references;
 
 import instructions.base.Index16Instruction;
+import instructions.base.MethodInvokeLogic;
+import rtda.heap.Instance_;
+import rtda.methodarea.Class_;
+import rtda.methodarea.Method_;
+import rtda.methodarea.rtcp.RuntimeConstantPool_;
+import rtda.methodarea.rtcp.resolvedref.ResolvedRef;
+import rtda.methodarea.rtcp.symref.MethodLookup;
+import rtda.methodarea.rtcp.symref.MethodRef;
 import rtda.stack.StackFrame_;
 
+// 调用实例构造器方法、私有方法和父类方法
 public class INVOKE_SPECIAL extends Index16Instruction {
     @Override
     public void execute(StackFrame_ frame) {
-//        Class_ currentClass = frame.getMethod_().getClass_();
-//        RuntimeConstantPool_ cp = currentClass.getRuntimeConstantPool();
-//        MethodRef methodRef = (MethodRef)(cp.getConstant(index).getVal());
-//        Class_ resolvedClass = methodRef.resolvedClass();
-//        Method_ resolvedMethod = methodRef.resolvedMethod();
-//
-//        if (resolvedMethod.getName().equals("<init>") && resolvedMethod.getClass_() != resolvedClass) {
-//            throw new NoSuchMethodError();
-//        }
-//
-//        if (resolvedMethod.isStatic()) {
-//            throw new IncompatibleClassChangeError();
-//        }
-//
-//        Instance_ ref = frame.getOperandStack().getRefFromTop(resolvedMethod.getArgSlotCount());
-//        if (ref == null) {
-//            throw new NullPointerException();
-//        }
-//
-//        if (resolvedMethod.isProtected()
-//                && resolvedMethod.getClass_().isSuperClassOf(currentClass)
-//                && resolvedMethod.getClass_().getPackageName().equals(currentClass.getPackageName())
-//                && (ref.getClass_() != currentClass)
-//                && ref.getClass_().isSubClassOf(currentClass)) {
-//            throw new IllegalAccessError();
-//        }
-//        Method_ methodToBeInvoked = resolvedMethod;
-//        if (currentClass.isSuper()
-//                && resolvedClass.isSubClassOf(currentClass)
-//                && resolvedMethod.getName().equals("<init>")) {
-//            methodToBeInvoked = MethodRef.lookupMethodInClass(currentClass.getSuperClass(),
-//                    methodRef.getName(), methodRef.getDescriptor());
-//        }
-//
-//        if (methodToBeInvoked == null || methodToBeInvoked.isAbstract()) {
-//            throw new AbstractMethodError();
-//        }
-//
-//        MethodInvokeLogic.invokeMethod(frame, methodToBeInvoked);
-        frame.getOperandStack().popRef();
+        Class_ currentClass = frame.getMethod_().getClass_();
+        RuntimeConstantPool_ cp = currentClass.getRuntimeConstantPool();
+        MethodRef methodRef = (MethodRef) (cp.getConstant(index).getVal());
+        Class_ resolvedClass = methodRef.getClass_();
+        if (resolvedClass == null) {
+            resolvedClass = ResolvedRef.resolvedClassRef(methodRef.getClassName(), methodRef.getRuntimeConstantPool());
+        }
+        Method_ resolvedMethod = methodRef.resolvedMethod();
+
+        // 解析的方法是构造器且方法声明的类就是通过方法引用解析出的类，否则抛出错误
+        if (resolvedMethod.getName().equals("<init>") && resolvedMethod.getClass_() != resolvedClass) {
+            throw new NoSuchMethodError();
+        }
+
+        // 该方法如果是静态方法，抛出错误
+        if (resolvedMethod.isStatic()) {
+            throw new IncompatibleClassChangeError();
+        }
+
+        // 被调用方法局部变量表第0号索引代表this，是从调用该方法的帧的操作数栈倒入的
+        Instance_ ref = frame.getOperandStack().getRefFromTop(resolvedMethod.getArgSlotCount());
+        if (ref == null) {
+            throw new NullPointerException();
+        }
+
+        // 一个方法是protected的，并且不满足后面括号内的条件
+        if (resolvedMethod.isProtected() && !(
+                // 被调用方法的类是当前类的父类
+                resolvedMethod.getClass_().isSuperClassOf(currentClass)
+                        // 被调用方法的类的包名等于当前类的包名
+                        || resolvedMethod.getClass_().getPackageName().equals(currentClass.getPackageName())
+                        // 被调用方法的类等于当前类
+                        || (ref.getClass_() == currentClass)
+                        // 被调用当前的类是当前类的子类
+                        || ref.getClass_().isSubClassOf(currentClass))) {
+            // 抛出非法访问权限的错误
+            throw new IllegalAccessError();
+        }
+
+        // JDK 1.0.2之后编译的类的这个标志必须为真 见《深入理解Java虚拟机》P173
+        if (currentClass.isSuper()
+                // 解析出来的类是父类
+                && resolvedClass.isSuperClassOf(currentClass)
+                // 解析的是父类的方法而且不是<init>构造器方法
+                && !(resolvedMethod.getName().equals("<init>"))) {
+            // 通过简单名和描述符找出父类满足条件的方法
+            resolvedMethod = MethodLookup.lookupMethodInClass(currentClass.getSuperClass(),
+                    methodRef.getName(), methodRef.getDescriptor());
+        }
+
+        // 该方法不能为空，不能是抽象方法
+        if (resolvedMethod == null || resolvedMethod.isAbstract()) {
+            throw new AbstractMethodError();
+        }
+
+        MethodInvokeLogic.invokeMethod(frame, resolvedMethod);
     }
 }
