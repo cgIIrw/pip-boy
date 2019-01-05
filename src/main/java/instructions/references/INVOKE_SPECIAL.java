@@ -24,9 +24,9 @@ public class INVOKE_SPECIAL extends Index16Instruction {
         }
         Method_ resolvedMethod = methodRef.resolvedMethod();
 
-        // 解析的方法是构造器且方法声明的类就是通过方法引用解析出的类，否则抛出错误
+        // 解析的方法是构造器则方法声明的类就是通过方法引用解析出的类，否则抛出错误
         if (resolvedMethod.getName().equals("<init>") && resolvedMethod.getClass_() != resolvedClass) {
-            throw new NoSuchMethodError();
+            throw new NoSuchMethodError("没有该方法！");
         }
 
         // 该方法如果是静态方法，抛出错误
@@ -34,7 +34,9 @@ public class INVOKE_SPECIAL extends Index16Instruction {
             throw new IncompatibleClassChangeError();
         }
 
-        // 被调用方法局部变量表第0号索引代表this，是从调用该方法的帧的操作数栈倒入的
+        // 被调用方法局部变量表第0号索引代表调用该方法的对象this，在未调用之前
+        // 该对象位于外围方法的操作数栈中，通过索引找到该对象并引用，后续的访问
+        // 判断会使用到该对象
         Instance_ ref = frame.getOperandStack().getRefFromTop(resolvedMethod.getArgSlotCount());
         if (ref == null) {
             throw new NullPointerException();
@@ -70,6 +72,7 @@ public class INVOKE_SPECIAL extends Index16Instruction {
             throw new AbstractMethodError();
         }
 
+        // 方法调用的公有逻辑
         MethodInvokeLogic.invokeMethod(frame, resolvedMethod);
     }
 }

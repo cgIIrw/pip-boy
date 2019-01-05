@@ -54,7 +54,7 @@ public class Main06 {
         Class_ mainClass = classLoader.loadClass(className);
         for (Method_ method : mainClass.getMethods()) {
             if (method.getName().equals("main")) {
-                Interpret6.interpret(method);
+                Interpret7.interpret(method, true);
             }
 
 

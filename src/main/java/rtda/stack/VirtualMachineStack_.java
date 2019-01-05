@@ -39,7 +39,7 @@ public class VirtualMachineStack_ {
         return temptop;
     }
 
-    // 返回当前栈顶帧
+    // 返回当前栈顶帧引用，但未pop
     public StackFrame_ getTop() {
         if (this.top == null) {
             throw new RuntimeException("Java虚拟机栈已空！");

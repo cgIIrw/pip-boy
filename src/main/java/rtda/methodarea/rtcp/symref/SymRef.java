@@ -20,7 +20,6 @@ public class SymRef {
     // todo
 
 
-
     public RuntimeConstantPool_ getRuntimeConstantPool() {
         return runtimeConstantPool;
     }
@@ -31,6 +30,10 @@ public class SymRef {
 
     public Class_ getClass_() {
         return class_;
+    }
+
+    public void setClass_(Class_ class_) {
+        this.class_ = class_;
     }
 
     public void setClassName(String className) {

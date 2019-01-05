@@ -1,7 +1,6 @@
 import instructions.InstructionFactory;
 import instructions.base.Instruction;
 import instructions.control.return_.RETURN;
-import instructions.references.INVOKE_VIRTUAL;
 import instructions.utils.BytecodeReader;
 import rtda.methodarea.Method_;
 import rtda.stack.StackFrame_;

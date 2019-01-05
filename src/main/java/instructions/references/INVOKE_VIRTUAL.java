@@ -1,7 +1,11 @@
 package instructions.references;
 
 import instructions.base.Index16Instruction;
+import instructions.base.MethodInvokeLogic;
+import rtda.heap.Instance_;
 import rtda.methodarea.Class_;
+import rtda.methodarea.Method_;
+import rtda.methodarea.rtcp.symref.MethodLookup;
 import rtda.methodarea.rtcp.symref.MethodRef;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
 import rtda.stack.OperandStack_;
@@ -13,73 +17,40 @@ public class INVOKE_VIRTUAL extends Index16Instruction {
         Class_ currentClass = frame.getMethod_().getClass_();
         RuntimeConstantPool_ cp = currentClass.getRuntimeConstantPool();
         MethodRef methodRef = (MethodRef) (cp.getConstant(index).getVal());
-//        Method_ resolvedMethod = methodRef.resolvedMethod();
+        Method_ resolvedMethod = methodRef.resolvedMethod();
 
-        if (methodRef.getName().equals("println")) {
-            OperandStack_ stack = frame.getOperandStack();
-            switch (methodRef.getDescriptor()) {
-                case "(Z)V":
-                    System.out.println(stack.popInt() != 0);
-                    break;
-                case "(C)V":
-                    System.out.println(stack.popInt());
-                    break;
-                case "(I)V":
-                case "(B)V":
-                case "(S)V":
-                    System.out.println(stack.popInt());
-                    break;
-                case "(F)V":
-                    System.out.println(stack.popFloat());
-                    break;
-                case "(J)V":
-                    System.out.println(stack.popLong());
-                    break;
-                case "(D)V":
-                    System.out.println(stack.popDouble());
-                    break;
-                default:
-                    throw new RuntimeException("println: " + methodRef.getDescriptor());
-            }
-            stack.popRef();
-
-
+        if (resolvedMethod == null || resolvedMethod.isAbstract()) {
+            throw new AbstractMethodError();
         }
 
+        // 该方法如果是静态方法，抛出错误
+        if (resolvedMethod.isStatic()) {
+            throw new IncompatibleClassChangeError();
+        }
 
-//        if (resolvedMethod.isStatic()) {
-//            throw new IncompatibleClassChangeError();
-//        }
-//        Instance_ ref = frame.getOperandStack().getRefFromTop(resolvedMethod.getArgSlotCount() - 1);
+        // 被调用方法局部变量表第0号索引代表this，是从调用该方法的帧的操作数栈倒入的
+        Instance_ ref = frame.getOperandStack().getRefFromTop(resolvedMethod.getArgSlotCount());
+        if (ref == null) {
+            throw new NullPointerException();
+        }
 
-//        if (ref == null) {
-//            // hack
-//            if (methodRef.getName().equals("println")) {
-//                _println(frame.getOperandStack(), methodRef.getDescriptor());
-//                return;
-//            }
-//            throw new NullPointerException();
-//        }
-//
-//        if (resolvedMethod.isProtected()
-//                && resolvedMethod.getClass_().isSuperClassOf(currentClass)
-//                && resolvedMethod.getClass_().getPackageName().equals(currentClass.getPackageName())
-//                && ref.getClass_() != currentClass
-//                && !ref.getClass_().isSubClassOf(currentClass)) {
-//            throw new IllegalAccessError();
-//        }
-//
-//        Method_ methodToBeInvoked = MethodRef.lookupMethodInClass(currentClass.getSuperClass(),
-//                methodRef.getName(), methodRef.getDescriptor());
-//
-//        if (methodToBeInvoked == null || methodToBeInvoked.isAbstract()) {
-//            throw new AbstractMethodError();
-//        }
-//
-//        MethodInvokeLogic.invokeMethod(frame, methodToBeInvoked);
-//    }
-//
-//    public void _println(OperandStack_ stack, String descriptor) {
+        // 一个方法是protected的，并且不满足后面括号内的条件
+        if (resolvedMethod.isProtected() && !(
+                // 被调用方法的类是当前类的父类
+                resolvedMethod.getClass_().isSuperClassOf(currentClass)
+                        // 被调用方法的类的包名等于当前类的包名
+                        || resolvedMethod.getClass_().getPackageName().equals(currentClass.getPackageName())
+                        // 被调用方法的类等于当前类
+                        || (ref.getClass_() == currentClass)
+                        // 被调用当前的类是当前类的子类
+                        || ref.getClass_().isSubClassOf(currentClass))) {
+            // 抛出非法访问权限的错误
+            throw new IllegalAccessError();
+        }
 
+        // 和INVOKE_SPECIAL的主要区别
+        resolvedMethod = MethodLookup.lookupMethodInClass(ref.getClass_(),
+                methodRef.getName(), methodRef.getDescriptor());
+        MethodInvokeLogic.invokeMethod(frame, resolvedMethod);
     }
 }

@@ -63,11 +63,11 @@ public class ResolvedRef {
         Field_ field = fieldRef.lookupField(c);
 
         if (field == null) {
-            throw new NoSuchFieldError("java.lang.NoSuchFieldError");
+            throw new NoSuchFieldError("没有该字段！");
         }
 
         if (!field.isAccessibleTo(d)) {
-            throw new IllegalAccessError("java.lang.IllegalAccessError");
+            throw new IllegalAccessError("非法的访问权限！");
         }
         return field;
     }

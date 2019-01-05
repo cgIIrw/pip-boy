@@ -25,10 +25,6 @@ public class Thread_ {
         return this.virtualMachineStack.pop();
     }
 
-    public StackFrame_ currentStackFrame_() {
-        return this.virtualMachineStack.getTop();
-    }
-
     public StackFrame_ getTopFrame() {
         return this.virtualMachineStack.getTop();
     }

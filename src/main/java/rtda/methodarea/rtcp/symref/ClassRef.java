@@ -9,7 +9,7 @@ import rtda.methodarea.rtcp.symref.SymRef;
 
 // 类或接口的符号引用
 public class ClassRef extends SymRef {
-    private Class_ class_;
+//    private Class_ class_;
 
     public ClassRef(RuntimeConstantPool_ runtimeConstantPool, ConstantClassInfo classInfo) {
         super(runtimeConstantPool);
@@ -18,9 +18,9 @@ public class ClassRef extends SymRef {
 
     // 解析并进行缓存
     public Class_ resolvedClass() {
-        if (this.class_ == null) {
-            this.class_ = ResolvedRef.resolvedClassRef(this.getClassName(), this.getRuntimeConstantPool());
+        if (this.getClass_() == null) {
+            this.setClass_(ResolvedRef.resolvedClassRef(this.getClassName(), this.getRuntimeConstantPool()));
         }
-        return this.class_;
+        return getClass_();
     }
 }

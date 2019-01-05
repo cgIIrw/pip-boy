@@ -11,10 +11,9 @@ public class OperandStack_ {
     public OperandStack_(int maxStack) {
         if (maxStack > 0) {
             slots = new Slot_[maxStack];
-        }
-        assert slots != null;
-        for (int i = 0; i < slots.length; i++) {
-            slots[i] = new Slot_();
+            for (int i = 0; i < slots.length; i++) {
+                slots[i] = new Slot_();
+            }
         }
     }
 
@@ -54,8 +53,8 @@ public class OperandStack_ {
 
     public long popLong() {
         this.size -= 2;
-        int low = (int) (this.slots[this.size].getNum());
-        int high = (int) (this.slots[this.size + 1].getNum());
+        int low = (this.slots[this.size].getNum());
+        int high = (this.slots[this.size + 1].getNum());
         return ((high & 0xffffffffL) << 32) | (low & 0xffffffffL);
     }
 
@@ -93,6 +92,6 @@ public class OperandStack_ {
     }
 
     public Instance_ getRefFromTop(int index) {
-        return this.slots[this.size - 1 - index].getRef();
+        return this.slots[this.size - index].getRef();
     }
 }

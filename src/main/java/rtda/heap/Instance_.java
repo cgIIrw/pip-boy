@@ -1,7 +1,7 @@
 package rtda.heap;
 
 import rtda.methodarea.Class_;
-import rtda.methodarea.coutfields_utils.InstanceFieldsCounter;
+import rtda.methodarea.countfields_utils.InstanceFieldsCounter;
 import rtda.stack.LocalVars_;
 
 // 用此类开辟实例对象的内存空间

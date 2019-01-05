@@ -3,9 +3,10 @@ package rtda.methodarea;
 import classfile.attributeinfo.AttributeInfo;
 import classfile.memberinfo.MemberInfo;
 import classfile.attributeinfo.attributeinfos.CodeAttribute;
+import rtda.methodarea.countparams_utils.CountParamsTool;
 import rtda.utils.AccessFlags;
-import rtda.heap.MethodDescriptor;
-import rtda.heap.MethodDescriptorParser;
+import rtda.methodarea.countparams_utils.MethodDescriptor;
+import rtda.methodarea.countparams_utils.MethodDescriptorParser;
 
 public class Method_ extends ClassMember_ {
     private int maxStack;
@@ -29,7 +30,7 @@ public class Method_ extends ClassMember_ {
             this.maxLocals = codeAttribute.getMaxLocals();
             this.code = codeAttribute.getCode();
         }
-//        calcArgSlotCount();
+        calcArgSlotCount();
     }
 
     // 创建多个method，最终会遍历的调用Method_的构造方法
@@ -82,17 +83,24 @@ public class Method_ extends ClassMember_ {
         return code;
     }
 
-    public void calcArgSlotCount() {
-        MethodDescriptorParser p = new MethodDescriptorParser();
-        MethodDescriptor parsedDescriptor = p.parseMethodDescriptor(this.getDescriptor());
-
-        for (String paramType : parsedDescriptor.getParameterTypes()) {
-            this.argSlotCount++;
-            if (paramType.equals("J") || paramType.equals("D")) {
-                this.argSlotCount++;
-            }
-        }
-
+    //
+//    public void calcArgSlotCount() {
+//        MethodDescriptorParser p = new MethodDescriptorParser();
+//        MethodDescriptor parsedDescriptor = p.parseMethodDescriptor(this.getDescriptor());
+//
+//        for (String paramType : parsedDescriptor.getParameterTypes()) {
+//            this.argSlotCount++;
+//            if (paramType.equals("J") || paramType.equals("D")) {
+//                this.argSlotCount++;
+//            }
+//        }
+//
+//        if (!this.isStatic()) {
+//            this.argSlotCount++;
+//        }
+//    }
+    private void calcArgSlotCount() {
+        this.argSlotCount = CountParamsTool.countMethod(this.getDescriptor());
         if (!this.isStatic()) {
             this.argSlotCount++;
         }

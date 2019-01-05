@@ -16,14 +16,14 @@ public class MethodInvokeLogic {
         // 通过栈帧所在线程和所属方法，创建一个新的栈帧
         StackFrame_ newFrame = new StackFrame_(thread, method);
 
-        // 将创建的栈帧押入虚拟机栈顶
+        // 将创建的栈帧压入虚拟机栈顶
         thread.pushStackFrame_(newFrame);
 
         // 下面的代码主要作用是进行参数传递，首先确定方法参数所占位置数
-        int argSlotSlot = method.getArgSlotCount();
+        int argSlots = method.getArgSlotCount();
 
-        if (argSlotSlot > 0) {
-            for (int i = argSlotSlot - 1; i >= 0; i--) {
+        if (argSlots > 0) {
+            for (int i = argSlots - 1; i >= 0; i--) {
 
                 // 方法参数首先是存储在调用方法的栈帧的操作数栈中
                 Slot_ slot = invokerFrame.getOperandStack().popSlot();

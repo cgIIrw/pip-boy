@@ -2,7 +2,6 @@ package rtda.methodarea.rtcp.symref;
 
 import classfile.constantpool.ConstantInfo;
 import classfile.constantpool.constantInfos.ConstantMethodrefInfo;
-import rtda.utils.MethodLookup;
 import rtda.methodarea.Class_;
 import rtda.methodarea.Method_;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;

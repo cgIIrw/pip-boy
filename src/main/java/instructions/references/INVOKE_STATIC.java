@@ -7,6 +7,7 @@ import rtda.methodarea.rtcp.symref.MethodRef;
 import rtda.methodarea.Method_;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
 
+//
 public class INVOKE_STATIC extends Index16Instruction {
     @Override
     public void execute(StackFrame_ frame) {
@@ -14,8 +15,11 @@ public class INVOKE_STATIC extends Index16Instruction {
         MethodRef methodRef = (MethodRef) (cp.getConstant(index).getVal());
         Method_ resolvedMethod = methodRef.resolvedMethod();
         if (!resolvedMethod.isStatic()) {
-            throw new IncompatibleClassChangeError();
+            throw new IncompatibleClassChangeError("调用方法非静态方法！");
         }
+
+        // todo 类初始化判断，类没有初始化要进行初始化
+
         MethodInvokeLogic.invokeMethod(frame, resolvedMethod);
     }
 }

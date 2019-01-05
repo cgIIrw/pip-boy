@@ -1,4 +1,4 @@
-package rtda.methodarea.coutfields_utils;
+package rtda.methodarea.countfields_utils;
 
 import rtda.methodarea.Class_;
 import rtda.methodarea.Field_;

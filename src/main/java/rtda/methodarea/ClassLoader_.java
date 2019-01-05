@@ -3,7 +3,7 @@ package rtda.methodarea;
 import classfile.ClassFile;
 import classpath.ClassPath;
 import rtda.heap.Instance_;
-import rtda.methodarea.coutfields_utils.StaticFieldsCounter;
+import rtda.methodarea.countfields_utils.StaticFieldsCounter;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
 import rtda.stack.LocalVars_;
 
