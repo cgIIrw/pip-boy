@@ -1,6 +1,7 @@
 package instructions.references;
 
 import instructions.base.Index16Instruction;
+import rtda.methodarea.Clinit;
 import rtda.stack.LocalVars_;
 import rtda.stack.StackFrame_;
 import rtda.stack.OperandStack_;
@@ -16,7 +17,13 @@ public class GET_STATIC extends Index16Instruction {
         FieldRef fieldRef = (FieldRef)(((cp.getConstant(index))).getVal());
         Field_ field = fieldRef.resolvedField();
         Class_ class1 = field.getClass_();
-        // todo
+
+        // 类初始化
+        if (!class1.getClinitFlag()) {
+            Clinit.revertNextPc(frame);
+            Clinit.clinitClass(frame.getThread_(), class1);
+            return;
+        }
 
         if (!field.isStatic()) {
             throw new IncompatibleClassChangeError("java.lang.IncompatibleClassChangeError");

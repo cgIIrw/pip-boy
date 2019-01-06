@@ -2,6 +2,7 @@ package instructions.references;
 
 import instructions.base.Index16Instruction;
 import rtda.methodarea.Class_;
+import rtda.methodarea.Clinit;
 import rtda.methodarea.Field_;
 import rtda.methodarea.Method_;
 import rtda.methodarea.rtcp.symref.FieldRef;
@@ -25,14 +26,20 @@ public class PUT_STATIC extends Index16Instruction {
         FieldRef fieldRef = (FieldRef)((cp.getConstant(index)).getVal());
         Field_ field = fieldRef.resolvedField();
         Class_ class1 = field.getClass_();
-        // todo
+
+        // 类初始化
+        if (!class1.getClinitFlag()) {
+            Clinit.revertNextPc(frame);
+            Clinit.clinitClass(frame.getThread_(), class1);
+            return;
+        }
 
         if (!field.isStatic()) {
             throw new IncompatibleClassChangeError("java.lang.IncompatibleClassChangeError");
         }
 
         if (field.isFinal()) {
-            if (currentClass != class1 || currentMethod.getName() != "<clinit?") {
+            if (currentClass != class1 || !currentMethod.getName().equals("<clinit>")) {
                 throw new IllegalAccessError("java.lang.IllegalAccessError");
             }
         }

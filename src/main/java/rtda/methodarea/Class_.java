@@ -34,6 +34,8 @@ public class Class_ {
 
     private LocalVars_ staticVars;
 
+    private boolean clinitedFlag = false;
+
     public Class_(ClassFile cf) {
         this.accessFlags = cf.getAccessFlags();
         this.thisClassName = cf.getClassName();
@@ -256,5 +258,13 @@ public class Class_ {
             }
         }
         return null;
+    }
+
+    public boolean getClinitFlag() {
+        return clinitedFlag;
+    }
+
+    public void setClinitedFlag(boolean clinitedFlag) {
+        this.clinitedFlag = clinitedFlag;
     }
 }

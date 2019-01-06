@@ -5,8 +5,6 @@ import classfile.memberinfo.MemberInfo;
 import classfile.attributeinfo.attributeinfos.CodeAttribute;
 import rtda.methodarea.countparams_utils.CountParamsTool;
 import rtda.utils.AccessFlags;
-import rtda.methodarea.countparams_utils.MethodDescriptor;
-import rtda.methodarea.countparams_utils.MethodDescriptorParser;
 
 public class Method_ extends ClassMember_ {
     private int maxStack;

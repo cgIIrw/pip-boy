@@ -32,5 +32,9 @@ public class MethodInvokeLogic {
                 newFrame.getLocalVars().setSlot(i, slot);
             }
         }
+
+        if (method.isNative() && method.getName().equals("registerNatives")) {
+            thread.popStackFrame_();
+        }
     }
 }
