@@ -13,15 +13,13 @@ public class INSTANCE_OF extends Index16Instruction {
     public void execute(StackFrame_ frame) {
         OperandStack_ stack = frame.getOperandStack();
         Instance_ ref = stack.popRef();
-        if (ref == null) {
-            stack.pushInt(0);
-        }
-
         RuntimeConstantPool_ cp = frame.getMethod_().getClass_().getRuntimeConstantPool();
-        ClassRef classRef = (ClassRef)((cp.getConstant(index)).getVal());
+        ClassRef classRef = (ClassRef) ((cp.getConstant(index)).getVal());
         Class_ class_ = classRef.resolvedClass();
         // ref虽然是引用但是isInstanceOf调用的是内部的class进行判断
-        if (ref.isInstanceOf(class_)) {
+        if (ref == null) {
+            stack.pushInt(0);
+        } else if (ref.isInstanceOf(class_)) {
             stack.pushInt(1);
         } else {
             stack.pushInt(0);
