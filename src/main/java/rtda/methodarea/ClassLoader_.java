@@ -26,11 +26,20 @@ public class ClassLoader_ {
         if (classMap.containsKey(name)) {
             return classMap.get(name);
         }
+
+        if (name.startsWith("["))
+            return loadArrayClass(name);
         // 数组类的数据不来自Class文件，运行时生成，要单独考虑
         return loadNonArrayClass(name);
     }
 
-    public Class_ loadNonArrayClass(String name) {
+    private Class_ loadArrayClass(String name) {
+        Class_ class_ = new Class_(name, this);
+        this.classMap.put(name, class_);
+        return class_;
+    }
+
+    private Class_ loadNonArrayClass(String name) {
         byte[] data = readClass(name);
         Class_ class_ = defineClass(data);
         link(class_);
