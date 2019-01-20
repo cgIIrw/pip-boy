@@ -36,6 +36,18 @@ public class Class_ {
 
     private boolean clinitedFlag = false;
 
+    // name是完全限定名
+    // Java虚拟机运行时产生数组类的构造器
+    public Class_(String name, ClassLoader_ classLoader) {
+        this.accessFlags = AccessFlags.ACC_PUBLIC;
+        this.thisClassName = name;
+        this.loader = classLoader;
+        this.clinitedFlag = true;
+        this.superClass = classLoader.loadClass("java/lang/Object");
+        this.interfaces = new Class_[]{classLoader.loadClass("java/lang/Cloneable"),
+                classLoader.loadClass("java/io/Serializable")};
+    }
+
     public Class_(ClassFile cf) {
         this.accessFlags = cf.getAccessFlags();
         this.thisClassName = cf.getClassName();
@@ -266,5 +278,29 @@ public class Class_ {
 
     public void setClinitedFlag(boolean clinitedFlag) {
         this.clinitedFlag = clinitedFlag;
+    }
+
+    public boolean isArray() {
+        return this.thisClassName.startsWith("[");
+    }
+
+    // 为新创建的数组开辟内存
+    public Instance_ newArray(int count) {
+        if (!isArray())
+            throw new RuntimeException("该对象不是数组！");
+        switch (thisClassName) {
+            case "[Z":
+            case "[B":
+            case "[C":
+            case "[S":
+            case "[I":
+            case "[F":
+                return new Instance_(this, count);
+            case "[D":
+            case "[J":
+                return new Instance_(this, 2 * count);
+            default:
+                return new Instance_(this, count);
+        }
     }
 }
