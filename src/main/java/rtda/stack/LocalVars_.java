@@ -66,4 +66,8 @@ public class LocalVars_ {
     public void setSlot(int index, Slot_ slot) {
         this.slots[index] = slot;
     }
+
+    public Slot_[] getSlots() {
+        return slots;
+    }
 }
