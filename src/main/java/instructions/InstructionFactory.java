@@ -232,6 +232,9 @@ public class InstructionFactory {
         map.put(0xb7, new INVOKE_SPECIAL());
         map.put(0xb8, new INVOKE_STATIC());
         map.put(0xbb, new NEW());
+        map.put(0xbc, new NEW_ARRAY());
+        map.put(0xbd, new ANEW_ARRAY());
+        map.put(0xbe, new ARRAY_LENGTH());
         map.put(0xc0, new CHECK_CAST());
         map.put(0xc1, new INSTANCE_OF());
         map.put(0xc6, new IFNULL());
