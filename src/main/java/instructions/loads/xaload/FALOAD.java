@@ -20,6 +20,8 @@ public class FALOAD extends NoOperandsInstruction {
         Tools.checkIndex(slot_s.length, index);
         // 将数组索引为index的值压入操作数栈
         // 引用占用一个slot
-        operandStack.pushFloat(slot_s[index].getNum());
+        int temp = slot_s[index].getNum();
+        float val = Float.intBitsToFloat(temp);
+        operandStack.pushFloat(val);
     }
 }
