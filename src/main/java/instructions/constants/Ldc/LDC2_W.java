@@ -7,6 +7,8 @@ import rtda.stack.OperandStack_;
 import rtda.methodarea.rtcp.Constant;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
 
+import java.math.BigInteger;
+
 
 // 从运行时常量池加载long和double
 public class LDC2_W extends Index16Instruction {
@@ -18,7 +20,7 @@ public class LDC2_W extends Index16Instruction {
 
         switch (c.getType()) {
             case ConstantInfoFactory.CONSTANT_Long:
-                stack.pushLong(((long) (c.getVal())));
+                stack.pushLong(((BigInteger) (c.getVal())).longValue());
                 break;
             case ConstantInfoFactory.CONSTANT_Double:
                 stack.pushDouble(((double) (c.getVal())));
