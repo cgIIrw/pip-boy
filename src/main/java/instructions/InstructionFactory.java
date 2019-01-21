@@ -19,6 +19,7 @@ import instructions.loads.dload.*;
 import instructions.loads.fload.*;
 import instructions.loads.iload.*;
 import instructions.loads.lload.*;
+import instructions.loads.xaload.*;
 import instructions.math.add.*;
 import instructions.math.and.*;
 import instructions.math.div.*;
@@ -39,6 +40,7 @@ import instructions.stores.fstore.*;
 import instructions.stores.istore.*;
 import instructions.stores.lstore.*;
 import instructions.references.*;
+import instructions.stores.xastore.*;
 
 import java.util.HashMap;
 
@@ -92,6 +94,14 @@ public class InstructionFactory {
         map.put(0x2b, new ALOAD_1());
         map.put(0x2c, new ALOAD_2());
         map.put(0x2d, new ALOAD_3());
+        map.put(0x2e, new IALOAD());
+        map.put(0x2f, new LALOAD());
+        map.put(0x30, new FALOAD());
+        map.put(0x31, new DALOAD());
+        map.put(0x32, new AALOAD());
+        map.put(0x33, new BALOAD());
+        map.put(0x34, new CALOAD());
+        map.put(0x35, new SALOAD());
         map.put(0x36, new ISTORE());
         map.put(0x37, new LSTORE());
         map.put(0x38, new FSTORE());
@@ -117,6 +127,14 @@ public class InstructionFactory {
         map.put(0x4c, new ASTORE_1());
         map.put(0x4d, new ASTORE_2());
         map.put(0x4e, new ASTORE_3());
+        map.put(0x4f, new IASTORE());
+        map.put(0x50, new LASTORE());
+        map.put(0x51, new FASTORE());
+        map.put(0x52, new DASTORE());
+        map.put(0x53, new AASTORE());
+        map.put(0x54, new BASTORE());
+        map.put(0x55, new CASTORE());
+        map.put(0x56, new SASTORE());
         map.put(0x57, new POP());
         map.put(0x58, new POP2());
         map.put(0x59, new DUP());
