@@ -6,7 +6,7 @@ import rtda.heap.Instance_;
 import rtda.stack.OperandStack_;
 import rtda.stack.StackFrame_;
 
-public class IASTORE extends NoOperandsInstruction {
+public class SASTORE extends NoOperandsInstruction {
     @Override
     public void execute(StackFrame_ frame) {
         OperandStack_ operandStack = frame.getOperandStack();
