@@ -9,7 +9,7 @@ public abstract class BranchInstruction implements Instruction {
     @Override
     public void fetchOperands(BytecodeReader reader) {
         // 获取跳转偏移量
-        this.offset = reader.readUint16();
+        this.offset = reader.readInt16();
     }
 
     public int getOffset() {
