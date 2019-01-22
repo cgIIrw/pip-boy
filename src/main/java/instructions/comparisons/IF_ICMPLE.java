@@ -9,9 +9,9 @@ import static instructions.comparisons.IF_ICMPEQ._icmpPop;
 public class IF_ICMPLE extends BranchInstruction {
     @Override
     public void execute(StackFrame_ frame) {
-
-        int val1 = _icmpPop(frame)[0];
-        int val2 = _icmpPop(frame)[1];
+        int[] temp = _icmpPop(frame);
+        int val1 = temp[0];
+        int val2 = temp[1];
 
         if (val1 <= val2) {
             Branch.branch(frame, this.getOffset());
