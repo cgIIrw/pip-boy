@@ -17,6 +17,15 @@ public class INVOKE_VIRTUAL extends Index16Instruction {
         Class_ currentClass = frame.getMethod_().getClass_();
         RuntimeConstantPool_ cp = currentClass.getRuntimeConstantPool();
         MethodRef methodRef = (MethodRef) (cp.getConstant(index).getVal());
+        // todo 钩子方法，后续应该被替换 ---------------------------------------
+        if (methodRef.getName().equals("println")) {
+            println_(frame.getOperandStack(), methodRef.getDescriptor());
+            // 钩子方法不仅会让操作数栈弹出打印的参数(上一步已完成)，还需要弹出调用方法
+            // 的引用
+            frame.getOperandStack().popRef();
+            return;
+        }
+        // todo -------------------------------------------------------------
         Method_ resolvedMethod = methodRef.resolvedMethod();
 
         if (resolvedMethod == null || resolvedMethod.isAbstract()) {
@@ -52,5 +61,30 @@ public class INVOKE_VIRTUAL extends Index16Instruction {
         resolvedMethod = MethodLookup.lookupMethodInClass(ref.getClass_(),
                 methodRef.getName(), methodRef.getDescriptor());
         MethodInvokeLogic.invokeMethod(frame, resolvedMethod);
+    }
+
+    // todo 钩子函数 ------------------
+    private void println_(OperandStack_ operandStack, String descriptor) {
+        switch (descriptor) {
+            case "(Z)V":
+                System.out.println(operandStack.popInt() != 0);
+            case "(C)V":
+            case "(B)V":
+            case "(S)V":
+            case "(I)V":
+                System.out.println(operandStack.popInt());
+                break;
+            case "(F)V":
+                System.out.println(operandStack.popFloat());
+                break;
+            case "(J)V":
+                System.out.println(operandStack.popLong());
+                break;
+            case "(D)V":
+                System.out.println(operandStack.popDouble());
+                break;
+            default:
+                operandStack.popRef();
+        }
     }
 }
