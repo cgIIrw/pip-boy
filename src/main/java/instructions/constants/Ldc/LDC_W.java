@@ -2,6 +2,8 @@ package instructions.constants.Ldc;
 
 import classfile.constantpool.ConstantInfoFactory;
 import instructions.base.Index16Instruction;
+import rtda.heap.Instance_;
+import rtda.heap.StringPool;
 import rtda.stack.OperandStack_;
 import rtda.stack.StackFrame_;
 import rtda.methodarea.rtcp.Constant;
@@ -23,8 +25,11 @@ public class LDC_W extends Index16Instruction {
             case ConstantInfoFactory.CONSTANT_Float:
                 stack.pushFloat((float) (c.getVal()));
                 break;
-//            case ConstantInfoFactory.CONSTANT_String:
-//                break;
+            case ConstantInfoFactory.CONSTANT_String:
+                Instance_ internedRef = StringPool.jString(frame.getMethod_().getClass_()
+                        .getLoader(), (String) (c.getVal()));
+                stack.pushRef(internedRef);
+                break;
 //            case ConstantInfoFactory.CONSTANT_Class:
 //                break;
 //            case ConstantInfoFactory.CONSTANT_Fieldref:
