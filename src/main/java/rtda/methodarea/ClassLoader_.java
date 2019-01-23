@@ -3,6 +3,7 @@ package rtda.methodarea;
 import classfile.ClassFile;
 import classpath.ClassPath;
 import rtda.heap.Instance_;
+import rtda.heap.StringPool;
 import rtda.methodarea.countfields_utils.StaticFieldsCounter;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
 import rtda.stack.LocalVars_;
@@ -190,7 +191,9 @@ public class ClassLoader_ {
                     vars.setDouble(slotId, dval);
                     break;
                 case "Ljava/lang/String;":
-                    // todo
+                    String str = (String) (cp.getConstant(cpIndex).getVal());
+                    Instance_ jStr = StringPool.jString(class_.getLoader(), str);
+                    vars.setRef(slotId, jStr);
                     break;
                 default:
                     break;
