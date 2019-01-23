@@ -13,7 +13,7 @@ public class StringPool {
     // Java的String是以char数组来表现的，这里的str可以理解为运行时常量池的
     // 字符串常量，这里需要解析来完成Java String应该具备的基本功能，而因为编
     // 写的代码使用的是Java，所以是用Java语言来实现Java String
-    public Instance_ jString(ClassLoader_ loder, String str) {
+    public static Instance_ jString(ClassLoader_ loder, String str) {
         if (internedStrings.containsKey(str))
             return internedStrings.get(str);
 
