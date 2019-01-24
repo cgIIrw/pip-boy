@@ -41,4 +41,28 @@ public class StringPool {
         internedStrings.put(str, stringInstance);
         return stringInstance;
     }
+
+    public static String goString(Instance_ jStr) {
+
+        // 这个jStr相当于jString中的stringInstance
+        // 首先要获得value引用的字符数组，可以通过for
+        // 循环查找，也可以通过slotId来获取
+        Instance_ newChars = null;
+        for (Field_ f : jStr.getClass_().getFields()) {
+            if (!f.isStatic() && f.getName().equals("value")
+                    && f.getDescriptor().equals("[C")) {
+                newChars = jStr.getFields().getSlots()[f.getSlotId()].getRef();
+            }
+        }
+        if (newChars != null) {
+            int len = newChars.getFields().getSlots().length;
+            char[] chars = new char[len];
+
+            for (int i = 0; i < len; i++)
+                chars[i] = (char) (newChars.getFields().getSlots()[i].getNum());
+
+            return new String(chars);
+        }
+        return null;
+    }
 }
