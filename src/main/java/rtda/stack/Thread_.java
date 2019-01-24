@@ -28,4 +28,8 @@ public class Thread_ {
     public StackFrame_ getTopFrame() {
         return this.virtualMachineStack.getTop();
     }
+
+    public VirtualMachineStack_ getVirtualMachineStack() {
+        return virtualMachineStack;
+    }
 }
