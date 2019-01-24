@@ -18,10 +18,7 @@ public class Interpret8_5 {
     private static void loop(Thread_ thread, boolean logInst) {
 
         BytecodeReader reader = new BytecodeReader();
-        while (true) {
-            if (thread.getVirtualMachineStack().getEndMethodTop() == null) {
-                break;
-            }
+        while (thread.getVirtualMachineStack().getEndMethodTop() != null) {
             StackFrame_ frame = thread.getTopFrame();
             int pc = frame.getNextPC();
             thread.setPc(pc);
@@ -41,7 +38,7 @@ public class Interpret8_5 {
         }
     }
 
-    public static void logInstruction(StackFrame_ frame, Instruction instruction) {
+    private static void logInstruction(StackFrame_ frame, Instruction instruction) {
         Method_ method_ = frame.getMethod_();
         String className = method_.getClass_().getThisClassName();
         String methodName = method_.getName();
