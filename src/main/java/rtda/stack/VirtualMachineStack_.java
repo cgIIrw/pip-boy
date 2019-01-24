@@ -46,4 +46,8 @@ public class VirtualMachineStack_ {
         }
         return this.top;
     }
+
+    public StackFrame_ getEndMethodTop() {
+        return this.top;
+    }
 }
