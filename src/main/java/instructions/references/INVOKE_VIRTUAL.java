@@ -3,6 +3,7 @@ package instructions.references;
 import instructions.base.Index16Instruction;
 import instructions.base.MethodInvokeLogic;
 import rtda.heap.Instance_;
+import rtda.heap.StringPool;
 import rtda.methodarea.Class_;
 import rtda.methodarea.Method_;
 import rtda.methodarea.rtcp.symref.MethodLookup;
@@ -82,6 +83,10 @@ public class INVOKE_VIRTUAL extends Index16Instruction {
                 break;
             case "(D)V":
                 System.out.println(operandStack.popDouble());
+                break;
+            case "(Ljava/lang/String;)V":
+                Instance_ jStr = operandStack.popRef();
+                System.out.println(StringPool.goString(jStr));
                 break;
             default:
                 operandStack.popRef();
