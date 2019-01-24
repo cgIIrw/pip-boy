@@ -9,6 +9,7 @@ import rtda.methodarea.rtcp.RuntimeConstantPool_;
 import rtda.stack.LocalVars_;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.HashMap;
 
 // 类加载器
@@ -19,7 +20,6 @@ public class ClassLoader_ {
     public ClassLoader_(ClassPath cp) {
         this.cp = cp;
         classMap = new HashMap<>();
-
     }
 
     // name是完全限定名
@@ -179,7 +179,7 @@ public class ClassLoader_ {
                     vars.setInt(slotId, val);
                     break;
                 case "J":
-                    long lval = (long) (cp.getConstant(cpIndex).getVal());
+                    long lval = ((BigInteger) (cp.getConstant(cpIndex).getVal())).longValue();
                     vars.setLong(slotId, lval);
                     break;
                 case "F":
@@ -223,7 +223,8 @@ public class ClassLoader_ {
                     vars.setDouble(slotId, dval);
                     break;
                 case "Ljava/lang/String;":
-                    // todo
+                    Instance_ stringval = null;
+                    vars.setRef(slotId, stringval);
                     break;
                 default:
                     Instance_ refval = null;
