@@ -1,7 +1,5 @@
 package native_;
 
-import rtda.stack.StackFrame_;
-
 import java.util.HashMap;
 
 public class Registry {
@@ -14,7 +12,7 @@ public class Registry {
         register.put(key, nativeMethod);
     }
 
-    public NativeMethod findNativeMethod(String className, String methodName, String methodDescriptor) {
+    public static NativeMethod findNativeMethod(String className, String methodName, String methodDescriptor) {
         String key = className + "~" + methodName + "~" + methodDescriptor;
         if (register.containsKey(key)) {
             return register.get(key);
