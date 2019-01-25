@@ -33,8 +33,8 @@ public class MethodInvokeLogic {
             }
         }
 
-        if (method.isNative() && method.getName().equals("registerNatives")) {
-            thread.popStackFrame_();
-        }
+//        if (method.isNative() && method.getName().equals("registerNatives")) {
+//            thread.popStackFrame_();
+//        }
     }
 }
