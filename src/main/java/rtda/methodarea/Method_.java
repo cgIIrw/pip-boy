@@ -6,6 +6,9 @@ import classfile.attributeinfo.attributeinfos.CodeAttribute;
 import rtda.methodarea.countparams_utils.CountParamsTool;
 import rtda.utils.AccessFlags;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Method_ extends ClassMember_ {
     private int maxStack;
     private int maxLocals;
@@ -29,6 +32,47 @@ public class Method_ extends ClassMember_ {
             this.code = codeAttribute.getCode();
         }
         calcArgSlotCount();
+
+        // 判断方法是否是本地方法，如果是，那么求出代表返回值的描述符片段，
+        // 通过该片段来判断返回字节码指令的类型
+        if (this.isNative()) {
+            // 获得方法的描述符
+            String des = this.getDescriptor();
+            Pattern pattern = Pattern.compile("(?=\\().*(?<=\\))");
+            Matcher matcher = pattern.matcher(des);
+            // 得到代表返回值的描述符片段
+            String returnDes = matcher.replaceAll("");
+            this.injectCodeAttribute(returnDes);
+        }
+    }
+
+    // 注入字节码，为调用本地方法服务
+    private void injectCodeAttribute(String returnType) {
+        // 幸运数字7
+        this.maxStack = 7;
+        this.maxLocals = this.getArgSlotCount();
+        // 第二个字节码指令用于执行本地方法后的返回
+        switch (returnType.charAt(0)) {
+            case 'V':
+                this.code = new int[]{0xfe, 0xb1};
+                break;
+            case 'D':
+                this.code = new int[]{0xfe, 0xaf};
+                break;
+            case 'F':
+                this.code = new int[]{0xfe, 0xae};
+                break;
+            case 'J':
+                this.code = new int[]{0xfe, 0xad};
+                break;
+            case 'L':
+            case '[':
+                this.code = new int[]{0xfe, 0xb0};
+                break;
+            default:
+                this.code = new int[]{0xfe, 0xac};
+                break;
+        }
     }
 
     // 创建多个method，最终会遍历的调用Method_的构造方法
