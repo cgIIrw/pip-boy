@@ -31,6 +31,7 @@ import instructions.math.rem.*;
 import instructions.math.sh.*;
 import instructions.math.sub.*;
 import instructions.math.xor.*;
+import instructions.natived.INVOKE_NATIVE;
 import instructions.stack.dup.*;
 import instructions.stack.pop.*;
 import instructions.stack.swap.*;
@@ -48,6 +49,7 @@ public class InstructionFactory {
     private static HashMap<Integer, Instruction> map = new HashMap<>();
 
     static {
+        map.put(0xfe, new INVOKE_NATIVE());
         map.put(0x00, new NOP());
         map.put(0x01, new ACONST_NULL());
         map.put(0x02, new ICONST_M1());
