@@ -1,13 +1,11 @@
 import classpath.ClassPath;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
-import rtda.methodarea.ClassLoader_;
-import rtda.methodarea.Class_;
-import rtda.methodarea.Method_;
 
 import java.io.File;
+import java.io.IOException;
 
-public class Main06 {
+public class Main_PrintByteCode {
 
     public static void main(String[] args) throws ParseException {
         String className = getMainName();
@@ -46,32 +44,20 @@ public class Main06 {
 //            cpOption = "";
 //        }
         ClassPath cp = ClassPath.parse(jreOption, cpOption);
-
-        ClassLoader_ classLoader = new ClassLoader_(cp);
-
         // File.separator.charAt(0)是为了取字符而非字符串
         String className = args[count].replace('.', File.separator.charAt(0));
-        Class_ mainClass = classLoader.loadClass(className);
-        for (Method_ method : mainClass.getMethods()) {
-            if (method.getName().equals("main")) {
-                Interpret7.interpret(method, true);
-            }
-
-
+        byte[] classData = null;
+        try {
+            classData = cp.readClass(className);
+        } catch (IOException e) {
+            System.out.printf("不能找到和加载主类 %s\n", args[count]);
         }
-
-//        byte[] classData = null;
-//        try {
-//            classData = cp.readClass(className);
-//        } catch (IOException e) {
-//            System.out.printf("不能找到和加载主类 %s\n", args[count]);
-//        }
-//        for (int i = 0; i < (classData != null ? classData.length : 0); i++) {
-//            if (i % 20 == 0) {
-//                System.out.println();
-//            }
-//            System.out.printf("%02X ", classData[i]); // 此打印如《深入理解Java虚拟机》显示
-//        }
+        for (int i = 0; i < (classData != null ? classData.length : 0); i++) {
+            if (i % 20 == 0) {
+                System.out.println();
+            }
+            System.out.printf("%02X ", classData[i]); // 此打印如《深入理解Java虚拟机》显示
+        }
     }
 
     // 该方法用来返回静态方法main所属的类的类名
