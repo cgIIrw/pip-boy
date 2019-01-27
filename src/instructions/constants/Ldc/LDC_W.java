@@ -3,7 +3,6 @@ package instructions.constants.Ldc;
 /**
  * 和LDC不同之处在于操作数它取16位
  */
-import classfile.CreateConstantInfo;
 import instructions.base.Index16Instruction;
 import rtda.Myframe;
 import rtda.OperandStack;

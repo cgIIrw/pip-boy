@@ -1,6 +1,5 @@
 package instructions.constants.Ldc;
 
-import classfile.CreateConstantInfo;
 import instructions.base.Index16Instruction;
 import rtda.Myframe;
 import rtda.OperandStack;
