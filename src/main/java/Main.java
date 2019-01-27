@@ -6,6 +6,7 @@ import rtda.methodarea.Class_;
 import rtda.methodarea.Method_;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 public class Main {
 
@@ -15,7 +16,17 @@ public class Main {
         CommandLine cmd = Cmd.cmd(args);
 
         if (cmd.hasOption("version")) {
-            System.out.println("version 0.0.1");
+//            System.out.println("version 0.0.1");
+            FileInputStream fis;
+            try {
+                File file = new File("src/main/resources/banner.text");
+                fis = new FileInputStream(file);
+                byte[] b = new byte[(int) file.length()];
+                while (fis.read(b) != -1)
+                    System.out.println(new String(b));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else if (cmd.hasOption("help") || cmd.hasOption("?") || args.length == 0) {
             Cmd.printUsage(className);
         } else {
@@ -56,8 +67,6 @@ public class Main {
             if (method.getName().equals("main")) {
                 Interpret.interpret(method, false);
             }
-
-
         }
 
 //        byte[] classData = null;
