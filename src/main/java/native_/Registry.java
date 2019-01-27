@@ -20,6 +20,7 @@ public class Registry {
         if (methodDescriptor.equals("()V") && methodName.equals("registerNatives")) {
             return frame -> {
                 // do nothing
+//                System.out.println(frame.getMethod_().getClass_().getThisClassName());
             };
         }
         return null;
