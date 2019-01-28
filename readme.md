@@ -1,5 +1,7 @@
-# 用Java语言实现Java虚拟机
+# <img src="http://ww1.sinaimg.cn/large/006QHM1zly1fzn3vikirtj314i0zo4qq.jpg" width = "50" height = "50"/> Pip-Boy
 
-测试用例：-Xjre ClassFileTest
 
-本实现参考了[《自己动手写Java虚拟机》](https://book.douban.com/subject/26802084/)一书。
+Pip-Boy是一个采用Java语言实现的Java虚拟机。
+
+
+声明：本站所引《辐射》系列之图片仅用于交流、欣赏与致敬，其版权由相关公司拥有。
