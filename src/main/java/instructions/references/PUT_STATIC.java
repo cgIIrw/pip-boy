@@ -29,9 +29,9 @@ public class PUT_STATIC extends Index16Instruction {
 
         // 类初始化
         if (!class1.getClinitFlag()) {
-            Clinit.revertNextPc(frame);
+//            Clinit.revertNextPc(frame);
             Clinit.clinitClass(frame.getThread_(), class1);
-            return;
+//            return;
         }
 
         if (!field.isStatic()) {
