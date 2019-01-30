@@ -17,9 +17,9 @@ public class NEW extends Index16Instruction {
 
         // 类初始化
         if (!class_.getClinitFlag()) {
-            Clinit.revertNextPc(frame);
+//            Clinit.revertNextPc(frame);
             Clinit.clinitClass(frame.getThread_(), class_);
-            return;
+//            return;
         }
 
         if (class_.isAbstract() || class_.isInterface()) {
