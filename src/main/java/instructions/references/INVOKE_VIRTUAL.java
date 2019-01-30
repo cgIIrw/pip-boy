@@ -11,7 +11,7 @@ import rtda.methodarea.rtcp.symref.MethodRef;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
 import rtda.stack.OperandStack_;
 import rtda.stack.StackFrame_;
-
+// 调用方法：当前方法；被调用方法：当前方法内调用的方法；
 public class INVOKE_VIRTUAL extends Index16Instruction {
     @Override
     public void execute(StackFrame_ frame) {
@@ -19,10 +19,12 @@ public class INVOKE_VIRTUAL extends Index16Instruction {
         RuntimeConstantPool_ cp = currentClass.getRuntimeConstantPool();
         MethodRef methodRef = (MethodRef) (cp.getConstant(index).getVal());
         // todo 钩子方法，后续应该被替换 ---------------------------------------
+        // 当执行*.println方法时，未真正进入该方法，而是在当前frame模拟执行println方法
         if (methodRef.getName().equals("println")) {
             println_(frame.getOperandStack(), methodRef.getDescriptor());
             // 钩子方法不仅会让操作数栈弹出打印的参数(上一步已完成)，还需要弹出调用方法
-            // 的引用
+            // 的引用，因为这里的frame是调用方法所属的frame，而调用方法在调用被调用方
+            // 法时需要将引用传入被调用方法的局部变量表
             frame.getOperandStack().popRef();
             return;
         }
