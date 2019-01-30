@@ -1,8 +1,7 @@
 # <img src="http://ww1.sinaimg.cn/large/006QHM1zly1fzn3vikirtj314i0zo4qq.jpg" width = "50" height = "50"/> Pip-Boy
 
 
-Pip-Boy是一款采用Java语言实现的简易版Java虚拟机，开发的目的是理解、研究Java这门语言背后的运行机制。
-
+Pip-Boy是一款采用Java语言实现的简易版Java虚拟机。
 
 
 
@@ -20,7 +19,7 @@ Pip-Boy是一款采用Java语言实现的简易版Java虚拟机，开发的目�
 - [x] 编写执行.class文件的命令行工具
 - [x] 读取.class文件字节码
 - [x] 完成类加载
-- [x] 实现多态、方法分派
+- [x] 实现多态、方法分派以及类初始化
 - [x] 构建数组类型
 - [x] 实现字符串部分功能
 - [x] 实现native方法调用
