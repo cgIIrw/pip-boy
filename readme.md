@@ -29,8 +29,13 @@ Pip-Boy是一款采用Java语言实现的简易版Java虚拟机。
 
 ## <img src="http://ww1.sinaimg.cn/large/006QHM1zly1fzohav632mj306o06oaax.jpg" width = "45" height = "44"/> 演示
 
+### 查看版本
 
-## <img src="http://ww1.sinaimg.cn/large/006QHM1zly1fzohceh2s6j30d90a9dis.jpg" width = "45" height = "38"/> 文档
+<p align="center">
+  <img width="600" src="https://github.com/cgIIrw/pip-boy/blob/master/svg/version.svg">
+</p>
+
+## <img src="http://ww1.sinaimg.cn/large/006QHM1zly1fzohceh2s6j30d90a9dis.jpg" width = "47" height = "40"/> 文档
 
 ## <img src="http://ww1.sinaimg.cn/large/006QHM1zly1fzmmunxv61j30ht0ii777.jpg" width = "45" height = "45"/> 参考
 
