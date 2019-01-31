@@ -5,13 +5,13 @@ import rtda.methodarea.ClassLoader_;
 import rtda.methodarea.Class_;
 import rtda.methodarea.Method_;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
+import java.net.URL;
 
 public class Main {
 
     public static void main(String[] args) throws ParseException {
-        String className = getMainName();
+//        String className = getMainName();
 
         CommandLine cmd = Cmd.cmd(args);
 
@@ -19,7 +19,31 @@ public class Main {
 //            System.out.println("version 0.0.1");
             FileInputStream fis;
             try {
-                File file = new File("src/main/resources/banner.text");
+//                File file = new File("src/main/resources/banner.text");
+                File file = null;
+                String resource = "banner.text";
+                URL res = Main_PrintByteCode.class.getClassLoader().getResource(resource);
+                assert res != null;
+                // 使得运行jar包可以读取resource资源
+                if (res.toString().startsWith("jar:")) {
+                    try {
+                        InputStream input = Main_PrintByteCode.class.getResourceAsStream(resource);
+                        file = File.createTempFile("tempfile", ".temp");
+                        OutputStream out = new FileOutputStream(file);
+                        int read;
+                        byte[] bytes = new byte[1024];
+
+                        while ((read = input.read(bytes)) != -1) {
+                            out.write(bytes, 0, read);
+                        }
+                        file.deleteOnExit();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    file = new File(res.getFile());
+                }
+                assert file != null;
                 fis = new FileInputStream(file);
                 byte[] b = new byte[(int) file.length()];
                 while (fis.read(b) != -1)
@@ -28,7 +52,7 @@ public class Main {
                 e.printStackTrace();
             }
         } else if (cmd.hasOption("help") || cmd.hasOption("?") || args.length == 0) {
-            Cmd.printUsage(className);
+            Cmd.printUsage();
         } else {
             startJVM(cmd, args);
         }
@@ -83,13 +107,13 @@ public class Main {
 //        }
     }
 
-    // 该方法用来返回静态方法main所属的类的类名
-    private static String getMainName() {
-        return new Object() {
-            String getClassName() {
-                String clazzName = this.getClass().getName();
-                return clazzName.substring(0, clazzName.lastIndexOf('$'));
-            }
-        }.getClassName();
-    }
+//    // 该方法用来返回静态方法main所属的类的类名，使用内部类对象反射的方式
+//    private static String getMainName() {
+//        return new Object() {
+//            String getClassName() {
+//                String clazzName = this.getClass().getName();
+//                return clazzName.substring(0, clazzName.lastIndexOf('$'));
+//            }
+//        }.getClassName();
+//    }
 }
