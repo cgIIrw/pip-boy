@@ -16,8 +16,8 @@ class Cmd {
         return paraer.parse(options, args);
     }
 
-    static void printUsage(String className) {
-        System.out.println("Usage: java " + className + " [-options] class [args...]");
+    static void printUsage() {
+        System.out.println("Usage: java -jar pip-boy.jar [-options <params...>] class [args...]");
     }
 }
 
