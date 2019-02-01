@@ -1,9 +1,6 @@
 # <img src="http://ww1.sinaimg.cn/large/006QHM1zly1fzn3vikirtj314i0zo4qq.jpg" width = "50" height = "50"/> Pip-Boy
 
-
 Pip-Boy是一款采用Java语言实现的简易版Java虚拟机。
-
-
 
 ## <img src="http://ww1.sinaimg.cn/large/006QHM1zly1fzohopiiwaj30qa0n2tgd.jpg" width = "45" height = "43"/> 开发环境 & 项目依赖
 
@@ -47,7 +44,32 @@ Pip-Boy是一款采用Java语言实现的简易版Java虚拟机。
 
 ### 多态
 
-### 类初始化
+```java
+public class Poly {
+    public static void main(String[] args) {
+      A instance = new B();
+      instance.printMethod();
+    }
+
+    static class A {
+      public void printMethod() {
+        System.out.println("I am A");
+      }
+    }
+
+    static class B extends A {
+      @Override
+      public void printMethod() {
+        System.out.println("I am B");
+      }
+    }
+}
+```
+
+<p align="center">
+  <img width="600" src="https://github.com/cgIIrw/pip-boy/blob/master/svg/Poly.svg">
+</p>
+
 
 ### 数组
 
@@ -87,7 +109,6 @@ public class FindNumberWithSum {
   <img width="600" src="https://github.com/cgIIrw/pip-boy/blob/master/svg/FindNumberWithSum.svg">
 </p>
 
-### 字符串
 
 ### native方法调用
 
