@@ -112,7 +112,20 @@ public class FindNumberWithSum {
 
 ### native方法调用
 
+计算哈希值涉及到native方法的调用，本例打印hashCode()返回的结果，代码如下：
 
+```java
+public class HashCodeTest {
+    public static void main(String[] args) {
+        Object hashCodeTest = new HashCodeTest();
+        System.out.println(hashCodeTest.hashCode());
+    }
+}
+```
+
+<p align="center">
+  <img width="600" src="https://github.com/cgIIrw/pip-boy/blob/master/svg/native.svg">
+</p>
 
 ## <img src="http://ww1.sinaimg.cn/large/006QHM1zly1fzohceh2s6j30d90a9dis.jpg" width = "47" height = "40"/> 文档
 
