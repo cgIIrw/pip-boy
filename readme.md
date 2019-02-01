@@ -37,6 +37,14 @@ Pip-Boy是一款采用Java语言实现的简易版Java虚拟机。
 
 ### -Xjre & -cp
 
+-Xjre用来指定jre的位置，-cp/-classpath用来指定用户目录：
+
+<p align="center">
+  <img width="600" src="https://github.com/cgIIrw/pip-boy/blob/master/svg/Xjre-cp.svg">
+</p>
+
+-Xjre也可以用读取字节码的方式进行说明：https://asciinema.org/a/xHSYmlOKVpWmTj8J4MS49aw29
+
 ### 多态
 
 ### 类初始化
