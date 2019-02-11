@@ -1,8 +1,7 @@
 package rtda.methodarea.rtcp.symref;
 
-import rtda.methodarea.Class_;
+import rtda.methodarea.InstanceKlass_;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
-import rtda.methodarea.rtcp.resolvedref.ResolvedRef;
 
 public class SymRef {
     private RuntimeConstantPool_ runtimeConstantPool;
@@ -11,7 +10,7 @@ public class SymRef {
     private String className;
 
     // 符号引用的真正类，解析阶段将符号引用替换成直接引用
-    private Class_ class_;
+    private InstanceKlass_ instanceKlass_;
 
     public SymRef(RuntimeConstantPool_ runtimeConstantPool) {
         this.runtimeConstantPool = runtimeConstantPool;
@@ -28,12 +27,12 @@ public class SymRef {
         return className;
     }
 
-    public Class_ getClass_() {
-        return class_;
+    public InstanceKlass_ getInstanceKlass_() {
+        return instanceKlass_;
     }
 
-    public void setClass_(Class_ class_) {
-        this.class_ = class_;
+    public void setInstanceKlass_(InstanceKlass_ instanceKlass_) {
+        this.instanceKlass_ = instanceKlass_;
     }
 
     public void setClassName(String className) {

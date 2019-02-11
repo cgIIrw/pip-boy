@@ -2,7 +2,7 @@ package rtda.methodarea.rtcp.symref;
 
 import classfile.constantpool.ConstantInfo;
 import classfile.constantpool.constantInfos.ConstantFieldrefInfo;
-import rtda.methodarea.Class_;
+import rtda.methodarea.InstanceKlass_;
 import rtda.methodarea.Field_;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
 import rtda.methodarea.rtcp.resolvedref.ResolvedRef;
@@ -29,22 +29,22 @@ public class FieldRef extends MemberRef {
         return this.field;
     }
 
-    public Field_ lookupField(Class_ class_) {
-        for (Field_ field : class_.getFields()) {
+    public Field_ lookupField(InstanceKlass_ instanceKlass_) {
+        for (Field_ field : instanceKlass_.getFields()) {
             if (this.getName().equals(field.getName()) && this.getDescriptor().equals(field.getDescriptor())) {
                 return field;
             }
         }
 
-        for (Class_ iface : class_.getInterfaces()) {
+        for (InstanceKlass_ iface : instanceKlass_.getInterfaces()) {
             Field_ field = lookupField(iface);
             if (field != null) {
                 return field;
             }
         }
 
-        if (class_.getSuperClass() != null) {
-            return lookupField(class_.getSuperClass());
+        if (instanceKlass_.getSuperClass() != null) {
+            return lookupField(instanceKlass_.getSuperClass());
         }
         return null;
     }

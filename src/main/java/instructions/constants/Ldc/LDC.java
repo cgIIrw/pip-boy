@@ -14,7 +14,7 @@ public class LDC extends Index8Instruction {
     @Override
     public void execute(StackFrame_ frame) {
         OperandStack_ stack = frame.getOperandStack();
-        RuntimeConstantPool_ cp = frame.getMethod_().getClass_().getRuntimeConstantPool();
+        RuntimeConstantPool_ cp = frame.getMethod_().getInstanceKlass_().getRuntimeConstantPool();
         Constant c = cp.getConstant(index);
 
         switch (c.getType()) {
@@ -29,7 +29,7 @@ public class LDC extends Index8Instruction {
 //            case ConstantInfoFactory.CONSTANT_Double:
 //                break;
             case ConstantInfoFactory.CONSTANT_String:
-                Instance_ internedRef = StringPool.jString(frame.getMethod_().getClass_()
+                Instance_ internedRef = StringPool.jString(frame.getMethod_().getInstanceKlass_()
                         .getLoader(), (String) (c.getVal()));
                 stack.pushRef(internedRef);
                 break;

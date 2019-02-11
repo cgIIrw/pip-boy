@@ -5,7 +5,7 @@ package instructions.references;
  */
 
 import instructions.base.Index16Instruction;
-import rtda.methodarea.Class_;
+import rtda.methodarea.InstanceKlass_;
 import rtda.methodarea.Field_;
 import rtda.methodarea.Method_;
 import rtda.methodarea.rtcp.symref.FieldRef;
@@ -18,7 +18,7 @@ public class PUT_FIELD extends Index16Instruction {
     @Override
     public void execute(StackFrame_ frame) {
         Method_ currentMethod = frame.getMethod_();
-        Class_ currentClass = currentMethod.getClass_();
+        InstanceKlass_ currentClass = currentMethod.getInstanceKlass_();
         RuntimeConstantPool_ cp = currentClass.getRuntimeConstantPool();
         FieldRef fieldRef = (FieldRef)((cp.getConstant(index)).getVal());
         Field_ field = fieldRef.resolvedField();
@@ -28,7 +28,7 @@ public class PUT_FIELD extends Index16Instruction {
         }
 
         if (field.isFinal()) {
-            if ((currentClass != field.getClass_()) || (currentMethod.getName() != "<init>")) {
+            if ((currentClass != field.getInstanceKlass_()) || (currentMethod.getName() != "<init>")) {
                 throw new IllegalAccessError("java.lang.IllegalAccessError");
             }
         }

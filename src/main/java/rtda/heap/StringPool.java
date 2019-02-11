@@ -1,7 +1,7 @@
 package rtda.heap;
 
 import rtda.methodarea.ClassLoader_;
-import rtda.methodarea.Class_;
+import rtda.methodarea.InstanceKlass_;
 import rtda.methodarea.Field_;
 
 import java.util.HashMap;
@@ -25,12 +25,12 @@ public class StringPool {
 
         // 加载String类，String虽然不同于基本类型，但不要忘了它和数组的
         // 加载机制不一样
-        Class_ stringClass = loder.loadClass("java/lang/String");
+        InstanceKlass_ stringClass = loder.loadClass("java/lang/String");
         // 给字符串在JVM中创建实例
         Instance_ stringInstance = stringClass.newObject();
         // 在stringClass中寻找满足条件的字段，计算其slotId，然后在
         // 字符串实例中，给对应id的字段传递值
-        for (Field_ f : stringInstance.getClass_().getFields()) {
+        for (Field_ f : stringInstance.getInstanceKlass_().getFields()) {
             if (!f.isStatic() && f.getName().equals("value")
                     && f.getDescriptor().equals("[C")) {
                 stringInstance.getFields().getSlots()[f.getSlotId()].setRef(newchars);
@@ -48,7 +48,7 @@ public class StringPool {
         // 首先要获得value引用的字符数组，可以通过for
         // 循环查找，也可以通过slotId来获取
         Instance_ newChars = null;
-        for (Field_ f : jStr.getClass_().getFields()) {
+        for (Field_ f : jStr.getInstanceKlass_().getFields()) {
             if (!f.isStatic() && f.getName().equals("value")
                     && f.getDescriptor().equals("[C")) {
                 newChars = jStr.getFields().getSlots()[f.getSlotId()].getRef();

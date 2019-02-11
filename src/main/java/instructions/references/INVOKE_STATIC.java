@@ -12,7 +12,7 @@ import rtda.methodarea.rtcp.RuntimeConstantPool_;
 public class INVOKE_STATIC extends Index16Instruction {
     @Override
     public void execute(StackFrame_ frame) {
-        RuntimeConstantPool_ cp = frame.getMethod_().getClass_().getRuntimeConstantPool();
+        RuntimeConstantPool_ cp = frame.getMethod_().getInstanceKlass_().getRuntimeConstantPool();
         MethodRef methodRef = (MethodRef) (cp.getConstant(index).getVal());
         Method_ resolvedMethod = methodRef.resolvedMethod();
         if (!resolvedMethod.isStatic()) {
@@ -20,9 +20,9 @@ public class INVOKE_STATIC extends Index16Instruction {
         }
 
         // 类初始化
-        if (!frame.getMethod_().getClass_().getClinitFlag()) {
+        if (!frame.getMethod_().getInstanceKlass_().getClinitFlag()) {
 //            Clinit.revertNextPc(frame);
-            Clinit.clinitClass(frame.getThread_(), frame.getMethod_().getClass_());
+            Clinit.clinitClass(frame.getThread_(), frame.getMethod_().getInstanceKlass_());
 //            return;
         }
 

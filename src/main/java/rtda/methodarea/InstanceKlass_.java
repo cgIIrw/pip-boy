@@ -6,7 +6,7 @@ import rtda.methodarea.rtcp.RuntimeConstantPool_;
 import rtda.stack.LocalVars_;
 import rtda.utils.AccessFlags;
 
-public class Class_ {
+public class InstanceKlass_ {
     //
     private int accessFlags;
     //当前类名(完全限定名)
@@ -24,9 +24,9 @@ public class Class_ {
     // 当前的类加载器
     private ClassLoader_ loader;
     // 父类的Class
-    private Class_ superClass;
+    private InstanceKlass_ superClass;
     // 被继承的接口的Class
-    private Class_[] interfaces;
+    private InstanceKlass_[] interfaces;
 
     private int instanceSlotCount;
 
@@ -38,17 +38,17 @@ public class Class_ {
 
     // name是完全限定名
     // Java虚拟机运行时产生数组类的构造器
-    public Class_(String name, ClassLoader_ classLoader) {
+    public InstanceKlass_(String name, ClassLoader_ classLoader) {
         this.accessFlags = AccessFlags.ACC_PUBLIC;
         this.thisClassName = name;
         this.loader = classLoader;
         this.clinitedFlag = true;
         this.superClass = classLoader.loadClass("java/lang/Object");
-        this.interfaces = new Class_[]{classLoader.loadClass("java/lang/Cloneable"),
+        this.interfaces = new InstanceKlass_[]{classLoader.loadClass("java/lang/Cloneable"),
                 classLoader.loadClass("java/io/Serializable")};
     }
 
-    public Class_(ClassFile cf) {
+    public InstanceKlass_(ClassFile cf) {
         this.accessFlags = cf.getAccessFlags();
         this.thisClassName = cf.getClassName();
         this.superClassName = cf.getSuperClassName();
@@ -100,22 +100,22 @@ public class Class_ {
         return "";
     }
 
-    public boolean isSuperClassOf(Class_ other) {
+    public boolean isSuperClassOf(InstanceKlass_ other) {
         return other.isSubClassOf(this);
     }
 
-    public boolean isSubClassOf(Class_ class_) {
+    public boolean isSubClassOf(InstanceKlass_ instanceKlass_) {
 
-        for (Class_ c = this.superClass; c != null; c = c.superClass) {
-            if (c == class_) {
+        for (InstanceKlass_ c = this.superClass; c != null; c = c.superClass) {
+            if (c == instanceKlass_) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean isSubInterfaceOf(Class_ iface) {
-        for (Class_ superInterface : this.interfaces) {
+    public boolean isSubInterfaceOf(InstanceKlass_ iface) {
+        for (InstanceKlass_ superInterface : this.interfaces) {
             if (superInterface == iface || superInterface.isSubInterfaceOf(iface)) {
                 return true;
             }
@@ -123,9 +123,9 @@ public class Class_ {
         return false;
     }
 
-    public boolean isImplements(Class_ iface) {
-        for (Class_ c = this; c != null; c = c.superClass) {
-            for (Class_ i : c.interfaces) {
+    public boolean isImplements(InstanceKlass_ iface) {
+        for (InstanceKlass_ c = this; c != null; c = c.superClass) {
+            for (InstanceKlass_ i : c.interfaces) {
                 if (i == iface || i.isSubInterfaceOf(iface)) {
                     return true;
                 }
@@ -134,9 +134,9 @@ public class Class_ {
         return false;
     }
 
-    public boolean isAssignableFrom(Class_ other) {
+    public boolean isAssignableFrom(InstanceKlass_ other) {
         // 判断other是不是this的子类或者继承自this
-        Class_ t = this;
+        InstanceKlass_ t = this;
 
         if (t == other) {
             return true;
@@ -150,7 +150,7 @@ public class Class_ {
     }
 
     //
-    public boolean isAccessibleTo(Class_ otherclass) {
+    public boolean isAccessibleTo(InstanceKlass_ otherclass) {
         return this.isPublic() || (this.getPackageName().equals(otherclass.getPackageName()));
     }
 
@@ -194,11 +194,11 @@ public class Class_ {
         return loader;
     }
 
-    public Class_ getSuperClass() {
+    public InstanceKlass_ getSuperClass() {
         return superClass;
     }
 
-    public Class_[] getInterfaces() {
+    public InstanceKlass_[] getInterfaces() {
         return interfaces;
     }
 
@@ -242,11 +242,11 @@ public class Class_ {
         this.loader = loader;
     }
 
-    public void setSuperClass(Class_ superClass) {
+    public void setSuperClass(InstanceKlass_ superClass) {
         this.superClass = superClass;
     }
 
-    public void setInterfaces(Class_[] interfaces) {
+    public void setInterfaces(InstanceKlass_[] interfaces) {
         this.interfaces = interfaces;
     }
 

@@ -2,7 +2,7 @@ package rtda.methodarea.rtcp.symref;
 
 import classfile.constantpool.ConstantInfo;
 import classfile.constantpool.constantInfos.ConstantInterfaceMethodrefInfo;
-import rtda.methodarea.Class_;
+import rtda.methodarea.InstanceKlass_;
 import rtda.methodarea.Method_;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
 
@@ -36,7 +36,7 @@ public class InterfaceMethodRef extends MemberRef {
         return this.method;
     }
 
-    public Method_ lookupInterfaceMethod(Class_ iface, String name, String descriptor) {
+    public Method_ lookupInterfaceMethod(InstanceKlass_ iface, String name, String descriptor) {
 
         // 在接口中查找是否有简单名和描述符都与目标相匹配的方法，如果有，返回这个方法的直接引用，查找结束
         for (Method_ method : iface.getMethods()) {

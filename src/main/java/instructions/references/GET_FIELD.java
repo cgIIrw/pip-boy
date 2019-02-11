@@ -12,7 +12,7 @@ import rtda.heap.*;
 public class GET_FIELD extends Index16Instruction {
     @Override
     public void execute(StackFrame_ frame) {
-        RuntimeConstantPool_ cp = frame.getMethod_().getClass_().getRuntimeConstantPool();
+        RuntimeConstantPool_ cp = frame.getMethod_().getInstanceKlass_().getRuntimeConstantPool();
         FieldRef fieldRef = (FieldRef)((cp.getConstant(index)).getVal());
         Field_ field = fieldRef.resolvedField();
 

@@ -4,7 +4,7 @@ import classfile.constantpool.ConstantInfo;
 import classfile.constantpool.ConstantInfoFactory;
 import classfile.constantpool.ConstantPool;
 import classfile.constantpool.constantInfos.*;
-import rtda.methodarea.Class_;
+import rtda.methodarea.InstanceKlass_;
 import rtda.methodarea.rtcp.symref.ClassRef;
 import rtda.methodarea.rtcp.symref.FieldRef;
 import rtda.methodarea.rtcp.symref.InterfaceMethodRef;
@@ -13,11 +13,11 @@ import rtda.methodarea.rtcp.symref.MethodRef;
 import java.util.NoSuchElementException;
 
 public class RuntimeConstantPool_ {
-    private Class_ class_;
+    private InstanceKlass_ instanceKlass_;
     private Constant[] constants;
 
-    public RuntimeConstantPool_(Class_ class_, ConstantPool cp) {
-        this.class_ = class_;
+    public RuntimeConstantPool_(InstanceKlass_ instanceKlass_, ConstantPool cp) {
+        this.instanceKlass_ = instanceKlass_;
         ConstantInfo[] constantInfos = cp.getCp();
         constants = new Constant[constantInfos.length];
 
@@ -84,8 +84,8 @@ public class RuntimeConstantPool_ {
         }
     }
 
-    public Class_ getClass_() {
-        return class_;
+    public InstanceKlass_ getInstanceKlass_() {
+        return instanceKlass_;
     }
 
     public Constant[] getConstants() {

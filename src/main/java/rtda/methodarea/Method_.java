@@ -23,8 +23,8 @@ public class Method_ extends ClassMember_ {
         return maxLocals;
     }
 
-    public Method_(Class_ class_, MemberInfo memberInfo) {
-        super(class_, memberInfo);
+    public Method_(InstanceKlass_ instanceKlass_, MemberInfo memberInfo) {
+        super(instanceKlass_, memberInfo);
         CodeAttribute codeAttribute = getCodeAttribute(memberInfo.getAttributes());
         if (codeAttribute != null) {
             this.maxStack = codeAttribute.getMaxStack();
@@ -76,10 +76,10 @@ public class Method_ extends ClassMember_ {
     }
 
     // 创建多个method，最终会遍历的调用Method_的构造方法
-    public static Method_[] newMethods(Class_ class_, MemberInfo[] memberInfos) {
+    public static Method_[] newMethods(InstanceKlass_ instanceKlass_, MemberInfo[] memberInfos) {
         Method_[] methods = new Method_[memberInfos.length];
         for (int i = 0; i < methods.length; i++) {
-            methods[i] = new Method_(class_, memberInfos[i]);
+            methods[i] = new Method_(instanceKlass_, memberInfos[i]);
         }
         return methods;
     }

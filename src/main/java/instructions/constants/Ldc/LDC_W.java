@@ -15,7 +15,7 @@ public class LDC_W extends Index16Instruction {
     @Override
     public void execute(StackFrame_ frame) {
         OperandStack_ stack = frame.getOperandStack();
-        RuntimeConstantPool_ cp = frame.getMethod_().getClass_().getRuntimeConstantPool();
+        RuntimeConstantPool_ cp = frame.getMethod_().getInstanceKlass_().getRuntimeConstantPool();
         Constant c = cp.getConstant(index);
 
         switch (c.getType()) {
@@ -26,7 +26,7 @@ public class LDC_W extends Index16Instruction {
                 stack.pushFloat((float) (c.getVal()));
                 break;
             case ConstantInfoFactory.CONSTANT_String:
-                Instance_ internedRef = StringPool.jString(frame.getMethod_().getClass_()
+                Instance_ internedRef = StringPool.jString(frame.getMethod_().getInstanceKlass_()
                         .getLoader(), (String) (c.getVal()));
                 stack.pushRef(internedRef);
                 break;

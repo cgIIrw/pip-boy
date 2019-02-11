@@ -2,7 +2,7 @@ import classpath.ClassPath;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
 import rtda.methodarea.ClassLoader_;
-import rtda.methodarea.Class_;
+import rtda.methodarea.InstanceKlass_;
 import rtda.methodarea.Method_;
 
 import java.io.*;
@@ -86,7 +86,7 @@ public class Main {
 
         // File.separator.charAt(0)是为了取字符而非字符串
         String className = args[count].replace('.', File.separator.charAt(0));
-        Class_ mainClass = classLoader.loadClass(className);
+        InstanceKlass_ mainClass = classLoader.loadClass(className);
         for (Method_ method : mainClass.getMethods()) {
             if (method.getName().equals("main")) {
                 Interpret.interpret(method, false);

@@ -1,6 +1,5 @@
 import instructions.InstructionFactory;
 import instructions.base.Instruction;
-import instructions.control.return_.RETURN;
 import instructions.utils.BytecodeReader;
 import rtda.methodarea.Method_;
 import rtda.stack.StackFrame_;
@@ -37,7 +36,7 @@ public class Interpret {
 
     private static void logInstruction(StackFrame_ frame, Instruction instruction) {
         Method_ method_ = frame.getMethod_();
-        String className = method_.getClass_().getThisClassName();
+        String className = method_.getInstanceKlass_().getThisClassName();
         String methodName = method_.getName();
         int pc = frame.getThread_().getPc();
         System.out.println(className + " " + methodName + " " + pc + " " + instruction);

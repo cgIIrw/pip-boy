@@ -42,7 +42,7 @@ public class Registry {
                     e.printStackTrace();
                 }
                 // do nothing
-//                System.out.println(frame.getMethod_().getClass_().getThisClassName());
+//                System.out.println(frame.getMethod_().getInstanceKlass_().getThisClassName());
             };
         }
         return null;

@@ -17,8 +17,8 @@ public class ARRAY_LENGTH extends NoOperandsInstruction {
         // 获取slots数组长度
         int slotsLength = ref.getFields().getSlots().length;
         // 如果数组是Double或者Long类型，则数组长度为slots长度的二分之一
-        if (ref.getClass_().getThisClassName().equals("[D") ||
-                ref.getClass_().getThisClassName().equals("[J")) {
+        if (ref.getInstanceKlass_().getThisClassName().equals("[D") ||
+                ref.getInstanceKlass_().getThisClassName().equals("[J")) {
             arrLen = slotsLength / 2;
         } else {
             arrLen = slotsLength;

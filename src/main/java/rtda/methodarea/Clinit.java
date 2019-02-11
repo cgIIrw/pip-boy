@@ -12,15 +12,15 @@ import rtda.stack.Thread_;
 // 使用JDK1.7动态语言支持时的某些场景；
 public class Clinit {
     // 类初始化方法
-    public static void clinitClass(Thread_ thread, Class_ class_) {
-        getClinitMethod(thread, class_);
-        clinitSuperClass(thread, class_);
-        class_.setClinitedFlag(true);
+    public static void clinitClass(Thread_ thread, InstanceKlass_ instanceKlass_) {
+        getClinitMethod(thread, instanceKlass_);
+        clinitSuperClass(thread, instanceKlass_);
+        instanceKlass_.setClinitedFlag(true);
     }
 
     // 获取<clinit>方法，一旦获取到就生成栈帧压入虚拟机栈中
-    private static void getClinitMethod(Thread_ thread, Class_ class_) {
-        Method_ clinit = class_.getStaticMethod("<clinit>", "()V");
+    private static void getClinitMethod(Thread_ thread, InstanceKlass_ instanceKlass_) {
+        Method_ clinit = instanceKlass_.getStaticMethod("<clinit>", "()V");
         // 从当前的类查找类初始化器，如果不存在就要考虑在父类中查找了，
         // 后者相当于递归调用，将在其他方法中实现
         if (clinit != null) {
@@ -30,9 +30,9 @@ public class Clinit {
     }
 
     // 在父类中递归查找和获取<clinit>方法
-    private static void clinitSuperClass(Thread_ thread, Class_ class_) {
-        if (!class_.isInterface()) {
-            Class_ superClass = class_.getSuperClass();
+    private static void clinitSuperClass(Thread_ thread, InstanceKlass_ instanceKlass_) {
+        if (!instanceKlass_.isInterface()) {
+            InstanceKlass_ superClass = instanceKlass_.getSuperClass();
             if (superClass != null && !superClass.getClinitFlag())
                 clinitClass(thread, superClass);
         }

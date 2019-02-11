@@ -12,8 +12,8 @@ public class Field_ extends ClassMember_ {
 
     // Field_构造方法，除了调用父类的构造方法，还会判断是否
     // 拥有常量值属性，如果有获得对应的常量池索引
-    public Field_(Class_ class_, MemberInfo memberInfo) {
-        super(class_, memberInfo);
+    public Field_(InstanceKlass_ instanceKlass_, MemberInfo memberInfo) {
+        super(instanceKlass_, memberInfo);
         ConstantValueAttribute constantValueAttribute =
                 getConstantValueAttribute(memberInfo.getAttributes());
         if (constantValueAttribute != null) {
@@ -22,11 +22,11 @@ public class Field_ extends ClassMember_ {
     }
 
     // 创建多个字段，最终会遍历的调用Field_的构造方法
-    public static Field_[] newFields(Class_ class_, MemberInfo[] memberInfos) {
+    public static Field_[] newFields(InstanceKlass_ instanceKlass_, MemberInfo[] memberInfos) {
         Field_[] fields = new Field_[memberInfos.length];
         for (int i = 0; i < fields.length; i++) {
             // 参看构造方法
-            fields[i] = new Field_(class_, memberInfos[i]);
+            fields[i] = new Field_(instanceKlass_, memberInfos[i]);
         }
         return fields;
     }

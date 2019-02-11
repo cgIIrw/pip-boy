@@ -15,7 +15,7 @@ import java.util.HashMap;
 // 类加载器
 public class ClassLoader_ {
     private ClassPath cp;
-    private HashMap<String, Class_> classMap;
+    private HashMap<String, InstanceKlass_> classMap;
 
     public ClassLoader_(ClassPath cp) {
         this.cp = cp;
@@ -23,7 +23,7 @@ public class ClassLoader_ {
     }
 
     // name是完全限定名
-    public Class_ loadClass(String name) {
+    public InstanceKlass_ loadClass(String name) {
         if (classMap.containsKey(name)) {
             return classMap.get(name);
         }
@@ -34,17 +34,17 @@ public class ClassLoader_ {
         return loadNonArrayClass(name);
     }
 
-    private Class_ loadArrayClass(String name) {
-        Class_ class_ = new Class_(name, this);
-        this.classMap.put(name, class_);
-        return class_;
+    private InstanceKlass_ loadArrayClass(String name) {
+        InstanceKlass_ instanceKlass_ = new InstanceKlass_(name, this);
+        this.classMap.put(name, instanceKlass_);
+        return instanceKlass_;
     }
 
-    private Class_ loadNonArrayClass(String name) {
+    private InstanceKlass_ loadNonArrayClass(String name) {
         byte[] data = readClass(name);
-        Class_ class_ = defineClass(data);
-        link(class_);
-        return class_;
+        InstanceKlass_ instanceKlass_ = defineClass(data);
+        link(instanceKlass_);
+        return instanceKlass_;
     }
 
     public byte[] readClass(String name) {
@@ -57,63 +57,63 @@ public class ClassLoader_ {
         return data;
     }
 
-    public Class_ defineClass(byte[] bytes) {
+    public InstanceKlass_ defineClass(byte[] bytes) {
         // 这里就已经完成了字节码到Class_对象的转换，基本思路就是一个"空"架子，往
         // 里面填东西，并没有什么黑科技
-        Class_ class_ = parseClass(bytes);
+        InstanceKlass_ instanceKlass_ = parseClass(bytes);
         // 相当于标记一下是谁加载的这个类(当前的类加载器加载的类)
-        class_.setLoader(this);
+        instanceKlass_.setLoader(this);
         // 和对象不一样，子类的Class是需要加载父类的Class的
-        resolveSuperClass(class_);
-        resolveInterfaces(class_);
-        this.classMap.put(class_.getThisClassName(), class_);
-        return class_;
+        resolveSuperClass(instanceKlass_);
+        resolveInterfaces(instanceKlass_);
+        this.classMap.put(instanceKlass_.getThisClassName(), instanceKlass_);
+        return instanceKlass_;
     }
 
-    public Class_ parseClass(byte[] bytes) {
+    public InstanceKlass_ parseClass(byte[] bytes) {
         ClassFile cf = ClassFile.Parse(bytes);
-        return new Class_(cf);
+        return new InstanceKlass_(cf);
     }
 
-    public void resolveSuperClass(Class_ class_) {
-        if (!class_.getThisClassName().equals("java/lang/Object")) {
-            class_.setSuperClass(class_.getLoader().loadClass(class_.getSuperClassName()));
+    public void resolveSuperClass(InstanceKlass_ instanceKlass_) {
+        if (!instanceKlass_.getThisClassName().equals("java/lang/Object")) {
+            instanceKlass_.setSuperClass(instanceKlass_.getLoader().loadClass(instanceKlass_.getSuperClassName()));
         }
     }
 
-    public void resolveInterfaces(Class_ class_) {
-        int interCount = class_.getInterfaceNames().length;
+    public void resolveInterfaces(InstanceKlass_ instanceKlass_) {
+        int interCount = instanceKlass_.getInterfaceNames().length;
         if (interCount > 0) {
-            class_.setInterfaces(new Class_[interCount]);
+            instanceKlass_.setInterfaces(new InstanceKlass_[interCount]);
             for (int i = 0; i < interCount; i++) {
-                class_.getInterfaces()[i] = class_.getLoader()
-                        .loadClass(class_.getInterfaceNames()[i]);
+                instanceKlass_.getInterfaces()[i] = instanceKlass_.getLoader()
+                        .loadClass(instanceKlass_.getInterfaceNames()[i]);
             }
         }
     }
 
-    public void link(Class_ class_) {
+    public void link(InstanceKlass_ instanceKlass_) {
         // 验证
-        vertify(class_);
+        vertify(instanceKlass_);
         // 准备：在方法区中为变量分配内存，这里的变量指static修饰。
-        prepare(class_);
+        prepare(instanceKlass_);
     }
 
-    public void vertify(Class_ class_) {
+    public void vertify(InstanceKlass_ instanceKlass_) {
         // todo
     }
 
-    public void prepare(Class_ class_) {
+    public void prepare(InstanceKlass_ instanceKlass_) {
         // todo
         // 计算实例字段的个数
-//        calcInstanceFieldSlotIds(class_);
+//        calcInstanceFieldSlotIds(instanceKlass_);
         // 计算静态字段的个数
-        StaticFieldsCounter.countsStaticFields(class_);
+        StaticFieldsCounter.countsStaticFields(instanceKlass_);
         // 给类变量分配空间，然后给他们赋予初始值
-        allocAndInitStaticVars(class_);
+        allocAndInitStaticVars(instanceKlass_);
     }
 
-//    public void calcInstanceFieldSlotIds(Class_ class_) {
+//    public void calcInstanceFieldSlotIds(InstanceKlass_ class_) {
 //        int slotId = 0;
 //        if (class_.getSuperClass() != null) {
 //            // 从上往下，先把父类的个数加上
@@ -132,7 +132,7 @@ public class ClassLoader_ {
 //        class_.setInstanceSlotCount(slotId);
 //    }
 
-//    public void calcStaticFieldSlotIds(Class_ class_) {
+//    public void calcStaticFieldSlotIds(InstanceKlass_ class_) {
 //        int slotId = 0;
 //        for (int i = 0; i < class_.getFields().length; i++) {
 //            if (class_.getFields()[i].isStatic()) {
@@ -146,19 +146,19 @@ public class ClassLoader_ {
 //        class_.setStaticSlotCount(slotId);
 //    }
 
-    private void allocAndInitStaticVars(Class_ class_) {
+    private void allocAndInitStaticVars(InstanceKlass_ instanceKlass_) {
         // LocalVars是一个Slot[]的包装类，这里用来定位和初始化
-        class_.setStaticVars(new LocalVars_(class_.getStaticSlotCount()));
-        for (Field_ field : class_.getFields()) {
+        instanceKlass_.setStaticVars(new LocalVars_(instanceKlass_.getStaticSlotCount()));
+        for (Field_ field : instanceKlass_.getFields()) {
 //            if (field.isStatic() && field.isFinal()) {
-            initStaticFinalVar(class_, field);
+            initStaticFinalVar(instanceKlass_, field);
 //            }
         }
     }
 
-    private void initStaticFinalVar(Class_ class_, Field_ field) {
-        LocalVars_ vars = class_.getStaticVars();
-        RuntimeConstantPool_ cp = class_.getRuntimeConstantPool();
+    private void initStaticFinalVar(InstanceKlass_ instanceKlass_, Field_ field) {
+        LocalVars_ vars = instanceKlass_.getStaticVars();
+        RuntimeConstantPool_ cp = instanceKlass_.getRuntimeConstantPool();
         // 再次强调一下，这里constValue_index的是static final
 //        int cpIndex = field.getConstValue_index();
         int slotId = field.getSlotId();
@@ -192,7 +192,7 @@ public class ClassLoader_ {
                     break;
                 case "Ljava/lang/String;":
                     String str = (String) (cp.getConstant(cpIndex).getVal());
-                    Instance_ jStr = StringPool.jString(class_.getLoader(), str);
+                    Instance_ jStr = StringPool.jString(instanceKlass_.getLoader(), str);
                     vars.setRef(slotId, jStr);
                     break;
                 default:

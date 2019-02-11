@@ -3,7 +3,7 @@ package instructions.references;
 import instructions.base.Index8Instruction;
 import rtda.heap.Instance_;
 import rtda.methodarea.ClassLoader_;
-import rtda.methodarea.Class_;
+import rtda.methodarea.InstanceKlass_;
 import rtda.stack.OperandStack_;
 import rtda.stack.StackFrame_;
 
@@ -28,13 +28,13 @@ public class NEW_ARRAY extends Index8Instruction {
         if (count < 0)
             throw new NegativeArraySizeException();
 
-        ClassLoader_ loader = frame.getMethod_().getClass_().getLoader();
-        Class_ arrClass = getPrimitiveArrayClass(loader);
+        ClassLoader_ loader = frame.getMethod_().getInstanceKlass_().getLoader();
+        InstanceKlass_ arrClass = getPrimitiveArrayClass(loader);
         Instance_ arr = arrClass.newArray(count);
         operandStack.pushRef(arr);
     }
 
-    private Class_ getPrimitiveArrayClass(ClassLoader_ loader) {
+    private InstanceKlass_ getPrimitiveArrayClass(ClassLoader_ loader) {
         switch (this.index) {
             case AT_BOOLEAN:
                 return loader.loadClass("[Z");

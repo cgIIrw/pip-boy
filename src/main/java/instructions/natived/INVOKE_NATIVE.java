@@ -10,7 +10,7 @@ public class INVOKE_NATIVE extends NoOperandsInstruction {
     @Override
     public void execute(StackFrame_ frame) {
         Method_ method = frame.getMethod_();
-        String className = method.getClass_().getThisClassName();
+        String className = method.getInstanceKlass_().getThisClassName();
         String methodName = method.getName();
         String methodDescriptor = method.getDescriptor();
         // 查找相应的本地方法

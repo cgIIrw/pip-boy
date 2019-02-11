@@ -3,7 +3,7 @@ package instructions.references;
 import instructions.base.Index16Instruction;
 import instructions.base.MethodInvokeLogic;
 import rtda.heap.Instance_;
-import rtda.methodarea.Class_;
+import rtda.methodarea.InstanceKlass_;
 import rtda.methodarea.Method_;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
 import rtda.methodarea.rtcp.resolvedref.ResolvedRef;
@@ -15,17 +15,17 @@ import rtda.stack.StackFrame_;
 public class INVOKE_SPECIAL extends Index16Instruction {
     @Override
     public void execute(StackFrame_ frame) {
-        Class_ currentClass = frame.getMethod_().getClass_();
+        InstanceKlass_ currentClass = frame.getMethod_().getInstanceKlass_();
         RuntimeConstantPool_ cp = currentClass.getRuntimeConstantPool();
         MethodRef methodRef = (MethodRef) (cp.getConstant(index).getVal());
-        Class_ resolvedClass = methodRef.getClass_();
+        InstanceKlass_ resolvedClass = methodRef.getInstanceKlass_();
         if (resolvedClass == null) {
             resolvedClass = ResolvedRef.resolvedClassRef(methodRef.getClassName(), methodRef.getRuntimeConstantPool());
         }
         Method_ resolvedMethod = methodRef.resolvedMethod();
 
         // 解析的方法是构造器则方法声明的类就是通过方法引用解析出的类，否则抛出错误
-        if (resolvedMethod.getName().equals("<init>") && resolvedMethod.getClass_() != resolvedClass) {
+        if (resolvedMethod.getName().equals("<init>") && resolvedMethod.getInstanceKlass_() != resolvedClass) {
             throw new NoSuchMethodError("没有该方法！");
         }
 
@@ -45,13 +45,13 @@ public class INVOKE_SPECIAL extends Index16Instruction {
         // 一个方法是protected的，并且不满足后面括号内的条件
         if (resolvedMethod.isProtected() && !(
                 // 被调用方法的类是当前类的父类
-                resolvedMethod.getClass_().isSuperClassOf(currentClass)
+                resolvedMethod.getInstanceKlass_().isSuperClassOf(currentClass)
                         // 被调用方法的类的包名等于当前类的包名
-                        || resolvedMethod.getClass_().getPackageName().equals(currentClass.getPackageName())
+                        || resolvedMethod.getInstanceKlass_().getPackageName().equals(currentClass.getPackageName())
                         // 被调用方法的类等于当前类
-                        || (ref.getClass_() == currentClass)
+                        || (ref.getInstanceKlass_() == currentClass)
                         // 被调用当前的类是当前类的子类
-                        || ref.getClass_().isSubClassOf(currentClass))) {
+                        || ref.getInstanceKlass_().isSubClassOf(currentClass))) {
             // 抛出非法访问权限的错误
             throw new IllegalAccessError();
         }

@@ -15,7 +15,7 @@ public class LDC2_W extends Index16Instruction {
     @Override
     public void execute(StackFrame_ frame) {
         OperandStack_ stack = frame.getOperandStack();
-        RuntimeConstantPool_ cp = frame.getMethod_().getClass_().getRuntimeConstantPool();
+        RuntimeConstantPool_ cp = frame.getMethod_().getInstanceKlass_().getRuntimeConstantPool();
         Constant c = cp.getConstant(index);
 
         switch (c.getType()) {

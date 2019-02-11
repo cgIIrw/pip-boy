@@ -1,6 +1,6 @@
 package rtda.methodarea.rtcp.resolvedref;
 
-import rtda.methodarea.Class_;
+import rtda.methodarea.InstanceKlass_;
 import rtda.methodarea.Field_;
 import rtda.methodarea.Method_;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
@@ -12,9 +12,9 @@ public class ResolvedRef {
 
     // d是加载的当前.class文件的Class对象，c是通过类符号引用的
     // 完全限定名产生的class对象，d应该拥有c的访问权限
-    public static Class_ resolvedClassRef(String className, RuntimeConstantPool_ runtimeConstantPool) {
-        Class_ d = runtimeConstantPool.getClass_();
-        Class_ c = d.getLoader().loadClass(className);
+    public static InstanceKlass_ resolvedClassRef(String className, RuntimeConstantPool_ runtimeConstantPool) {
+        InstanceKlass_ d = runtimeConstantPool.getInstanceKlass_();
+        InstanceKlass_ c = d.getLoader().loadClass(className);
         if (!c.isAccessibleTo(d)) {
             throw new IllegalAccessError("错误的访问权限！");
         }
@@ -25,9 +25,9 @@ public class ResolvedRef {
     public static Method_ resolveMethodRef(MethodRef methodRef) {
 
         // 当前代码所处的类d
-        Class_ d = methodRef.getRuntimeConstantPool().getClass_();
+        InstanceKlass_ d = methodRef.getRuntimeConstantPool().getInstanceKlass_();
         // 要解析的非接口方法所属的类或接口c
-        Class_ c = methodRef.getClass_();
+        InstanceKlass_ c = methodRef.getInstanceKlass_();
         if (c == null) {
             c = ResolvedRef.resolvedClassRef(methodRef.getClassName(), methodRef.getRuntimeConstantPool());
         }
@@ -55,8 +55,8 @@ public class ResolvedRef {
 
     // 解析字段的符号引用
     public static Field_ resolveFieldRef(FieldRef fieldRef) {
-        Class_ d = fieldRef.getRuntimeConstantPool().getClass_();
-        Class_ c = fieldRef.getClass_();
+        InstanceKlass_ d = fieldRef.getRuntimeConstantPool().getInstanceKlass_();
+        InstanceKlass_ c = fieldRef.getInstanceKlass_();
         if (c == null) {
             c = ResolvedRef.resolvedClassRef(fieldRef.getClassName(), fieldRef.getRuntimeConstantPool());
         }
@@ -76,10 +76,10 @@ public class ResolvedRef {
     public static Method_ resolvedInterfaceMethodRef(InterfaceMethodRef interfaceMethodRef) {
 
         // 当前代码所处的类d
-        Class_ d = interfaceMethodRef.getRuntimeConstantPool().getClass_();
+        InstanceKlass_ d = interfaceMethodRef.getRuntimeConstantPool().getInstanceKlass_();
 
         // 要解析的非接口方法所属的类或接口c
-        Class_ c = interfaceMethodRef.getClass_();
+        InstanceKlass_ c = interfaceMethodRef.getInstanceKlass_();
         if (c == null) {
             c = ResolvedRef.resolvedClassRef(interfaceMethodRef.getClassName(), interfaceMethodRef.getRuntimeConstantPool());
         }
