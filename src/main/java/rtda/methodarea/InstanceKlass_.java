@@ -36,6 +36,17 @@ public class InstanceKlass_ {
 
     private boolean clinitedFlag = false;
 
+    // java.lang.Class在JVM中的表示
+    private Instance_ java_mirror_;
+
+    public Instance_ getJava_mirror_() {
+        return java_mirror_;
+    }
+
+    public void setJava_mirror_(Instance_ java_mirror_) {
+        this.java_mirror_ = java_mirror_;
+    }
+
     // name是完全限定名
     // Java虚拟机运行时产生数组类的构造器
     public InstanceKlass_(String name, ClassLoader_ classLoader) {
