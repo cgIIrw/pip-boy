@@ -5,6 +5,7 @@ import instructions.base.Index8Instruction;
 import rtda.heap.Instance_;
 import rtda.heap.StringPool;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
+import rtda.methodarea.rtcp.symref.ClassRef;
 import rtda.stack.OperandStack_;
 import rtda.stack.StackFrame_;
 import rtda.methodarea.rtcp.Constant;
@@ -33,8 +34,10 @@ public class LDC extends Index8Instruction {
                         .getLoader(), (String) (c.getVal()));
                 stack.pushRef(internedRef);
                 break;
-//            case ConstantInfoFactory.CONSTANT_Class:
-//                break;
+            case ConstantInfoFactory.CONSTANT_Class:
+                Instance_ java_mirror = ((ClassRef) (c.getVal())).resolvedClass().getJava_mirror_();
+                stack.pushRef(java_mirror);
+                break;
 //            case ConstantInfoFactory.CONSTANT_Fieldref:
 //                break;
 //            case ConstantInfoFactory.CONSTANT_Methodref:
