@@ -20,6 +20,7 @@ public class ClassLoader_ {
     public ClassLoader_(ClassPath cp) {
         this.cp = cp;
         classMap = new HashMap<>();
+        loadClass("java/lang/Class");
     }
 
     // name是完全限定名
@@ -28,10 +29,23 @@ public class ClassLoader_ {
             return classMap.get(name);
         }
 
-        if (name.startsWith("["))
-            return loadArrayClass(name);
-        // 数组类的数据不来自Class文件，运行时生成，要单独考虑
-        return loadNonArrayClass(name);
+        InstanceKlass_ instanceKlass_;
+        if (name.startsWith("[")) {
+            // 数组类的数据不来自Class文件，运行时生成，要单独考虑
+            instanceKlass_ = loadArrayClass(name);
+        } else {
+            instanceKlass_ = loadNonArrayClass(name);
+        }
+
+        // java/lang/Class的InstanceKlass_对象classInstanceKlass_
+        InstanceKlass_ classInstanceKlass_ = classMap.get("java/lang/Class");
+        // instanceKlass_里有个_java_mirror字段，
+        // 指向该类所对应的Java镜像——java.lang.Class实例
+        instanceKlass_.setJava_mirror_(classInstanceKlass_.newObject());
+        // 找到这个镜像，将其中的隐藏字段klass设置为instanceKlass_
+        // 实现instanceKlass_与mirror之间就有双向引用，可以来回导航
+        instanceKlass_.getJava_mirror_().setKlass(instanceKlass_);
+        return instanceKlass_;
     }
 
     private InstanceKlass_ loadArrayClass(String name) {
