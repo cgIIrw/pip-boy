@@ -9,6 +9,18 @@ public class Instance_ {
     private InstanceKlass_ instanceKlass_;
     private LocalVars_ fields;
 
+    // HotSpot VM会给Class对象注入一个隐藏字段“klass”，
+    // 用于指回到其对应的InstanceKlass对象
+    private InstanceKlass_ klass;
+
+    public InstanceKlass_ getKlass() {
+        return klass;
+    }
+
+    public void setKlass(InstanceKlass_ klass) {
+        this.klass = klass;
+    }
+
     // 为数组的创建添加一个构造器
     public Instance_(InstanceKlass_ instanceKlass_, int slotCount) {
         this.instanceKlass_ = instanceKlass_;
