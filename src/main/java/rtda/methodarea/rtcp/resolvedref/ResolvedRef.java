@@ -44,12 +44,6 @@ public class ResolvedRef {
         if (method == null) {
             throw new NoSuchMethodError("出现错误，没有该方法！");
         }
-
-        // 查找到了方法，返回了直接引用，还要在这一步进行权限验证，当前类应该能访问查找到的方法，
-        // 否则抛出IllegalAccessError异常
-        if (!method.isAccessibleTo(d)) {
-            throw new IllegalAccessError();
-        }
         return method;
     }
 
@@ -64,10 +58,6 @@ public class ResolvedRef {
 
         if (field == null) {
             throw new NoSuchFieldError("没有该字段！");
-        }
-
-        if (!field.isAccessibleTo(d)) {
-            throw new IllegalAccessError("非法的访问权限！");
         }
         return field;
     }
