@@ -1,6 +1,9 @@
 public class ClassTest {
     public static void main(String args[]) throws Exception {
-        Class stringClass = String.class;
-        System.out.println(stringClass.getName());
+        Class objectClass = ClassTest.class;
+        ClassTest o = new ClassTest();
+        Class objectClass02 = o.getClass();
+        System.out.println(objectClass.getName());
+        System.out.println(objectClass02.getName());
     }
 }
