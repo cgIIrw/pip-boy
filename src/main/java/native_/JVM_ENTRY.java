@@ -1,6 +1,8 @@
 package native_;
 
 import rtda.heap.Instance_;
+import rtda.heap.StringPool;
+import rtda.methodarea.InstanceKlass_;
 import rtda.stack.StackFrame_;
 
 public interface JVM_ENTRY {
@@ -44,6 +46,29 @@ public interface JVM_ENTRY {
         @Override
         public void execute(StackFrame_ frame) {
 
+        }
+    }
+
+    class GetObjectClass implements NativeMethod {
+
+        @Override
+        public void execute(StackFrame_ frame) {
+            Instance_ thisRef = frame.getLocalVars().getRef(0);
+            Instance_ jClass = thisRef.getInstanceKlass_().getJava_mirror_();
+            frame.getOperandStack().pushRef(jClass);
+        }
+    }
+
+    class JVM_GetClassName implements NativeMethod {
+
+        @Override
+        public void execute(StackFrame_ frame) {
+            Instance_ thisRef = frame.getLocalVars().getRef(0);
+            InstanceKlass_ instanceKlass = thisRef.getKlass();
+            String name = instanceKlass.getThisClassName();
+            name = name.replace("/", ".");
+            Instance_ jName = StringPool.jString(instanceKlass.getLoader(), name);
+            frame.getOperandStack().pushRef(jName);
         }
     }
 }
