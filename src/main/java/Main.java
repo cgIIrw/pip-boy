@@ -61,6 +61,7 @@ public class Main {
     private static void startJVM(CommandLine cmd, String[] args) {
         String jreOption = "";
         String cpOption = "";
+        boolean verboseFlag = false;
         int count = 0;
 
         if (cmd.hasOption("cp")) {
@@ -72,6 +73,16 @@ public class Main {
         if (cmd.hasOption("Xjre")) {
             jreOption = cmd.getOptionValue("Xjre");
             count = count + 2;
+        }
+        if (cmd.hasOption("v")) {
+            String s = cmd.getOptionValue("v");
+            if (s.equalsIgnoreCase("true") || s.equalsIgnoreCase("false")) {
+                verboseFlag = Boolean.valueOf(s);
+                count = count + 2;
+            } else {
+                System.out.println("错误输入-verbose参数！");
+                return;
+            }
         }
 
 //        // 当参数只有两个时，一个为Option，一个为类名称，相当于没有
@@ -89,7 +100,7 @@ public class Main {
         InstanceKlass_ mainClass = classLoader.loadClass(className);
         for (Method_ method : mainClass.getMethods()) {
             if (method.getName().equals("main")) {
-                Interpret.interpret(method, false);
+                Interpret.interpret(method, verboseFlag);
             }
         }
 
