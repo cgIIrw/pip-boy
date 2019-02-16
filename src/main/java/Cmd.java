@@ -11,6 +11,7 @@ class Cmd {
         options.addOption("version", false, "print version and exit");
         options.addOption("Xjre", true, "path to jre");
         options.addOption("cp", "classpath", true, "classpath");
+        options.addOption("v", "verbose", true, "verbose");
         //解析
         CommandLineParser paraer = new DefaultParser();
         return paraer.parse(options, args);
