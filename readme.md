@@ -20,7 +20,7 @@ Pip-Boy是一款采用Java语言实现的简易版Java虚拟机。
 - [x] 构建数组类型
 - [x] 实现字符串部分功能
 - [x] 实现native方法调用
-- [ ] 实现基本的反射功能
+- [x] 实现基本的反射功能
 - [ ] GC (开发中)
 - [ ] JIT (开发中)
 
@@ -109,6 +109,23 @@ public class FindNumberWithSum {
   <img width="600" src="https://github.com/cgIIrw/pip-boy/blob/master/svg/FindNumberWithSum.svg">
 </p>
 
+### 反射
+
+```java
+public class ClassTest {
+    public static void main(String args[]) throws Exception {
+        Class objectClass = ClassTest.class;
+        ClassTest o = new ClassTest();
+        Class objectClass02 = o.getClass();
+        System.out.println(objectClass.getName());
+        System.out.println(objectClass02.getName());
+    }
+}
+```
+
+<p align="center">
+  <img width="600" src="https://github.com/cgIIrw/pip-boy/blob/master/svg/reflect.svg">
+</p>
 
 ### native方法调用
 
