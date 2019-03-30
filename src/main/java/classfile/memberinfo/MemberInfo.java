@@ -7,7 +7,7 @@ import classfile.constantpool.ConstantPool;
 import classfile.utils.ClassReader;
 
 /**
- * Created by yin on 18/4/15.
+ * Created by cgrw on 18/4/15.
  */
 // 相当于FieldInfo、MethodInfo
 // 字段和方法由于结构相同用同一个结构体MemberInfo表示

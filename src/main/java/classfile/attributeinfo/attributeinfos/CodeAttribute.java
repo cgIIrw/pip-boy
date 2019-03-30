@@ -6,7 +6,7 @@ import classfile.constantpool.ConstantPool;
 import classfile.attributeinfo.AttributeInfoFactory;
 
 /**
- * Created by yin on 18/4/17.
+ * Created by cgrw on 18/4/17.
  */
 public class CodeAttribute implements AttributeInfo {
     private ConstantPool cp;

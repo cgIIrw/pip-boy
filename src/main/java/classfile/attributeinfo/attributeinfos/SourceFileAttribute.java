@@ -5,7 +5,7 @@ import classfile.utils.ClassReader;
 import classfile.constantpool.ConstantPool;
 
 /**
- * Created by yin on 18/4/22.
+ * Created by cgrw on 18/4/22.
  */
 public class SourceFileAttribute implements AttributeInfo {
     private ConstantPool cp;

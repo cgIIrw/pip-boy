@@ -4,7 +4,7 @@ import classfile.attributeinfo.AttributeInfo;
 import classfile.utils.ClassReader;
 
 /**
- * Created by yin on 18/4/22.
+ * Created by cgrw on 18/4/22.
  */
 public class ExceptionsAttribute implements AttributeInfo {
     private int[] exceptionIndexTable;

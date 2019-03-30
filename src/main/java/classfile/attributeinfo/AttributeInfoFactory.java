@@ -6,7 +6,7 @@ import classfile.constantpool.ConstantPool;
 import classfile.utils.ClassReader;
 
 /**
- * Created by yin on 18/4/17.
+ * Created by cgrw on 18/4/17.
  */
 // 属性表工厂
 public class AttributeInfoFactory {

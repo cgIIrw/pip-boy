@@ -1,7 +1,7 @@
 package classpath;
 
 /**
- * Created by yin on 18/4/2.
+ * Created by cgrw on 18/4/2.
  */
 // 用来创建各种路径实例的类
 class NewEntry {

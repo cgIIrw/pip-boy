@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by yin on 18/4/2.
+ * Created by cgrw on 18/4/2.
  */
 public class Composite_Entry implements Entry {
     private List<Entry> compositeEntry;

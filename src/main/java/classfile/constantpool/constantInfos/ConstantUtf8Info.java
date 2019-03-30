@@ -6,7 +6,7 @@ import classfile.constantpool.ConstantInfo;
 import java.io.*;
 
 /**
- * Created by yin on 18/4/16.
+ * Created by cgrw on 18/4/16.
  */
 public class ConstantUtf8Info implements ConstantInfo {
     private final int tag = 1;

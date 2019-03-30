@@ -4,7 +4,7 @@ import classfile.utils.ClassReader;
 import classfile.constantpool.ConstantInfo;
 
 /**
- * Created by yin on 18/4/16.
+ * Created by cgrw on 18/4/16.
  */
 public class ConstantNameAndTypeInfo implements ConstantInfo {
     private final int tag = 12;

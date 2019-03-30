@@ -4,7 +4,7 @@ import classfile.attributeinfo.AttributeInfo;
 import classfile.utils.ClassReader;
 
 /**
- * Created by yin on 18/4/17.
+ * Created by cgrw on 18/4/17.
  */
 public class UnparsedAttribute implements AttributeInfo {
     private String name;

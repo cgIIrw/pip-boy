@@ -4,7 +4,7 @@ import classfile.utils.ClassReader;
 import classfile.constantpool.ConstantInfo;
 
 /**
- * Created by yin on 18/4/17.
+ * Created by cgrw on 18/4/17.
  */
 public class ConstantMethodTypeInfo implements ConstantInfo {
     private final int tag = 16;

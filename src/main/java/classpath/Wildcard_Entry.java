@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by yin on 18/4/2.
+ * Created by cgrw on 18/4/2.
  */
 public class Wildcard_Entry implements Entry {
     private List<Entry> cp = new ArrayList<>();

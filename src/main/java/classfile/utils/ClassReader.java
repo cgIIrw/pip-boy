@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.util.stream.IntStream;
 
 /**
- * @author cgIIrw
+ * @author cgrw
  * @date 2018/4/11
  */
 // 字节码读取工具

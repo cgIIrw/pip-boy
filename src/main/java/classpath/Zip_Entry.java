@@ -5,7 +5,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 /**
- * Created by yin on 18/4/2.
+ * Created by cgrw on 18/4/2.
  */
 class Zip_Entry implements Entry {
     private String absPath;

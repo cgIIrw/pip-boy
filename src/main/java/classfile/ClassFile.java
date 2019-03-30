@@ -7,7 +7,7 @@ import classfile.memberinfo.MemberInfo;
 import classfile.utils.ClassReader;
 
 /**
- * @author cgIIrw
+ * @author cgrw
  * @date 2018/4/11
  */
 // 每一个Class文件对应一个classFile结构体，

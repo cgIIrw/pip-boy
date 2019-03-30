@@ -5,7 +5,7 @@ import classfile.constantpool.ConstantInfo;
 import classfile.constantpool.ConstantPool;
 
 /**
- * Created by yin on 18/4/17.
+ * Created by cgrw on 18/4/17.
  */
 public class ConstantMethodrefInfo implements ConstantInfo {
     private final int tag = 10;

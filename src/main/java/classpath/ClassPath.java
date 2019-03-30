@@ -3,7 +3,7 @@ package classpath;
 import java.io.*;
 
 /**
- * Created by yin on 18/4/2.
+ * Created by cgrw on 18/4/2.
  */
 public class ClassPath {
     private Entry bootClasspath;

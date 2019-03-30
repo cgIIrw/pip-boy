@@ -6,7 +6,7 @@ import classfile.constantpool.ConstantInfo;
 import java.math.BigInteger;
 
 /**
- * Created by yin on 18/4/16.
+ * Created by cgrw on 18/4/16.
  */
 public class ConstantLongInfo implements ConstantInfo {
     private final int tag = 5;

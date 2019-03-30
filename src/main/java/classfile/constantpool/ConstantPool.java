@@ -4,7 +4,7 @@ import classfile.constantpool.constantInfos.*;
 import classfile.utils.ClassReader;
 
 /**
- * Created by yin on 18/4/15.
+ * Created by cgrw on 18/4/15.
  */
 // 常量池代码抽象，它是Class文件之中的资源仓库
 public class ConstantPool {
