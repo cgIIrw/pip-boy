@@ -56,7 +56,8 @@ public class LocalVars_ {
     }
 
     public void setRef(int index, Instance_ ref) {
-        slots[index].setRef(ref);
+        if (ref != null)
+            slots[index].setRef(ref);
     }
 
     public Instance_ getRef(int index) {
