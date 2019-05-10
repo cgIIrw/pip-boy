@@ -175,6 +175,9 @@ public class ClassLoader_ {
 
     private void initStaticFinalVar(InstanceKlass_ instanceKlass_, Field_ field) {
         LocalVars_ vars = instanceKlass_.getStaticVars();
+        // 如果slots字段为null，说明没有final static || static变量
+        if (vars.getSlots() == null)
+            return;
         RuntimeConstantPool_ cp = instanceKlass_.getRuntimeConstantPool();
         // 再次强调一下，这里constValue_index的是static final
 //        int cpIndex = field.getConstValue_index();

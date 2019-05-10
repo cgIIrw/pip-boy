@@ -56,7 +56,6 @@ public class LocalVars_ {
     }
 
     public void setRef(int index, Instance_ ref) {
-        if (ref != null)
             slots[index].setRef(ref);
     }
 
