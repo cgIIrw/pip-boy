@@ -11,7 +11,8 @@ import rtda.methodarea.rtcp.symref.MethodRef;
 import rtda.methodarea.rtcp.RuntimeConstantPool_;
 import rtda.stack.OperandStack_;
 import rtda.stack.StackFrame_;
-// 调用方法：当前方法；被调用方法：当前方法内调用的方法；
+// 代码体内出现的名词"调用方法"：当前方法；－－－－－－
+// －－－－－－－－－"被调用方法"：当前方法内调用的方法；
 public class INVOKE_VIRTUAL extends Index16Instruction {
     @Override
     public void execute(StackFrame_ frame) {
