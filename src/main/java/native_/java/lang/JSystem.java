@@ -8,6 +8,9 @@ public class JSystem {
 
     private static JNINativeMethod[] methods = {
             new JNINativeMethod("gc", "()V", new JVM_GC()),
+            new JNINativeMethod("currentTimeMillis", "()J", new JVM_CurrentTimeMillis()),
+            new JNINativeMethod("nanoTime", "()J", new JVM_NanoTime()),
+            new JNINativeMethod("arraycopy", "(\" OBJ \"I\" OBJ \"II)V\"", new JVM_ArrayCopy()),
     };
 
     public static void Java_java_lang_System_registerNatives(String className) {
