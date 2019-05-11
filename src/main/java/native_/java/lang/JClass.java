@@ -12,7 +12,7 @@ public class JClass {
     };
 
     // 传入className，对本地方法进行注册
-    public static void Java_java_lang_Object_registerNatives(String className) {
+    public static void Java_java_lang_Class_registerNatives(String className) {
         for (JNINativeMethod jniNativeMethod : methods) {
             Registry.registerMethod(className, jniNativeMethod.getMethodName(),
                     jniNativeMethod.getMethodDescriptor(), jniNativeMethod.getNativeMethod());
