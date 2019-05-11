@@ -20,10 +20,12 @@ public class INVOKE_STATIC extends Index16Instruction {
         }
 
         // 类初始化
-        if (!frame.getMethod_().getInstanceKlass_().getClinitFlag()) {
-//            Clinit.revertNextPc(frame);
+        if (!frame.getMethod_().getInstanceKlass_().getClinitFlag()
+//                && frame.getMethod_().getInstanceKlass_().getStaticSlotCount() != 0
+        ) {
+            Clinit.revertNextPc(frame);
             Clinit.clinitClass(frame.getThread_(), frame.getMethod_().getInstanceKlass_());
-//            return;
+            return;
         }
 
         MethodInvokeLogic.invokeMethod(frame, resolvedMethod);

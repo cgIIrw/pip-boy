@@ -28,10 +28,12 @@ public class PUT_STATIC extends Index16Instruction {
         InstanceKlass_ class1 = field.getInstanceKlass_();
 
         // 类初始化
-        if (!class1.getClinitFlag()) {
-//            Clinit.revertNextPc(frame);
+        if (!class1.getClinitFlag()
+//                && class1.getStaticSlotCount() != 0
+        ) {
+            Clinit.revertNextPc(frame);
             Clinit.clinitClass(frame.getThread_(), class1);
-//            return;
+            return;
         }
 
         if (!field.isStatic()) {

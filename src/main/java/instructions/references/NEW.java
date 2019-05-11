@@ -16,10 +16,12 @@ public class NEW extends Index16Instruction {
         InstanceKlass_ instanceKlass_ = cf.resolvedClass();
 
         // 类初始化
-        if (!instanceKlass_.getClinitFlag()) {
-//            Clinit.revertNextPc(frame);
+        if (!instanceKlass_.getClinitFlag()
+//                && instanceKlass_.getStaticSlotCount() != 0
+        ) {
+            Clinit.revertNextPc(frame);
             Clinit.clinitClass(frame.getThread_(), instanceKlass_);
-//            return;
+            return;
         }
 
         if (instanceKlass_.isAbstract() || instanceKlass_.isInterface()) {
