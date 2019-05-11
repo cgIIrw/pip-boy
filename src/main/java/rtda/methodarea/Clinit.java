@@ -38,8 +38,8 @@ public class Clinit {
         }
     }
 
-//    // 修改frame中的nextPC(用以重置线程pc)
-//    public static void revertNextPc(StackFrame_ frame) {
-//        frame.setNextPC(frame.getThread_().getPc());
-//    }
+    // 修改frame中的nextPC(用以重置线程pc)
+    public static void revertNextPc(StackFrame_ frame) {
+        frame.setNextPC(frame.getThread_().getPc());
+    }
 }
